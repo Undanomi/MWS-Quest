@@ -1,0 +1,94 @@
+仮設置用
+base_8 - base_23
+
+地面
+base_32 - base_39
+
+木・地面装飾
+base_48 - base_111
+
+崖
+base_120 - base_199
+
+畑
+base_208 - base_231
+
+柵
+base_240 - base_287
+
+橋・看板
+base_296 - base_359
+
+床・階段
+base_368 - base_431
+
+家・壁・屋根
+base_440 - base679
+
+壁装飾
+base_688 - base_751
+
+店看板
+base_760 - base_775
+
+カウンター・カーテン
+base_784 - base_823
+
+家具
+base_832 - base_975
+
+置物
+base_984 - base_1079
+
+小物
+base_1088 - base_1183
+
+小物・位置調整用
+base_1192 - base_1278
+
+ダンジョン　床・壁・階段
+base_1296 - base_1487
+
+ダンジョン　装飾
+base_1496 - base_1559
+
+雪 木・地面装飾
+base_1568 - base_1615
+
+雪　崖
+base_1624 - base_1679
+
+雪　柵
+base_1688 - base_1735
+
+雪　橋・看板
+base_1744 - base_1831
+
+雪　屋根・テント
+base_1840 - base_1887
+
+雪　店看板・置物
+base_1896 - base_1983
+
+破壊 地面・床用
+base_1992 - base_2015
+
+破壊 壁用
+base_2024 - base_2071
+
+破壊 畑・看板
+base_2080 - base_2111
+
+破壊　窓・壁装飾
+base_2120 - base_2151
+
+破壊　家具
+base_2160 - base_2223
+
+破壊　置物
+base_2232 - base_2295
+
+破壊　小物
+base_2304 - base_2335
+
+
