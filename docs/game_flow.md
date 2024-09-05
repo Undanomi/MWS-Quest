@@ -152,4 +152,4 @@
   - シナリオ内の進捗のセーブは非対応
 
 画面イメージ
-![ending](img/ending.png)
+![kaisetsu](img/kaisetsu.png)
