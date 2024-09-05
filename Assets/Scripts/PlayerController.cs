@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("プレイヤーの移動速度移動速度")] public float moveSpeed;
+    [Header("プレイヤーの移動速度")] public float moveSpeed;
     
     private Rigidbody2D _rb;
     
