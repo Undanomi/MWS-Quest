@@ -48,4 +48,12 @@ public class LoginManager : MonoBehaviour
         
         return null;
     }
+   
+    /// <summary>
+    /// ユーザ登録画面に遷移する
+    /// </summary>
+    public void LoadRegisterScene()
+    {
+        SceneManager.LoadScene("Register");
+    }
 }
