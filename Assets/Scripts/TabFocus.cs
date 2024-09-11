@@ -5,17 +5,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-//UGUIにタブ移動機能を追加出来ます。
-//深い理由が無ければ、Canvasにこのスクリプトを張り付けて下さい。
-//子オブジェクトのHierarchyの上からの並び順で取得し、その順番通りで座標に因らずにタブキーでフォーカスを映すことが出来ます。
-//子オブジェクトがSetActive(false)で要素が非Activeになっても対応できるコードです。
-//selectedchangemethodをByArrowKeyに変更することで、上下左右キーでのフォーカス移動機能に変更することも出来ます。
-//Destroy対応
-
-
 public class UIFocusController : MonoBehaviour {
-
-
+    
     public enum SelectedChangeMethod {
         ByTabKey,
         ByArrowKey,
@@ -32,29 +23,21 @@ public class UIFocusController : MonoBehaviour {
 
 
     void Awake() {
-        //子オブジェクトをヒエラルキーの順に取得して追加する。
         foreach (var ChildObj in GetComponentsInChildren<Selectable>()) {
             SelectableList.Add(ChildObj);
             
         }
         eventsystem = EventSystem.current;
     }
-
-    //タブキーでUIのフォーカスを移します。順番は子オブジェクトのヒエラルキーの順番です。
+    
     void ChangeSelectedByTabKey(bool Tab,bool S_Tab) {
         if (Tab || S_Tab){
-            // 要素のホバー状態を解除
-            foreach (var selectable in SelectableList) {
-                if (selectable != null) selectable.OnDeselect(null);
-            }
             int SelectableActiveSum = SelectableList.Count(s => s != null && s.IsActive() );
             if (SelectableActiveSum > 1) {
-
                 GameObject goselected = eventsystem.currentSelectedGameObject;
                 if (goselected == null) return;
                 Selectable selected = goselected.GetComponent<Selectable>();
                 int selectedindex = SelectableList.FindIndex(s => s.Equals(selected));
-
                 if (S_Tab) {
                     // すべてフォーカス解除
                     foreach (var selectable in SelectableList) {
@@ -88,7 +71,6 @@ public class UIFocusController : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
             nextselectable = selected.FindSelectableOnLeft();
         } 
-
         if (nextselectable) nextselectable.Select();
 
     }
