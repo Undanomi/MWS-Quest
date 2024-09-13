@@ -62263,7 +62263,7 @@ GameObject:
   - component: {fileID: 861077606}
   - component: {fileID: 861077605}
   m_Layer: 0
-  m_Name: Franc
+  m_Name: Frank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91202,7 +91202,7 @@ GameObject:
   - component: {fileID: 2025955728}
   - component: {fileID: 2025955727}
   m_Layer: 0
-  m_Name: Charly
+  m_Name: Charlie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
