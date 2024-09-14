@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
+  - Player
+  - NPC
   - Confiner
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Objects
     uniqueID: 442357695
+    locked: 0
+  - name: NPC
+    uniqueID: 681235853
     locked: 0
   - name: Player
     uniqueID: 39452125
