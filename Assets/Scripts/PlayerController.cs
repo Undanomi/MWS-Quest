@@ -1,4 +1,5 @@
 using UnityEngine;
+using Yarn.Unity;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -27,13 +28,28 @@ public class PlayerController : MonoBehaviour
     {
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
-        
+        // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
+        if (FindObjectOfType<DialogueRunner>().IsDialogueRunning)
+        {
+            Debug.Log("Dialogue is running. Player cannot move.");
+            return;
+        }
         // プレイヤーの向きを変更
         SyncMoveAnimation();
     }
     
     void FixedUpdate()
     {
+        // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
+        if (FindObjectOfType<DialogueRunner>().IsDialogueRunning)
+        {
+            Debug.Log("Dialogue is running. Player cannot move.");
+            // 現在のフレームでの移動をキャンセル
+            _rb.velocity = Vector2.zero;
+            // AnimationをStoppingに変更
+            _anim.SetBool(IsMoving, false);
+            return;
+        }
         Move();
     }
 

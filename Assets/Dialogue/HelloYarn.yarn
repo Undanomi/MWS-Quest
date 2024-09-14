@@ -1,11 +1,18 @@
 ﻿title: Start
+
 ---
-Wow!
-My first ever Yarn script in Unity!
 
--> Gosh!
--> Incredible!
--> I'm amazed!
+<<jump ToFirstScene>>
 
-Anyway, time to get writing!
+===
+
+title: ToFirstScene
+
+---
+
+ナレーター: ここはセキュリティの世界です。
+Player: そうなんだ！楽しみ！
+ナレーター: さあ、旅を始めましょう！
+Player: はい！
+
 ===
