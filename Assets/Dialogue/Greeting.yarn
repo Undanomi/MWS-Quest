@@ -3,13 +3,13 @@
 ---
 
 <<if $hasVillageChiefMetBefore == false>>
-    VillageChief: はじめましてなのじゃ、旅人さん！
+    村長: はじめましてなのじゃ、旅人さん！
     PLAYER: こんにちは。こちらこそ、はじめまして。
-    VillageChief: ここは、私たちの村ですぞ！！どうぞ、ゆっくりしていってくだされ！
+    村長: ここは、私たちの村ですぞ！！どうぞ、ゆっくりしていってくだされ！
     PLAYER: ありがとうございます。村の様子を見てみたいです。
     <<set $hasVillageChiefMetBefore = true>>
 <<else>>
-    VillageChief: また会いましたね、旅人さん。
+    村長: また会いましたね、旅人さん。
     PLAYER: そうですね、また会いましたね。
 <<endif>>
 
