@@ -79018,7 +79018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 0}
-  conversationNode: AlliceGreeting
+  conversationNode: AliceGreeting
 --- !u!58 &1870243052
 CircleCollider2D:
   m_ObjectHideFlags: 0
