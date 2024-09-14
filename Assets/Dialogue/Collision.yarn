@@ -1,0 +1,109 @@
+﻿title: VillageChiefGreeting
+
+---
+
+<<if $hasVillageChiefMetBefore == false>>
+    VillageChief: はじめましてなのじゃ、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    VillageChief: ここは、私たちの村ですぞ！！どうぞ、ゆっくりしていってくだされ！
+    PLAYER: ありがとうございます。村の様子を見てみたいです。
+    <<set $hasVillageChiefMetBefore = true>>
+<<else>>
+    VillageChief: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
+title: AliceGreeting
+
+---
+
+<<if $hasAliceMetBefore == false>>
+    Alice: はじめまして、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    <<set $hasAliceMetBefore = true>>
+<<else>>
+    Alice: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
+title: BobGreeting
+
+---
+
+<<if $hasBobMetBefore == false>>
+    Bob: よぉ！お前は新しい旅人か？
+    PLAYER: こんにちは。はじめまして。
+    Bob: ニャハハ！俺はボブだ！楽しんでけよ！
+        -> わかった！楽しむね！
+            Bob: あぁ！それじゃあ、またな！
+        -> ありがとう！
+            Bob: 礼を言う奴には久しぶりに会ったぞ！またな！
+    <<set $hasBobMetBefore = true>>
+<<else>>
+    Bob: おう、また会ったな！
+    PLAYER: そうだね、また会ったね！
+<<endif>>
+
+===
+
+title: CharlieGreeting
+
+---
+
+<<if $hasCharlieMetBefore == false>>
+    Charlie: はじめまして、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    <<set $hasCharlieMetBefore = true>>
+<<else>>
+    Charlie: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
+
+title: DaveGreeting
+
+---
+
+<<if $hasDaveMetBefore == false>>
+    Dave: はじめまして、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    <<set $hasDaveMetBefore = true>>
+<<else>>
+    Dave: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
+
+title: EllenGreeting
+
+---
+
+<<if $hasEllenMetBefore == false>>
+    Ellen: はじめまして、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    <<set $hasEllenMetBefore = true>>
+<<else>>
+    Ellen: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
+
+title: FrankGreeting
+
+---
+
+<<if $hasFrankMetBefore == false>>
+    Frank: はじめまして、旅人さん！
+    PLAYER: こんにちは。こちらこそ、はじめまして。
+    <<set $hasFrankMetBefore = true>>
+<<else>>
+    Frank: また会いましたね、旅人さん。
+    PLAYER: そうですね、また会いましたね。
+<<endif>>
+
+===
