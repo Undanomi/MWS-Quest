@@ -9,5 +9,13 @@ namespace DefaultNamespace
         {
             SceneManager.LoadScene("Login");
         }
+        
+        void Update()
+        {
+            if(Input.anyKey)
+            {
+                SceneManager.LoadScene("Login");
+            }
+        }
     }
 }
