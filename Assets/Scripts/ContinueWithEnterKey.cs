@@ -20,7 +20,7 @@ public class ContinueOnEnter : MonoBehaviour
     void Update()
     {
         // Enterキーが押されたときにボタンをクリック
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
             if (continueButton != null)
             {
