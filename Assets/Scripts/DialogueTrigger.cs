@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -9,6 +10,7 @@ public class NPCTrigger : MonoBehaviour
     public string conversationNode = "StartConversation";  // Yarn の会話のノード名
     private Rigidbody2D rb2d;
     private CircleCollider2D col2d;
+    private bool isPlayerInRange = false;
     
     // Start is called before the first frame update
     void Start()
@@ -19,22 +21,32 @@ public class NPCTrigger : MonoBehaviour
         col2d.isTrigger = true;
         dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
-    
+
+    private void Update()
+    {
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+            {
+                if (!dialogueRunner.IsDialogueRunning)
+                {
+                    dialogueRunner.StartDialogue(conversationNode);
+                }
+            }
+    }
+
     // プレイヤーがトリガー範囲に入ったときに呼ばれる関数
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter");
-        Debug.Log(other.tag);
         if (other.CompareTag("Player"))  // トリガーに入ったオブジェクトがプレイヤーか確認
         {
-            Debug.Log("Player");
-            // Yarn Spinner の会話を開始
-            if (!dialogueRunner.IsDialogueRunning)
-            {
-                dialogueRunner.StartDialogue(conversationNode);
-            }else{
-                Debug.Log("Dialogue is already running");
-            }
+            isPlayerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))  // トリガーから出たオブジェクトがプレイヤーか確認
+        {
+            isPlayerInRange = false;
         }
     }
 }
