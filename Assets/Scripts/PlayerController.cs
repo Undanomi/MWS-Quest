@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int LookX = Animator.StringToHash("Look X");
     private static readonly int LookY = Animator.StringToHash("Look Y");
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+    public DialogueRunner dialogueRunner;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (FindObjectOfType<DialogueRunner>().IsDialogueRunning)
+        if (dialogueRunner.IsDialogueRunning || dialogueRunner.GetComponent<LogView>().isLogViewEnable)
         {
             return;
         }
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (FindObjectOfType<DialogueRunner>().IsDialogueRunning)
+        if (dialogueRunner.IsDialogueRunning || dialogueRunner.GetComponent<LogView>().isLogViewEnable)
         {
             // 現在のフレームでの移動をキャンセル
             _rb.velocity = Vector2.zero;

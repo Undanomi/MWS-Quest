@@ -80170,6 +80170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  dialogueRunner: {fileID: 1162895860}
 --- !u!70 &1395281431
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -80378,7 +80379,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 837156846}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.48758742
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
