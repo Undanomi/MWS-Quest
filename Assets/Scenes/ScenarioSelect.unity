@@ -2493,6 +2493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1727569153}
   - component: {fileID: 1727569154}
+  - component: {fileID: 1727569155}
   m_Layer: 0
   m_Name: ScenarioSelectionPanel
   m_TagString: Untagged
@@ -2549,6 +2550,20 @@ MonoBehaviour:
   m_Spacing: {x: 100, y: 50}
   m_Constraint: 1
   m_ConstraintCount: 3
+--- !u!114 &1727569155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727569152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dddacd3bdce69742a9b906e83904bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenarioButtons:
+  - {fileID: 1827528225}
 --- !u!1 &1778579895
 GameObject:
   m_ObjectHideFlags: 0

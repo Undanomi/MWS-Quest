@@ -24,7 +24,7 @@ public class LoginManager : MonoBehaviour
         if (username == "admin" && password == "password")
         {
             // ログイン成功時には次のシーンに遷移する
-            SceneManager.LoadScene("Village");
+            SceneManager.LoadScene("ScenarioSelect");
         }
         else
         {
