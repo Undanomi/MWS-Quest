@@ -13,9 +13,13 @@ namespace DefaultNamespace
         public GameObject lineView;
         public GameObject optionsListView;
         public String previousSearchWord = "";
+        private GameObject searchField;
+        private GameObject searchButton;
 
         private void Start()
         {
+            searchField = GameObject.Find("SearchField");
+            searchButton = GameObject.Find("SearchButton");
             logAnalysisSystem.SetActive(isLogViewEnable);
             lineView.SetActive(!isLogViewEnable);
             optionsListView.SetActive(!isLogViewEnable);
@@ -32,7 +36,7 @@ namespace DefaultNamespace
                 if (!isLogViewEnable)
                 {
                     //SearchFieldから検索ワードを取得
-                    previousSearchWord = GameObject.Find("SearchField").GetComponent<TMPro.TMP_InputField>().text;
+                    previousSearchWord = searchField.GetComponent<TMPro.TMP_InputField>().text;
                     Debug.Log("previousSearchWord: " + previousSearchWord);
                 }
                 
@@ -44,13 +48,17 @@ namespace DefaultNamespace
                 
                 if (isLogViewEnable){
                     //未確定のテキストを削除
-                    GameObject.Find("SearchField").GetComponent<TMPro.TMP_InputField>().text = "";
+                    searchField.GetComponent<TMPro.TMP_InputField>().text = "";
                     //SearchFieldに検索ワードを設定
-                    GameObject.Find("SearchField").GetComponent<TMPro.TMP_InputField>().text = previousSearchWord;
+                    searchField.GetComponent<TMPro.TMP_InputField>().text = previousSearchWord;
                     // SearchButtonをクリック
-                    GameObject.Find("SearchButton").GetComponent<Button>().onClick.Invoke();
+                    searchButton.GetComponent<Button>().onClick.Invoke();
+                    // 現在のフォーカスを解除
+                    EventSystem.current.SetSelectedGameObject(null);
                     // SearchFieldにフォーカスを当てる
-                    GameObject.Find("SearchField").GetComponent<TMPro.TMP_InputField>().Select();
+                    EventSystem.current.SetSelectedGameObject(searchField.GetComponent<TMPro.TMP_InputField>().gameObject);
+                    // Select()だけだとカーソルが表示されないのでActivateInputField()を呼ぶ
+                    EventSystem.current.currentSelectedGameObject.GetComponent<TMPro.TMP_InputField>().ActivateInputField();
                 }
             }
         }
