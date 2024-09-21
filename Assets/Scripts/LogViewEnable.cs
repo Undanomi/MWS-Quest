@@ -23,6 +23,12 @@ namespace DefaultNamespace
             logAnalysisSystem.SetActive(isLogViewEnable);
             lineView.SetActive(!isLogViewEnable);
             optionsListView.SetActive(!isLogViewEnable);
+            // 現在のフォーカスを解除
+            EventSystem.current.SetSelectedGameObject(null);
+            // SearchFieldにフォーカスを当てる
+            EventSystem.current.SetSelectedGameObject(searchField.GetComponent<TMPro.TMP_InputField>().gameObject);
+            // Select()だけだとカーソルが表示されないのでActivateInputField()を呼ぶ
+            EventSystem.current.currentSelectedGameObject.GetComponent<TMPro.TMP_InputField>().ActivateInputField();
         }
 
         //Lキーが押されたら，LogAnalysisSystemオブジェクトのすべての要素を可視化
@@ -35,9 +41,16 @@ namespace DefaultNamespace
                 
                 if (!isLogViewEnable)
                 {
+                    //SearchFieldを一旦確定
+                    searchField.GetComponent<TMPro.TMP_InputField>().DeactivateInputField();
                     //SearchFieldから検索ワードを取得
                     previousSearchWord = searchField.GetComponent<TMPro.TMP_InputField>().text;
                     Debug.Log("previousSearchWord: " + previousSearchWord);
+                    //文字化けしてたら削除
+                    if (previousSearchWord.Contains("\u001b"))
+                    {
+                        previousSearchWord = "";
+                    }
                 }
                 
                 //ダイアログの表示・非表示
