@@ -181,7 +181,16 @@ namespace DefaultNamespace
             {
                 // (3) 検索ワードに正規表現を使用してプレーンテキスト部分を検索しハイライト
                 Regex regex = new Regex(searchWord);
-                string highlightedPlainText = regex.Replace(plainText, "<mark=#FFFF0055>$0</mark>");
+                string highlightedPlainText = "";
+                // 改行で分割
+                var lines = plainText.Split('\n');
+                foreach (var line in lines)
+                {
+                    // 検索ワードをハイライト
+                    string highlightedLine = regex.Replace(line, "<mark=#FFFF0055>$0</mark>");
+                    highlightedPlainText += highlightedLine + "\n";
+                }
+                
 
                 // (4) タグを元の位置に復元しつつ、<mark>タグを無視
                 int tagIndex = 0;
@@ -227,7 +236,7 @@ namespace DefaultNamespace
                 }
 
                 // (5) <mark=#FFFF0055>が含まれない行を削除
-                var lines = _highlightedLogTextString.Split('\n');
+                lines = _highlightedLogTextString.Split('\n');
                 _highlightedLogTextString = "";
                 foreach (var line in lines)
                 {
