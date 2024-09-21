@@ -61293,7 +61293,7 @@ GameObject:
   - component: {fileID: 392563579}
   - component: {fileID: 392563578}
   m_Layer: 5
-  m_Name: SearhButton
+  m_Name: SearchButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80016,10 +80016,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdc5f6338bf4928b9d955ef13d6d6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLogViewEnable: 0
   logAnalysisSystem: {fileID: 1454500382}
   lineView: {fileID: 1797954978}
   optionsListView: {fileID: 466939469}
-  previousSearchWord: 
+  searchWord: 
 --- !u!1 &1395281424
 GameObject:
   m_ObjectHideFlags: 0
@@ -80376,8 +80377,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 837156847}
   m_HandleRect: {fileID: 837156846}
   m_Direction: 2
-  m_Value: 1.000001
-  m_Size: 0.8939102
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -94436,10 +94437,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.7411765, g: 0.8156863, b: 1, a: 1}
-    m_PressedColor: {r: 0.4009434, g: 0.78341943, b: 1, a: 1}
-    m_SelectedColor: {r: 0.740566, g: 0.81496257, b: 1, a: 1}
-    m_DisabledColor: {r: 0.4, g: 0.78431374, b: 1, a: 0.5019608}
+    m_HighlightedColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    m_PressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.6, g: 0.6, b: 0.6, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -94713,7 +94714,7 @@ GameObject:
   - component: {fileID: 2075651897}
   - component: {fileID: 2075651896}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: LogText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94758,12 +94759,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "2024/10/13 <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F\n2024/10/14
-    <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F\n2024/10/15
-    <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F\n2024/10/16
-    <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F\n2024/10/17
-    <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F\n2024/10/18
-    <color=red>xxxx</color>\u306E\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F"
+  m_text: "2024/10/11 <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/12
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/13
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/14
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/15
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/16
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/17
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/18
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/19
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/20
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/21
+    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
   m_sharedMaterial: {fileID: 3007508732787906507, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
