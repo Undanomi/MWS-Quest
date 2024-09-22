@@ -61110,7 +61110,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u8AAC\u660E\uFF01\n\u8AAC\u660E\uFF01\n\u8AAC\u660E\uFF01\n\u8AAC\u660E\uFF01"
+  m_text: "\u30A2\u30EA\u30B9:\n\u300C\u91D1\u5EAB\u306F\u79C1\u304B\u6751\u9577\u306E\u546A\u6587\u4EE5\u5916\u3067\u306F\u7D76\u5BFE\u306B\u958B\u304B\u306A\u3044\u3088\u300D\n\n\u30C1\u30E3\u30FC\u30EA\u30FC:\n\u300C\u6628\u65E5\u306E19\u6642\u3054\u308D\u306BAlice\u306E\u5BB6\u306B\u5165\u3063\u3066\u3044\u304F\u4EBA\u5F71\u3092\u898B\u305F\u3088\u300D\n\n\u30A4\u30D6:\n\u300C......\u300D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
   m_sharedMaterial: {fileID: 3007508732787906507, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
@@ -61137,8 +61137,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -79306,7 +79306,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 2, y: 1}
 --- !u!114 &1229899110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79580,8 +79580,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.96, y: -116.97}
-  m_SizeDelta: {x: 1822.396, y: 781.048}
+  m_AnchoredPosition: {x: 0.96, y: -68.058}
+  m_SizeDelta: {x: 1822.396, y: 683.224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397421803
 MonoBehaviour:
