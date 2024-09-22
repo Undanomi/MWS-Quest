@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Yarn.Unity;
 
 namespace DefaultNamespace
 {
@@ -16,6 +17,7 @@ namespace DefaultNamespace
         public GameObject lineView;
         public GameObject optionsListView;
         public String searchWord = "";
+        public DialogueRunner dialogueRunner;
         private GameObject _searchField;
         private GameObject _clearButton;
         private GameObject _searchButton;
@@ -53,6 +55,10 @@ namespace DefaultNamespace
         //Lキーが押されたら，LogAnalysisSystemオブジェクトのすべての要素を可視化
         void Update()
         {
+            if (dialogueRunner.IsDialogueRunning)
+            {
+                return;
+            }
             if (Input.GetKeyDown(keyCode))
             {
                 SwitchActivatingLogView();

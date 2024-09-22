@@ -80096,6 +80096,7 @@ MonoBehaviour:
   lineView: {fileID: 1797954978}
   optionsListView: {fileID: 466939469}
   searchWord: 
+  dialogueRunner: {fileID: 1162895860}
 --- !u!1 &1395281424
 GameObject:
   m_ObjectHideFlags: 0
@@ -80454,7 +80455,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 837156847}
   m_HandleRect: {fileID: 837156846}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 1.0000002
   m_Size: 0.48758742
   m_NumberOfSteps: 0
   m_OnValueChanged:
