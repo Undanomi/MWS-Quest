@@ -1,10 +1,14 @@
 ﻿title: Start
 
 ---
+/// player's village name
+<<declare $PlayerVillageName = "アルファ">>
+/// adversary's village name
+<<declare $AdversaryVillageName = "ブラボー">>
+/// player name
+<<declare $PlayerName = "プレイヤー">>
 
-ナレーター: ここはセキュリティの世界です。
-Player: そうなんだ！楽しみ！
-ナレーター: さあ、旅を始めましょう！
-Player: はい！
-
+ナレーター: ここは{$PlayerVillageName}村、農作物の生産・販売が盛んな村である。{$PlayerName}はこの村で衛兵をしている。
+ナレーター: ある日、近隣の村との交易記録が流出していることが判明した。{$PlayerVillageName}村の衛兵として、流出の原因を突き止めよう。
+ナレーター: この村では、村内で使用された呪文の痕跡をすべて記録している。この記録を、事件解決に有効に活用しよう。
 ===
