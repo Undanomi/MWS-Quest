@@ -60560,10 +60560,11 @@ GameObject:
   m_Component:
   - component: {fileID: 184199616}
   - component: {fileID: 184199615}
-  - component: {fileID: 184199614}
   - component: {fileID: 184199617}
   - component: {fileID: 184199619}
+  - component: {fileID: 184199621}
   - component: {fileID: 184199618}
+  - component: {fileID: 184199614}
   - component: {fileID: 184199620}
   m_Layer: 0
   m_Name: Ellen
@@ -60764,6 +60765,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 0}
   conversationNode: EllenGreeting
+--- !u!114 &184199621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184199613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &190493933
 GameObject:
   m_ObjectHideFlags: 0
@@ -60775,7 +60790,9 @@ GameObject:
   - component: {fileID: 190493936}
   - component: {fileID: 190493935}
   - component: {fileID: 190493938}
+  - component: {fileID: 190493941}
   - component: {fileID: 190493939}
+  - component: {fileID: 190493940}
   - component: {fileID: 190493937}
   m_Layer: 0
   m_Name: Bob
@@ -60921,12 +60938,61 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!70 &190493940
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190493933}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.7, y: 1}
+  m_Direction: 0
+--- !u!114 &190493941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190493933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &274854410
 GameObject:
   m_ObjectHideFlags: 0
@@ -60937,9 +61003,10 @@ GameObject:
   m_Component:
   - component: {fileID: 274854413}
   - component: {fileID: 274854412}
-  - component: {fileID: 274854411}
   - component: {fileID: 274854416}
+  - component: {fileID: 274854417}
   - component: {fileID: 274854415}
+  - component: {fileID: 274854411}
   - component: {fileID: 274854414}
   m_Layer: 0
   m_Name: Dave
@@ -60981,7 +61048,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.66, y: 1}
+  m_Size: {x: 0.66, y: 0.8}
   m_Direction: 0
 --- !u!212 &274854412
 SpriteRenderer:
@@ -61126,6 +61193,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &274854417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274854410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &326694133
 GameObject:
   m_ObjectHideFlags: 0
@@ -62477,9 +62558,10 @@ GameObject:
   m_Component:
   - component: {fileID: 861077607}
   - component: {fileID: 861077606}
-  - component: {fileID: 861077605}
   - component: {fileID: 861077610}
+  - component: {fileID: 861077611}
   - component: {fileID: 861077609}
+  - component: {fileID: 861077605}
   - component: {fileID: 861077608}
   m_Layer: 0
   m_Name: Frank
@@ -62521,7 +62603,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.7, y: 1}
+  m_Size: {x: 0.7, y: 0.9}
   m_Direction: 0
 --- !u!212 &861077606
 SpriteRenderer:
@@ -62666,6 +62748,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &861077611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861077604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &867731674
 GameObject:
   m_ObjectHideFlags: 0
@@ -78394,7 +78490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -113.89
+      value: -113.88989
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -79026,7 +79122,9 @@ GameObject:
   - component: {fileID: 1822412486}
   - component: {fileID: 1822412485}
   - component: {fileID: 1822412489}
+  - component: {fileID: 1822412490}
   - component: {fileID: 1822412488}
+  - component: {fileID: 1822412491}
   - component: {fileID: 1822412487}
   m_Layer: 0
   m_Name: VillageChief
@@ -79178,6 +79276,55 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1822412490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822412483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
+--- !u!70 &1822412491
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822412483}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.6, y: 0.8}
+  m_Direction: 0
 --- !u!1 &1870243047
 GameObject:
   m_ObjectHideFlags: 0
@@ -79189,7 +79336,9 @@ GameObject:
   - component: {fileID: 1870243050}
   - component: {fileID: 1870243049}
   - component: {fileID: 1870243053}
+  - component: {fileID: 1870243055}
   - component: {fileID: 1870243052}
+  - component: {fileID: 1870243054}
   - component: {fileID: 1870243051}
   m_Layer: 0
   m_Name: Alice
@@ -79341,6 +79490,55 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &1870243054
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870243047}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.8, y: 1}
+  m_Direction: 0
+--- !u!114 &1870243055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870243047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &1922645491
 GameObject:
   m_ObjectHideFlags: 0
@@ -92245,7 +92443,9 @@ GameObject:
   - component: {fileID: 2025955729}
   - component: {fileID: 2025955728}
   - component: {fileID: 2025955732}
+  - component: {fileID: 2025955734}
   - component: {fileID: 2025955731}
+  - component: {fileID: 2025955733}
   - component: {fileID: 2025955730}
   m_Layer: 0
   m_Name: Charlie
@@ -92397,6 +92597,55 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &2025955733
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025955726}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.7, y: 0.9}
+  m_Direction: 0
+--- !u!114 &2025955734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025955726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c21a1a20657d44d8259384334fa967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleColliderNote: "\u4F1A\u8A71\u5224\u5B9A\u7528"
+  capsuleColliderNote: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u540C\u58EB\u306E\u3042\u305F\u308A\u5224\u5B9A\u7528"
 --- !u!1 &2063797536
 GameObject:
   m_ObjectHideFlags: 0
