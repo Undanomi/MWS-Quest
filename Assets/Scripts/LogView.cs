@@ -55,6 +55,16 @@ namespace DefaultNamespace
         //Lキーが押されたら，LogAnalysisSystemオブジェクトのすべての要素を可視化
         void Update()
         {
+            // XSS対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
+            if (_searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("<"))
+            {
+                _searchField.GetComponent<TMPro.TMP_InputField>().text = Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, "<", "");
+            }
+            if (_searchField.GetComponent<TMPro.TMP_InputField>().text.Contains(">"))
+            {
+                _searchField.GetComponent<TMPro.TMP_InputField>().text = Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, ">", "");
+            }
+            
             if (dialogueRunner.IsDialogueRunning)
             {
                 return;
