@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,19 +7,48 @@ public class ScenarioSelector : MonoBehaviour
 {
     // Start is called before the first frame update
     public Button[] scenarioButtons;
+    public Image fadeImage;
     void Start()
     {
+        // シナリオボタンに変数を追加
         for (int i = 0; i < scenarioButtons.Length; i++)
         {
             int index = i; // ラムダ式内での参照用
-            scenarioButtons[i].onClick.AddListener(() => LoadScenario(index + 1));
+            scenarioButtons[i].onClick.AddListener(() => OnButtonClick(index));
         }
     }
+    private void OnButtonClick(int index)
+    {
+        foreach (Button button in scenarioButtons)
+        {
+            button.interactable = false;
+        }
+        // フェードアウト
+        StartCoroutine(FadeOut(index, 1.0f));
+        
+    }
     
+    private IEnumerator FadeOut(int index, float delay)
+    {
+        fadeImage.gameObject.SetActive(true);
+        Color color = fadeImage.color;
+        float elapsedTime = 0f;
+        while (elapsedTime < delay)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(0f, 1f, elapsedTime / delay);
+            fadeImage.color = color;
+            yield return null;
+        }
+        color.a = 1f;
+        fadeImage.color = color;
+        // シナリオの読み込み
+        LoadScenario(index);
+    }
     private void LoadScenario(int scenarioId)
     {
         // 2桁の0埋めしたシナリオ名を作成
-        string sceneName = "Scenario" + scenarioId.ToString("D2");
+        string sceneName = "Scenario" + (scenarioId+1).ToString("D2");
         SceneManager.LoadScene(sceneName);
     }
 }
