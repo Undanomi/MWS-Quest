@@ -22,8 +22,8 @@ public class RegisterManager : MonoBehaviour
         if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && password == confirmPassword)
         {
             // ユーザ登録成功時の処理
-            // 仮処理として、登録成功時には村のシーンに遷移する
-            SceneManager.LoadScene("Village");
+            // 仮処理として、登録成功時にはシナリオ選択画面に遷移
+            SceneManager.LoadScene("ScenarioSelect");
         }
         else if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {

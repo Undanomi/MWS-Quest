@@ -23,8 +23,8 @@ public class LoginManager : MonoBehaviour
         // 仮処理として、ユーザ名とパスワードが一致していればログイン成功とする
         if (username == "admin" && password == "password")
         {
-            // ログイン成功時には次のシーンに遷移する
-            SceneManager.LoadScene("Village");
+            // ログイン成功時にはシナリオ選択画面に遷移
+            SceneManager.LoadScene("ScenarioSelect");
         }
         else
         {
