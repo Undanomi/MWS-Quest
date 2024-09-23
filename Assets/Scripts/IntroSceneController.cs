@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class IntroSceneController : MonoBehaviour
 {
@@ -21,6 +21,12 @@ public class IntroSceneController : MonoBehaviour
     public Cinemachine.CinemachineVirtualCamera mapOverViewCamera;
     public Cinemachine.CinemachineVirtualCamera playerFollowCamera;
     
+    [Header("シナリオタイトル")] public TextMeshProUGUI scenarioTitle;
+    [Header("シナリオタイトルの表示時間")] public float scenarioTitleDisplayTime;
+    [Header("暗転画像")] public Image fadeImage;
+    [Header("タイトルフェード時間")] public float titleFadeTime;
+    [Header("画像フェード時間")] public float imageFadeTime;
+    
     private readonly float _stopDistance = 0.1f;
     private PlayerController _playerController;
 
@@ -32,6 +38,9 @@ public class IntroSceneController : MonoBehaviour
     
     private IEnumerator HandleIntroSequence()
     {
+        // シナリオタイトルを表示
+        yield return StartCoroutine(ShowScenarioTitle());
+        
         // 俯瞰
         yield return StartCoroutine(SwitchMapCamera());
         
@@ -40,6 +49,70 @@ public class IntroSceneController : MonoBehaviour
         
     }
 
+    private IEnumerator ShowScenarioTitle()
+    {
+        float elapsedTime = 0f;
+        Color imageColor = fadeImage.color;
+        Color textColor = scenarioTitle.color;
+        
+        // 最初は暗転したままで2秒待つ
+        while (elapsedTime < 2.0f)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        elapsedTime = 0f;
+        // タイトルをフェードイン
+        while (elapsedTime < titleFadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            textColor.a = Mathf.Lerp(0, 1, elapsedTime / titleFadeTime);
+            scenarioTitle.color = textColor;
+            yield return null;
+        }
+        
+        // タイトルを表示
+        elapsedTime = 0f;
+        while (elapsedTime < scenarioTitleDisplayTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        
+        //タイトルをフェードアウト
+        elapsedTime = 0f;
+        while (elapsedTime < titleFadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            textColor.a = Mathf.Lerp(1, 0, elapsedTime / titleFadeTime);
+            scenarioTitle.color = textColor;
+            yield return null;
+        }
+        scenarioTitle.gameObject.SetActive(false);
+        
+        // 画面をフェードアウト
+        elapsedTime = 0f;
+        while (elapsedTime < imageFadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / imageFadeTime;
+            t = Mathf.SmoothStep(0, 1, t);
+            imageColor.a = Mathf.Lerp(1, 0, t);
+            fadeImage.color = imageColor;
+            yield return null;
+        }
+        fadeImage.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1.0f);
+    }
+    
+    
+    /// <summary>
+    /// 村全体を俯瞰した後、カメラをプレイヤーに追従させる
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SwitchMapCamera()
     {
         // マップを俯瞰
