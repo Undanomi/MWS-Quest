@@ -12,7 +12,7 @@ namespace DefaultNamespace
     public class LogView : MonoBehaviour
     {
         public Boolean isLogViewEnable = false;
-        KeyCode keyCode = KeyCode.L;
+        private KeyCode _keyCode = KeyCode.L;
         public GameObject logAnalysisSystem;
         public GameObject lineView;
         public GameObject optionsListView;
@@ -69,7 +69,7 @@ namespace DefaultNamespace
             {
                 return;
             }
-            if (Input.GetKeyDown(keyCode))
+            if (Input.GetKeyDown(_keyCode))
             {
                 SwitchActivatingLogView();
             }
@@ -103,6 +103,23 @@ namespace DefaultNamespace
             SearchWord();
         }
 
+        public void SetLogViewAvailable(bool isAvailable)
+        {
+            if(dialogueRunner.IsDialogueRunning)
+            {
+                dialogueRunner.Stop();
+            }
+
+            if (isAvailable)
+            {
+                _keyCode = KeyCode.L;
+            }
+            else
+            {
+                _keyCode = KeyCode.None;
+            }
+        }
+
         void SwitchActivatingLogView()
         {
             // 次の状態に遷移
@@ -126,7 +143,7 @@ namespace DefaultNamespace
             logAnalysisSystem.SetActive(isLogViewEnable);
             lineView.SetActive(!isLogViewEnable);
             optionsListView.SetActive(!isLogViewEnable);
-            keyCode = isLogViewEnable ? KeyCode.Escape : KeyCode.L;
+            _keyCode = isLogViewEnable ? KeyCode.Escape : KeyCode.L;
 
             if (isLogViewEnable)
             {
