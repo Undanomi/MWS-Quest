@@ -84,7 +84,7 @@ namespace DefaultNamespace
                 _searchButton.GetComponent<Button>().onClick.Invoke();
             }
         }
-
+        
         void onEscapeButtonClicked()
         {
             Debug.Log("EscapeButtonClicked");

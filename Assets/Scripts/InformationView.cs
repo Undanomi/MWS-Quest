@@ -1,9 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+public class InformationView : MonoBehaviour
 {
-    public class InformationView : MonoBehaviour
-    {
-        
-    }
+    
 }
