@@ -1,6 +1,3 @@
-using System;
-using DefaultNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -8,30 +5,30 @@ using Yarn.Unity;
 [RequireComponent(typeof(CircleCollider2D))]
 public class NPCTrigger : MonoBehaviour
 {
-    public DialogueRunner dialogueRunner;  // Yarn Spinner の DialogueRunner を参照
+    private DialogueRunner _dialogueRunner;  // Yarn Spinner の DialogueRunner を参照
     public string conversationNode = "StartConversation";  // Yarn の会話のノード名
-    private Rigidbody2D rb2d;
-    private CircleCollider2D col2d;
-    private bool isPlayerInRange = false;
+    private Rigidbody2D _rb2d;
+    private CircleCollider2D _col2d;
+    private bool _isPlayerInRange;
     
     // Start is called before the first frame update
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-        col2d = GetComponent<CircleCollider2D>();
-        rb2d.isKinematic = true;
-        col2d.isTrigger = true;
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
+        _rb2d = GetComponent<Rigidbody2D>();
+        _col2d = GetComponent<CircleCollider2D>();
+        _rb2d.isKinematic = true;
+        _col2d.isTrigger = true;
+        _dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     private void Update()
     {
-            if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
-                dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
+            if (_isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
+                _dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
             {
-                if (!dialogueRunner.IsDialogueRunning)
+                if (!_dialogueRunner.IsDialogueRunning)
                 {
-                    dialogueRunner.StartDialogue(conversationNode);
+                    _dialogueRunner.StartDialogue(conversationNode);
                 }
             }
     }
@@ -41,7 +38,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))  // トリガーに入ったオブジェクトがプレイヤーか確認
         {
-            isPlayerInRange = true;
+            _isPlayerInRange = true;
         }
     }
 
@@ -49,7 +46,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))  // トリガーから出たオブジェクトがプレイヤーか確認
         {
-            isPlayerInRange = false;
+            _isPlayerInRange = false;
         }
     }
 }
