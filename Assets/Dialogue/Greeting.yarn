@@ -20,6 +20,7 @@ tracking: always
     村長: おお！ついに事件の原因がわかったか！
     <<jump VillageChiefFirstQuestion>>
 <<else>>
+    村長: おお！原因がわかったか！
     <<jump VillageChiefSecondQuestion>>
 <<endif>>
 
@@ -41,7 +42,8 @@ title: VillageChiefFirstQuestion
         村長: 礼を言うぞ!
         <<set $CorrectFirstQuestion = true>>
         村長: しかし，実はまだ気がかりな事があるのじゃ...。
-        <<jump VillageChiefSecondQuestion>>
+        村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃろう？
+        村長: それも調査をお願いしてもよいかな？分かったら再度報告に来てくれ！
     -> アリスの不注意
         ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
     -> デイヴが村の外に持ち出した
@@ -52,7 +54,6 @@ title: VillageChiefFirstQuestion
 title: VillageChiefSecondQuestion
 
 ---
-
 村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃ？
     -> 行商人がおいていった
         <<jump VillageChiefSecondQuestionIncorrect>>
