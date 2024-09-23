@@ -1,4 +1,6 @@
 using System;
+using DefaultNamespace;
+using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -24,7 +26,8 @@ public class NPCTrigger : MonoBehaviour
 
     private void Update()
     {
-            if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
+            if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
+                dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
             {
                 if (!dialogueRunner.IsDialogueRunning)
                 {

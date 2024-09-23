@@ -43,12 +43,15 @@ public class UIFocusController : MonoBehaviour {
                     foreach (var selectable in SelectableList) {
                         if (selectable != null) selectable.OnDeselect(null);
                     }
+                    Debug.Log("S_Tab: " + selectedindex);
+                    SelectableList[0].Select();
                 } else if(Tab){
                     for (int i = 0, j = selectedindex + 1; i < SelectableActiveSum; i++, j++) {
-                        if (j >= SelectableList.Count) j = 0;
+                        if (j >= SelectableList.Count - 1) j = 0;
                         if (SelectableList[j] != null && SelectableList[j].IsActive()) {
                             SelectableList[j].Select(); 
                             selected.OnDeselect(null);
+                            Debug.Log("Tab: " + j);
                             return;
                         }
                     }
