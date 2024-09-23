@@ -21,9 +21,6 @@ public class IntroSceneController : MonoBehaviour
     public Cinemachine.CinemachineVirtualCamera mapOverViewCamera;
     public Cinemachine.CinemachineVirtualCamera playerFollowCamera;
     
-    [Header("カメラ切り替えまでの時間")]
-    public float cameraSwitchDelay;
-
     private readonly float _stopDistance = 0.1f;
     private PlayerController _playerController;
 
