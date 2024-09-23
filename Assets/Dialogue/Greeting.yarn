@@ -82,7 +82,7 @@ title: AliceGreeting
 
 ---
 
-<<if $AliceMetCount == 0>>
+<<if $CorrectFirstQuestion == false>>
     アリス: 大事な情報が他の村に流出するなんて、物騒なこともあるものね。
     アリス: 私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずよ
     <<set $AliceMetCount = 1>>
