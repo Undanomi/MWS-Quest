@@ -33,7 +33,19 @@ namespace DefaultNamespace
             _searchButton = GameObject.Find("SearchButton");
             _escapeButton = GameObject.Find("EscapeButton");
             _logText = GameObject.Find("Scroll View/Viewport/Content/LogText");
-            _logTextString = _logText.GetComponent<TMPro.TMP_Text>().text;
+            TextAsset textAsset = Resources.Load<TextAsset>("log");
+
+            // TextAssetがnullでないことを確認
+            if (textAsset != null)
+            {
+                // テキスト内容をstringとして取得
+                _logTextString = textAsset.text;
+                _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
+            }
+            else
+            {
+                Debug.LogError("Text file not found!");
+            }
 
             logAnalysisSystem.SetActive(isLogViewEnable);
             lineView.SetActive(!isLogViewEnable);
