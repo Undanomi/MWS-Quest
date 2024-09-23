@@ -97,10 +97,8 @@ public class PlayerController : MonoBehaviour
     
     public void StartAutoMove(Vector2 destination, float autoMoveSpeed)
     {
-        Debug.Log("moveSpeed: " + moveSpeed);
+        // 一時的に移動速度を変更
         _prevMoveSpeed = moveSpeed;
-        Debug.Log("autoMoveSpeed: " + autoMoveSpeed);
-        Debug.Log("_prevMoveSpeed: " + _prevMoveSpeed);
         moveSpeed = autoMoveSpeed;
         _isAutoMoving = true;
         _autoMoveDestination = destination;
@@ -108,10 +106,9 @@ public class PlayerController : MonoBehaviour
     
     public void StopAutoMove()
     {
+        // 移動速度を元に戻す
         moveSpeed = _prevMoveSpeed;
-        Debug.Log("moveSpeed: " + moveSpeed);
         _isAutoMoving = false;
-        _anim.SetFloat(LookY, -1);
     }
     
 }
