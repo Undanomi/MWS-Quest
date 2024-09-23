@@ -80455,8 +80455,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 837156847}
   m_HandleRect: {fileID: 837156846}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.48758742
+  m_Value: 1
+  m_Size: 0.48758736
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -94837,17 +94837,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "2024/10/11 <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/12
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/13
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/14
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/15
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/16
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/17
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/18
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/19
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/20
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n2024/10/21
-    <color=red>xxxx</color>\u306E<color=#2244DD>\u30B3\u30DE\u30F3\u30C9\u3092\u4F7F\u3063\u305F</color>\n"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
   m_sharedMaterial: {fileID: 3007508732787906507, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
