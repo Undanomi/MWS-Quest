@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class IntroSceneController : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class IntroSceneController : MonoBehaviour
     
     [Header("プレイヤーの目的地")]
     public Vector2[] destinations;
+    public Vector2 startPosition;
 
-    [Header("プレイヤーの移動速度")] public float moveSpeed;
+    [Header("自動移動中のプレイヤーの移動速度")] public float autoMoveSpeed;
     
     [Header("VirtualCameraオブジェクト")]
     public Cinemachine.CinemachineVirtualCamera mapOverViewCamera;
@@ -34,20 +36,25 @@ public class IntroSceneController : MonoBehaviour
     private IEnumerator HandleIntroSequence()
     {
         // 俯瞰
-        yield return StartCoroutine(SwitchCamera());
+        yield return StartCoroutine(SwitchMapCamera());
         
         // プレイヤーを目的地に移動
         yield return StartCoroutine(MovePlayerToDestination());
         
     }
 
-    private IEnumerator SwitchCamera()
+    private IEnumerator SwitchMapCamera()
     {
         // マップを俯瞰
         mapOverViewCamera.Priority = 1;
         playerFollowCamera.Priority = 0;
         
-        yield return new WaitForSeconds(cameraSwitchDelay);
+        // ダイアログでStartを開始し、終了するまで待つ
+        dialogueRunner.StartDialogue("Start");
+        while (dialogueRunner.IsDialogueRunning)
+        {
+            yield return null;
+        }
         
         // プレイヤーを追従
         mapOverViewCamera.Priority = 0;
@@ -58,10 +65,11 @@ public class IntroSceneController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator MovePlayerToDestination()
     {
+        _playerController.SetAutoMoveSpeed(autoMoveSpeed);
         foreach (Vector2 destination in destinations)
         {
             Vector2 direction = (destination - (Vector2)player.transform.position).normalized;
-            _playerController.StartAutoMove(direction, moveSpeed);
+            _playerController.StartAutoMove(direction);
         
             // プレイヤーが目的地に到達するまでループ
             while (Vector2.Distance(player.transform.position, destination) > _stopDistance)
@@ -69,14 +77,21 @@ public class IntroSceneController : MonoBehaviour
                 yield return null;
             }
         }
+        // 村長に話しかける
+        dialogueRunner.StartDialogue("VillageChiefGreeting");
         
-        // プレイヤーの自動移動を停止
+        // ゲームスタート地点に移動する
+        Vector2 directionToStartPos = (startPosition - (Vector2)player.transform.position).normalized; 
+        _playerController.StartAutoMove(directionToStartPos);
+        while (Vector2.Distance(player.transform.position, startPosition) > _stopDistance)
+        {
+            yield return null;
+        }
+        
+        // プレイヤーの移動を停止
         _playerController.StopAutoMove();
         
-        if (dialogueRunner)
-        {
-            // YarnSpinnerのDialogueRunnerを開始
-            dialogueRunner.StartDialogue("Start");
-        }
+        // ナレーターのセリフ
+        dialogueRunner.StartDialogue("NarratorGreeting");
     }
 }

@@ -6,7 +6,6 @@ using Yarn.Unity;
 public class PlayerController : MonoBehaviour
 {
     [Header("プレイヤーの移動速度")] public float moveSpeed;
-    private float _prevMoveSpeed;
     
     private Rigidbody2D _rb;
     
@@ -17,37 +16,34 @@ public class PlayerController : MonoBehaviour
     private static readonly int LookX = Animator.StringToHash("Look X");
     private static readonly int LookY = Animator.StringToHash("Look Y");
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
-    public DialogueRunner dialogueRunner;
+    private DialogueRunner _dialogueRunner;
     
     private bool _isAutoMoving;
     private Vector2 _autoMoveDestination;
+    private float _autoMoveSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_isAutoMoving)
-        {
-            _horizontal = _autoMoveDestination.x;
-            _vertical = _autoMoveDestination.y;
-        }
-        else
-        {
-            _horizontal = Input.GetAxis("Horizontal");
-            _vertical = Input.GetAxis("Vertical");
-        }
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (dialogueRunner.IsDialogueRunning || dialogueRunner.GetComponent<LogView>().isLogViewEnable)
+        if (_dialogueRunner.IsDialogueRunning || _dialogueRunner.GetComponent<LogView>().isLogViewEnable)
         {
             Debug.Log("Dialogue is running. Player cannot move.");
             return;
         }
+        
+        // プレイヤーの入力を受け付ける
+        _horizontal = Input.GetAxis("Horizontal"); 
+        _vertical = Input.GetAxis("Vertical");
+        
         // プレイヤーの向きを変更
         SyncMoveAnimation();
     }
@@ -55,7 +51,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (dialogueRunner.IsDialogueRunning || dialogueRunner.GetComponent<LogView>().isLogViewEnable)
+        if (_dialogueRunner.IsDialogueRunning || _dialogueRunner.GetComponent<LogView>().isLogViewEnable)
         {
             // 現在のフレームでの移動をキャンセル
             _rb.velocity = Vector2.zero;
@@ -71,7 +67,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SyncMoveAnimation()
     {
-        Vector2 moveDirection = new Vector2(_horizontal, _vertical);
+        Vector2 moveDirection = _isAutoMoving ? _autoMoveDestination : new Vector2(_horizontal, _vertical);
         if (moveDirection.sqrMagnitude > 0)
         {
             _anim.SetFloat(LookX, moveDirection.x);
@@ -91,23 +87,24 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // direction unit-vector
-        Vector2 moveDirection = new Vector2(_horizontal, _vertical).normalized;
-        _rb.velocity = moveDirection * moveSpeed;
+        Vector2 moveDirection = _isAutoMoving ? _autoMoveDestination : new Vector2(_horizontal, _vertical);
+        _rb.velocity = moveDirection * (_isAutoMoving ? _autoMoveSpeed : moveSpeed);
+    }
+   
+    public void SetAutoMoveSpeed(float speed)
+    {
+        _autoMoveSpeed = speed;
     }
     
-    public void StartAutoMove(Vector2 destination, float autoMoveSpeed)
+    public void StartAutoMove(Vector2 destination)
     {
-        // 一時的に移動速度を変更
-        _prevMoveSpeed = moveSpeed;
-        moveSpeed = autoMoveSpeed;
         _isAutoMoving = true;
         _autoMoveDestination = destination;
     }
     
     public void StopAutoMove()
     {
-        // 移動速度を元に戻す
-        moveSpeed = _prevMoveSpeed;
+        Debug.Log("moveSpeed: " + moveSpeed);
         _isAutoMoving = false;
     }
     

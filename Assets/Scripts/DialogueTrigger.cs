@@ -8,7 +8,7 @@ using Yarn.Unity;
 [RequireComponent(typeof(CircleCollider2D))]
 public class NPCTrigger : MonoBehaviour
 {
-    public DialogueRunner dialogueRunner;  // Yarn Spinner の DialogueRunner を参照
+    private DialogueRunner _dialogueRunner;  // Yarn Spinner の DialogueRunner を参照
     public string conversationNode = "StartConversation";  // Yarn の会話のノード名
     private Rigidbody2D rb2d;
     private CircleCollider2D col2d;
@@ -21,17 +21,17 @@ public class NPCTrigger : MonoBehaviour
         col2d = GetComponent<CircleCollider2D>();
         rb2d.isKinematic = true;
         col2d.isTrigger = true;
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
+        _dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     private void Update()
     {
             if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
-                dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
+                _dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
             {
-                if (!dialogueRunner.IsDialogueRunning)
+                if (!_dialogueRunner.IsDialogueRunning)
                 {
-                    dialogueRunner.StartDialogue(conversationNode);
+                    _dialogueRunner.StartDialogue(conversationNode);
                 }
             }
     }
