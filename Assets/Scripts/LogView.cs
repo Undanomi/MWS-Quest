@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Yarn.Unity;
 
@@ -23,14 +24,26 @@ public class LogView : MonoBehaviour
     private string _logTextString;
     private string _highlightedLogTextString;
 
-    private void Start()
-    {
-        _searchField = GameObject.Find("SearchField");
-        _clearButton = GameObject.Find("ClearButton");
-        _searchButton = GameObject.Find("SearchButton");
-        _escapeButton = GameObject.Find("EscapeButton");
-        _logText = GameObject.Find("Scroll View/Viewport/Content/LogText");
-        _logTextString = _logText.GetComponent<TMPro.TMP_Text>().text;
+        private void Start()
+        {
+            _searchField = GameObject.Find("SearchField");
+            _clearButton = GameObject.Find("ClearButton");
+            _searchButton = GameObject.Find("SearchButton");
+            _escapeButton = GameObject.Find("EscapeButton");
+            _logText = GameObject.Find("Scroll View/Viewport/Content/LogText");
+            TextAsset textAsset = Resources.Load<TextAsset>("log");
+
+            // TextAssetがnullでないことを確認
+            if (textAsset != null)
+            {
+                // テキスト内容をstringとして取得
+                _logTextString = textAsset.text;
+                _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
+            }
+            else
+            {
+                Debug.LogError("Text file not found!");
+            }
 
         logAnalysisSystem.SetActive(isLogViewEnable);
         lineView.SetActive(!isLogViewEnable);
