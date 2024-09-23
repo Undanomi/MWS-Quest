@@ -60,7 +60,6 @@ title: VillageChiefSecondQuestion
         村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
         村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
         村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
-        <<jump Ending>>
     -> 村の倉庫に置いてあった
         <<jump VillageChiefSecondQuestionIncorrect>>
     -> フランクがアリスに渡した
