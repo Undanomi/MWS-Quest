@@ -1,30 +1,98 @@
 ﻿title: VillageChiefGreeting
-
+tracking: always
 ---
-
-<<if $hasVillageChiefMetBefore == false>>
-    村長: はじめましてなのじゃ、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    村長: ここは、私たちの村ですぞ！！どうぞ、ゆっくりしていってくだされ！
-    PLAYER: ありがとうございます。村の様子を見てみたいです。
-    <<set $hasVillageChiefMetBefore = true>>
+<<declare $AliceMetCount = 0 as number>>
+<<declare $BobMetCount = 0 as number>>
+<<declare $CharlieMetCount = 0 as number>>
+<<declare $DaveMetCount = 0 as number>>
+<<declare $EllenMetCount = 0 as number>>
+<<declare $FrankMetCount = 0 as number>>
+<<declare $CorrectFirstQuestion = false as bool>>
+<<if visited("VillageChiefGreeting") == false>>
+    村長: {$PlayerName}、衛兵であるお主を呼んだのは他でもない、例の事件を解決してもらうためじゃ
+    村長: 先日、近隣の村との交易記録が外部に流出した事件はお主も知っておるな？交易記録はわが村の状況が記録されている、重要な機密情報じゃ。
+    村長: 同じことを起こさないためにも、お主にはこの事件の原因を突き止めてほしいのじゃ。そこで、まずは聞き込み調査からお願いしたい！
+    村長: わしには原因の検討もつかん...どうか頼んだぞ！
+<<elseif ($AliceMetCount == 0 or $BobMetCount == 0 or $CharlieMetCount == 0 or $DaveMetCount == 0 or $EllenMetCount == 0 or $FrankMetCount == 0)>>
+    村長: 何が原因で情報が持ち出されたのか検討もつかん...。この村の衛兵として、お主の力で事件を解決してくれ！
+    村長: まずは、聞き込み調査からお願いしたい！
+<<elseif $CorrectFirstQuestion == false>>
+    村長: おお！ついに事件の原因がわかったか！
+    <<jump VillageChiefFirstQuestion>>
 <<else>>
-    村長: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
+    村長: おお！原因がわかったか！
+    <<jump VillageChiefSecondQuestion>>
 <<endif>>
 
+===
+title: NarratorGreeting
+
+---
+ナレーター: この村では、村内で使用された呪文の痕跡をすべて記録している。この記録を事件解決に有効に活用しよう。
+
+===
+title: VillageChiefFirstQuestion
+
+---
+村長: 取引記録が流出した原因はなんじゃ？
+    -> チャーリーの魔法
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 帳簿管理の魔法の書
+        村長: なんと！帳簿管理の魔法の書が原因じゃったか...。これからは帳簿管理の魔法の書には気をつけねばならんな...。
+        村長: 礼を言うぞ!
+        <<set $CorrectFirstQuestion = true>>
+        村長: しかし，実はまだ気がかりな事があるのじゃ...。
+        村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃろう？
+        村長: それも調査をお願いしてもよいかな？分かったら再度報告に来てくれ！
+    -> アリスの不注意
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> デイヴが村の外に持ち出した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> もう少し調べる
+        村長: 原因がわかったら報告しておくれ！
+===
+title: VillageChiefSecondQuestion
+
+---
+村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃ？
+    -> 行商人がおいていった
+        <<jump VillageChiefSecondQuestionIncorrect>>
+    -> アリスがブラボー村のイブからもらった
+        村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
+        村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
+        村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
+    -> 村の倉庫に置いてあった
+        <<jump VillageChiefSecondQuestionIncorrect>>
+    -> フランクがアリスに渡した
+        <<jump VillageChiefSecondQuestionIncorrect>>
+    -> もう少し調べる
+        村長: 原因がわかったら報告しておくれ！
+        ナレーター: もう一度、帳簿管理の魔法の書を扱っていた村人の話を聞きにいこう。新しい情報を話してくれるかもしれない...
+===
+title: VillageChiefSecondQuestionIncorrect
+
+---
+<<if $AliceMetCount == 1>>
+    ナレーター: もう一度アリスの話を聞きにいこう。新しい情報を話してくれるかもしれない...。
+<<else>>
+    ナレーター: アリスの話を思い出してみよう。
+<<endif>>
 ===
 title: AliceGreeting
 
 ---
 
-<<if $hasAliceMetBefore == false>>
-    アリス: はじめまして、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    <<set $hasAliceMetBefore = true>>
+<<if $CorrectFirstQuestion == false>>
+    アリス: 大事な情報が他の村に流出するなんて、物騒なこともあるものね。
+    アリス: 私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずよ
+    <<set $AliceMetCount = 1>>
 <<else>>
-    アリス: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
+    アリス: まさか帳簿管理の魔法の書が原因だったなんて...。無害なものだと思って封印を解除してしまっていたわ。
+    {$PlayerName}: 帳簿管理の魔法の書はどうやって手に入れたんだ？
+    アリス: 帳簿管理の魔法の書は転送呪文によってポストに送られてきたものよ。
+    アリス: 送り主が書いてあるわ...
+    アリス: 帳簿管理の魔法の書の送り主は...ブラボー村のイブよ。村長に知らせましょう。
+    <<set $AliceMetCount = 2>>
 <<endif>>
 
 ===
@@ -32,19 +100,10 @@ title: BobGreeting
 
 ---
 
-<<if $hasBobMetBefore == false>>
-    ボブ: よぉ！お前は新しい旅人か？
-    PLAYER: こんにちは。はじめまして。
-    ボブ: ニャハハ！俺はボブだ！楽しんでけよ！
-        -> わかった！楽しむね！
-            ボブ: あぁ！それじゃあ、またな！
-        -> ありがとう！
-            ボブ: 礼を言う奴には久しぶりに会ったぞ！またな！
-    <<set $hasBobMetBefore = true>>
-<<else>>
-    ボブ: おう、また会ったな！
-    PLAYER: そうだね、また会ったね！
-<<endif>>
+ボブ: 事件の調査か、ご苦労さん。
+ボブ: そういえば、昨日の19時ごろにアリスの家から大きな物音がしていたな。普段は静かな家なんだが...
+<<set $BobMetCount = 1>>
+
 
 ===
 
@@ -52,14 +111,9 @@ title: CharlieGreeting
 
 ---
 
-<<if $hasCharlieMetBefore == false>>
-    チャーリー: はじめまして、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    <<set $hasCharlieMetBefore = true>>
-<<else>>
-    チャーリー: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
-<<endif>>
+チャーリー: この村では、今までこんな事件は起きた事がなかったんだよ。早く原因を知りたいね。
+チャーリー: そういえば村長、昨日は丸1日遠くの町に出かけていたんだよ。村長のいない村は寂しかったなあ...
+<<set $CharlieMetCount = 1>>
 
 ===
 
@@ -67,29 +121,17 @@ title: DaveGreeting
 
 ---
 
-<<if $hasDaveMetBefore == false>>
-    デイブ: はじめまして、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    <<set $hasDaveMetBefore = true>>
-<<else>>
-    デイブ: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
-<<endif>>
-
+デイヴ: 村には囲うように結界が張ってあって呪文が通らないようになっているんだ。
+デイヴ: 転送の魔法を使うときは、その呪文だけ通るように結界に穴を開けるんだよ。
+<<set $DaveMetCount = 1>>
 ===
 
 title: EllenGreeting
 
 ---
 
-<<if $hasEllenMetBefore == false>>
-    エレン: はじめまして、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    <<set $hasEllenMetBefore = true>>
-<<else>>
-    エレン: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
-<<endif>>
+エレン: 呪文を自動で発動する魔法の書というものがあるらしい...
+<<set $EllenMetCount = 1>>
 
 ===
 
@@ -97,13 +139,8 @@ title: FrankGreeting
 
 ---
 
-<<if $hasFrankMetBefore == false>>
-    フランク: はじめまして、旅人さん！
-    PLAYER: こんにちは。こちらこそ、はじめまして。
-    <<set $hasFrankMetBefore = true>>
-<<else>>
-    フランク: また会いましたね、旅人さん。
-    PLAYER: そうですね、また会いましたね。
-<<endif>>
+フランク: 転送の呪文で転送される書物は物によっては盗聴できるんだよね。
+フランク: 人の手紙を読むなんて無粋な真似はしないけどね。
+<<set $FrankMetCount = 1>>
 
 ===
