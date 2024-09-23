@@ -110,14 +110,7 @@ namespace DefaultNamespace
                 dialogueRunner.Stop();
             }
 
-            if (isAvailable)
-            {
-                _keyCode = KeyCode.L;
-            }
-            else
-            {
-                _keyCode = KeyCode.None;
-            }
+            _keyCode = isAvailable ? KeyCode.L : KeyCode.None;
         }
 
         void SwitchActivatingLogView()

@@ -62,11 +62,12 @@ public class IntroSceneController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator MovePlayerToDestination()
     {
+        _playerController.StartAutoMove();
         _playerController.SetAutoMoveSpeed(autoMoveSpeed);
         foreach (Vector2 destination in destinations)
         {
             Vector2 direction = (destination - (Vector2)player.transform.position).normalized;
-            _playerController.StartAutoMove(direction);
+            _playerController.SetAutoMoveDirection(direction);
         
             // プレイヤーが目的地に到達するまでループ
             while (Vector2.Distance(player.transform.position, destination) > _stopDistance)
@@ -79,7 +80,7 @@ public class IntroSceneController : MonoBehaviour
         
         // ゲームスタート地点に移動する
         Vector2 directionToStartPos = (startPosition - (Vector2)player.transform.position).normalized; 
-        _playerController.StartAutoMove(directionToStartPos);
+        _playerController.SetAutoMoveDirection(directionToStartPos);
         while (Vector2.Distance(player.transform.position, startPosition) > _stopDistance)
         {
             yield return null;
