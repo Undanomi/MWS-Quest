@@ -49,8 +49,8 @@ public class MissionManager : MonoBehaviour
                 UpdateMissionDisplay();
                 if (completeCount == 7)
                 {
-                    bool isVisited = HasVisitedNode("VillageChiefFirstQuestion");
-                    if (isVisited) _missionPhase++;
+                    bool isClear = GetYarnVariable<bool>("$CorrectFirstQuestion");
+                    if (isClear) _missionPhase++;
                 }
                 break;
             case 1:
