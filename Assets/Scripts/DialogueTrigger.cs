@@ -24,7 +24,7 @@ public class NPCTrigger : MonoBehaviour
     private void Update()
     {
             if (_isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
-                _dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
+                _dialogueRunner.GetComponent<LogViewController>().isLogViewRunning == false)
             {
                 if (!_dialogueRunner.IsDialogueRunning)
                 {
