@@ -55,6 +55,9 @@ public class IntroSceneController : MonoBehaviour
         Color imageColor = fadeImage.color;
         Color textColor = scenarioTitle.color;
         
+        fadeImage.gameObject.SetActive(true);
+        scenarioTitle.gameObject.SetActive(true);
+        
         // 最初は暗転したままで2秒待つ
         while (elapsedTime < 2.0f)
         {
