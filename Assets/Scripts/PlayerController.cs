@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
         if (_dialogueRunner.IsDialogueRunning || _dialogueRunner.GetComponent<LogView>().isLogViewEnable)
         {
-            Debug.Log("Dialogue is running. Player cannot move.");
+            // Debug.Log("Dialogue is running. Player cannot move.");
             return;
         }
         
