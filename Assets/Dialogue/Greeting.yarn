@@ -7,21 +7,45 @@ tracking: always
 <<declare $DaveMetCount = 0 as number>>
 <<declare $EllenMetCount = 0 as number>>
 <<declare $FrankMetCount = 0 as number>>
-<<declare $CorrectFirstQuestion = false as bool>>
+<<declare $IsaacMetCount = 0 as number>>
+<<declare $Correct1stQuestion = false as bool>>
+<<declare $Correct2ndQuestion = false as bool>>
+<<declare $Correct3rdQuestion = false as bool>>
+<<declare $Correct4thQuestion = false as bool>>
+<<declare $Correct5thQuestion = false as bool>>
+<<declare $Correct6thQuestion = false as bool>>
+<<declare $CorrectFinalQuestion = false as bool>>
 <<if visited("VillageChiefGreeting") == false>>
     村長: {$PlayerName}、衛兵であるお主を呼んだのは他でもない、例の事件を解決してもらうためじゃ
     村長: 先日、近隣の村との交易記録が外部に流出した事件はお主も知っておるな？交易記録はわが村の状況が記録されている、重要な機密情報じゃ。
-    村長: 同じことを起こさないためにも、お主にはこの事件の原因を突き止めてほしいのじゃ。そこで、まずは聞き込み調査からお願いしたい！
-    村長: わしには原因の検討もつかん...どうか頼んだぞ！
+    村長: 同じことを起こさないためにも、お主にはこの事件の原因を突き止めてほしいのじゃ。そこで、まずは村の怪しい出来事の調査をお願いしたい！
+    村長: わしには原因の検討もつかん...。どうか頼んだぞ！
 <<elseif ($AliceMetCount == 0 or $BobMetCount == 0 or $CharlieMetCount == 0 or $DaveMetCount == 0 or $EllenMetCount == 0 or $FrankMetCount == 0)>>
-    村長: 何が原因で情報が持ち出されたのか検討もつかん...。この村の衛兵として、お主の力で事件を解決してくれ！
-    村長: まずは、聞き込み調査からお願いしたい！
-<<elseif $CorrectFirstQuestion == false>>
-    村長: おお！ついに事件の原因がわかったか！
-    <<jump VillageChiefFirstQuestion>>
+    村長: 何が原因で情報が持ち出されたのか検討もつかん...。
+    村長: この村の衛兵として、お主の力で事件を解決してくれ！
+    村長: そこで、まずは村の怪しい出来事の調査をお願いしたい！
+    村長: どうか頼んだぞ！
+<<elseif $Correct1stQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief1stQuestion>>
+<<elseif $Correct2ndQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief2ndQuestion>>
+<<elseif $Correct3rdQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief3rdQuestion>>
+<<elseif $Correct4thQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief4thQuestion>>
+<<elseif $Correct5thQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief5thQuestion>>
+<<elseif $Correct6thQuestion == false>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChief6thQuestion>>
 <<else>>
-    村長: おお！原因がわかったか！
-    <<jump VillageChiefSecondQuestion>>
+    村長: 調査、ご苦労であった。
+    <<jump VillageChiefFinalQuestion>>
 <<endif>>
 
 ===
@@ -35,54 +59,142 @@ title: IntroSpellRecords
 
 ---
 {$PlayerName}: これでだいたい聞き込みができたな...
-{$PlayerName}: 呪文の記録も見てみよう
+{$PlayerName}: 呪文の記録も見て、何かわかったら村長に報告しよう！
 
 ===
-title: IntroReportVillageChief
+title: VillageChief1stQuestion
 
 ---
-ナレーター: 原因が分かったら、村長に報告に行こう
-
-===
-title: VillageChiefFirstQuestion
-
----
-村長: 取引記録が流出した原因はなんじゃ？
-    -> チャーリーの魔法
+村長: 何か怪しい出来事はあったかの?
+    -> アリスが「帳簿管理の魔法の書」をメールで受け取った
+        村長: ふむふむ、そんなことがあったのか...。
+        村長: その「帳簿管理の魔法の書」が何か怪しいことをしたんじゃろうか...。調査を続けてくれ!
+        <<set $Correct1stQuestion = true>>
+    -> ボブが「文書作成の魔道具」を起動した
         ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
-    -> 帳簿管理の魔法の書
-        村長: なんと！帳簿管理の魔法の書が原因じゃったか...。これからは帳簿管理の魔法の書には気をつけねばならんな...。
-        村長: 礼を言うぞ!
-        <<set $CorrectFirstQuestion = true>>
-        村長: しかし，実はまだ気がかりな事があるのじゃ...。
-        村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃろう？
-        村長: それも調査をお願いしてもよいかな？分かったら再度報告に来てくれ！
-    -> アリスの不注意
+    -> チャーリーが「画像編集の魔道具」を起動した
         ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
-    -> デイヴが村の外に持ち出した
+    -> デイヴが「webの秘伝書」を入手した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> エレンが「月の満ち欠けの書物」を閲覧した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> フランクが「記録の魔法の書」を展開した
         ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
     -> もう少し調べる
-        村長: 原因がわかったら報告しておくれ！
+        村長: 何かわかったら報告しておくれ！
+
 ===
-title: VillageChiefSecondQuestion
+title: VillageChief2ndQuestion
 
 ---
-村長: その帳簿管理の魔法の書は一体どこから持ち込まれてしまったんじゃ？
-    -> 行商人がおいていった
-        <<jump VillageChiefSecondQuestionIncorrect>>
-    -> アリスがブラボー村のイブからもらった
+村長: 「帳簿管理の魔法の書」は何をしたんじゃ?
+    -> 複数の交易記録の書をどこかに送った
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 精霊を呼び出した
+        村長: そのような面妖な存在を呼び出したのか...。
+        村長: その精霊とやらは何をしたんじゃろうか...。調査を続けてくれ!
+        <<set $Correct2ndQuestion = true>>
+    -> 故郷の村にある日記を自宅の本棚に転送した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 「帳簿の魔道具」を起動した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> もう少し調べる
+        村長: 何かわかったら報告しておくれ！
+
+===
+title: VillageChief3rdQuestion
+
+---
+村長: 精霊は何をしたんじゃ？
+    -> 村長へ手紙を送った
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 魔力の使用状況を確認した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 暴走していた呪文を停止した
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 複数の交易記録をどこかに送った
+        村長: 交易記録が流出させたのは精霊だったのか!
+        村長: どのくらいの交易記録が流出したのか、続けて調べておくれ！
+        <<set $Correct3rdQuestion = true>>
+    -> もう少し調べる
+        村長: 何かわかったら報告しておくれ！
+
+===
+title: VillageChief4thQuestion
+
+---
+村長: 持ち出された交易記録の数は何個じゃ？
+    -> 3個
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 5個
+        村長: なんと...。そんなに多くの交易記録が流出してしまったのか...。
+        村長: これは後が思いやられるの...
+        村長: 今後同じようなことをなくすためにも、改めて交易記録が流出した原因はなんじゃったかの?
+        <<set $Correct4thQuestion = true>>
+    -> 7個
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 9個
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> もう少し調べる
+        村長: 何かわかったら報告しておくれ！
+
+===
+title: VillageChief5thQuestion
+
+---
+村長: 交易記録が流出した原因はなんじゃったかの？
+    -> 「遠距離会話の魔道具」
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 「browserの魔道具」
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> 「帳簿管理の魔法の書」
+        村長: そうじゃったな、アリスが持っていた「帳簿管理の魔法の書」が原因じゃったな。
+        村長: この「帳簿管理の魔法の書」と精霊によって交易記録はどこに流出してしまったんじゃろうか...。
+        村長: 引き続き調べてみてくれ!
+        <<set $Correct5thQuestion = true>>
+    -> 「人工知能の魔法の書」
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> もう少し調べる
+        村長: 何かわかったら報告しておくれ！
+
+===
+title: VillageChief6thQuestion
+
+---
+村長: 交易記録はどこに送られてしまったんじゃろう？
+    -> {$PlayerVillageName}村
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> {$AdversaryVillageName}村
+        村長: なんと...、犯人はもしかしたら{$AdversaryVillageName}村の人間かもしれないの...。
+        村長: 誰が「帳簿管理の魔法の書」を持ち込んだのか、調査を続けてくれ！
+        <<set $Correct6thQuestion = true>>
+    -> デルタ村
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> エコー村
+        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+    -> もう少し調べる
+        村長: 何かわかったら報告しておくれ！
+
+===
+title: VillageChiefFinalQuestion
+
+---
+村長: 「帳簿管理の魔法の書」は誰から持ち込まれたんじゃ?
+    -> {$AdversaryVillageName}村のイブ
         村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
         村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
         村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
-    -> 村の倉庫に置いてあった
-        <<jump VillageChiefSecondQuestionIncorrect>>
-    -> フランクがアリスに渡した
-        <<jump VillageChiefSecondQuestionIncorrect>>
+        <<set $CorrectFinalQuestion = true>>
+    -> {$AdversaryVillageName}村のマロリー
+        <<jump VillageChiefFinalQuestionIncorrect>>
+    -> {$PlayerVillageName}村のアリス
+        <<jump VillageChiefFinalQuestionIncorrect>>
+    -> {$PlayerVillageName}村のフランク
+        <<jump VillageChiefFinalQuestionIncorrect>>
     -> もう少し調べる
-        村長: 原因がわかったら報告しておくれ！
-        ナレーター: もう一度、帳簿管理の魔法の書を扱っていた村人の話を聞きにいこう。新しい情報を話してくれるかもしれない...
+        村長: 何かわかったら報告しておくれ！
 ===
-title: VillageChiefSecondQuestionIncorrect
+title: VillageChief7thQuestionIncorrect
 
 ---
 <<if $AliceMetCount == 1>>
@@ -95,14 +207,14 @@ title: AliceGreeting
 
 ---
 
-<<if $CorrectFirstQuestion == false>>
-    アリス: 大事な情報が他の村に流出するなんて、物騒なこともあるものね。
-    アリス: 私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずよ
+<<if $Correct6thQuestion == false>>
+    アリス: 大事な情報が流出するなんて、物騒なこともあるものね。
+    アリス: 交易記録がある私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずだったのに...。
     <<set $AliceMetCount = 1>>
 <<else>>
     アリス: まさか帳簿管理の魔法の書が原因だったなんて...。無害なものだと思って封印を解除してしまっていたわ。
     {$PlayerName}: 帳簿管理の魔法の書はどうやって手に入れたんだ？
-    アリス: 帳簿管理の魔法の書は転送呪文によってポストに送られてきたものよ。
+    アリス: 転送呪文によってポストに送られてきたものよ。
     アリス: 送り主が書いてあるわ...
     アリス: 帳簿管理の魔法の書の送り主は...ブラボー村のイブよ。村長に知らせましょう。
     <<set $AliceMetCount = 2>>
@@ -112,48 +224,46 @@ title: AliceGreeting
 title: BobGreeting
 
 ---
-
 ボブ: 事件の調査か、ご苦労さん。
 ボブ: そういえば、昨日の19時ごろにアリスの家から大きな物音がしていたな。普段は静かな家なんだが...
 <<set $BobMetCount = 1>>
 
-
 ===
-
 title: CharlieGreeting
 
 ---
-
 チャーリー: この村では、今までこんな事件は起きた事がなかったんだよ。早く原因を知りたいね。
 チャーリー: そういえば村長、昨日は丸1日遠くの町に出かけていたんだよ。村長のいない村は寂しかったなあ...
 <<set $CharlieMetCount = 1>>
 
 ===
-
 title: DaveGreeting
 
 ---
-
 デイヴ: 村には囲うように結界が張ってあって呪文が通らないようになっているんだ。
 デイヴ: 転送の魔法を使うときは、その呪文だけ通るように結界に穴を開けるんだよ。
 <<set $DaveMetCount = 1>>
-===
 
+===
 title: EllenGreeting
 
 ---
-
 エレン: 呪文を自動で発動する魔法の書というものがあるらしい...
 <<set $EllenMetCount = 1>>
 
 ===
-
 title: FrankGreeting
 
 ---
-
 フランク: 転送の呪文で転送される書物は物によっては盗聴できるんだよね。
 フランク: 人の手紙を読むなんて無粋な真似はしないけどね。
 <<set $FrankMetCount = 1>>
+
+===
+title: Isaac
+
+---
+アイザック: ログ調査の基本は「怪しいことがあった時間帯のログを見る」と「わかった単語で検索する」だ!!
+<<set $IsaacMetCount = 1>>
 
 ===
