@@ -15,7 +15,6 @@ public class MissionManager : MonoBehaviour
     
     private readonly Dictionary<string, bool> _visitedNodes = new Dictionary<string, bool>();
     private InMemoryVariableStorage _variableStorage;
-    private LogViewController _logViewController;
     private readonly string[] _metCountVariableNames = new string[]
     {
         "$AliceMetCount", "$BobMetCount", "$CharlieMetCount", "$DaveMetCount", "$EllenMetCount", "$FrankMetCount"
@@ -28,7 +27,6 @@ public class MissionManager : MonoBehaviour
     {
         dialogueRunner.onNodeComplete.AddListener(OnNodeComplete);
         _variableStorage = dialogueRunner.VariableStorage as InMemoryVariableStorage;
-        _logViewController = FindObjectOfType<LogViewController>();
         
         LoadMissionData("Missions");
     }
