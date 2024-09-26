@@ -6,6 +6,7 @@ using Yarn.Unity;
 public class NPCTrigger : MonoBehaviour
 {
     private DialogueRunner _dialogueRunner;  // Yarn Spinner の DialogueRunner を参照
+    private GameObject _logAnalysisSystem;  // LogAnalysisSystem を参照
     public string conversationNode = "StartConversation";  // Yarn の会話のノード名
     private Rigidbody2D _rb2d;
     private CircleCollider2D _col2d;
@@ -19,12 +20,13 @@ public class NPCTrigger : MonoBehaviour
         _rb2d.isKinematic = true;
         _col2d.isTrigger = true;
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
+        _logAnalysisSystem = GameObject.Find("LogAnalysisSystem");
     }
 
     private void Update()
     {
             if (_isPlayerInRange && Input.GetKeyDown(KeyCode.E) && 
-                _dialogueRunner.GetComponent<LogView>().isLogViewEnable == false)
+                _logAnalysisSystem.GetComponent<LogViewController>().isLogViewRunning == false)
             {
                 if (!_dialogueRunner.IsDialogueRunning)
                 {

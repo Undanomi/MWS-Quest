@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int LookY = Animator.StringToHash("Look Y");
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private DialogueRunner _dialogueRunner;
-    private LogView _logView;
+    private GameObject _logAnalysisSystem;
     
     private bool _isAutoMoving;
     private Vector2 _autoMoveDirection;
@@ -29,16 +29,15 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
-        _logView = _dialogueRunner.GetComponent<LogView>();
+        _logAnalysisSystem = GameObject.Find("LogAnalysisSystem");
     }
 
     // Update is called once per frame
     void Update()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (_dialogueRunner.IsDialogueRunning || _dialogueRunner.GetComponent<LogView>().isLogViewEnable)
+        if (_dialogueRunner.IsDialogueRunning || _logAnalysisSystem.GetComponent<LogViewController>().isLogViewRunning)
         {
-            Debug.Log("Dialogue is running. Player cannot move.");
             return;
         }
         
@@ -53,7 +52,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (_dialogueRunner.IsDialogueRunning || _dialogueRunner.GetComponent<LogView>().isLogViewEnable)
+        if (_dialogueRunner.IsDialogueRunning || _logAnalysisSystem.GetComponent<LogViewController>().isLogViewRunning)
         {
             // 現在のフレームでの移動をキャンセル
             _rb.velocity = Vector2.zero;
@@ -117,7 +116,7 @@ public class PlayerController : MonoBehaviour
     public void StartAutoMove()
     {
         _isAutoMoving = true;
-        _logView.SetLogViewAvailable(false);
+        _logAnalysisSystem.GetComponent<LogViewController>().SetLogViewAvailable(false);
     }
     
     /// <summary>
@@ -126,7 +125,7 @@ public class PlayerController : MonoBehaviour
     public void StopAutoMove()
     {
         _isAutoMoving = false;
-        _logView.SetLogViewAvailable(true);
+        _logAnalysisSystem.GetComponent<LogViewController>().SetLogViewAvailable(true);
     }
     
 }
