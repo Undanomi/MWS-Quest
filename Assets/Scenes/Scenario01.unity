@@ -60639,7 +60639,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!225 &179715614
 CanvasGroup:
@@ -61616,7 +61616,6 @@ MonoBehaviour:
   endingText: {fileID: 1436093739}
   mapOverViewCamera: {fileID: 2081365621}
   playerFollowCamera: {fileID: 183777299}
-  skipToEnding: 0
 --- !u!1 &274854410
 GameObject:
   m_ObjectHideFlags: 0

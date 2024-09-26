@@ -42,8 +42,7 @@ public class EndingManager : MonoBehaviour
         if (_missionManager.isEndingStarted && !_isEndingStarted)
         {
             _isEndingStarted = true;
-            // エンディング中は呪文の痕跡画面を表示しないようにする
-            _logViewController.isLogViewRunning = false;
+            _logViewController.SetLogViewAvailable(false);
             StartCoroutine(HandleEndingSequence());
         }
     }
