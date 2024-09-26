@@ -46,7 +46,6 @@ public class EndingManager : MonoBehaviour
             _isEndingStarted = true;
             StartCoroutine(HandleEndingSequence());
         }
-        UpdateDescriptionImage();
     }
     
     private IEnumerator HandleEndingSequence()
@@ -77,16 +76,14 @@ public class EndingManager : MonoBehaviour
         Debug.Log("Starting description");
         _dialogueRunner.StartDialogue("Description");
         // 解説画面のフェードイン
-        yield return StartCoroutine(FadeImage(descriptionImage, 0f, 1f, fadeTime));
-        descriptionImage.gameObject.SetActive(true);
+        yield return StartCoroutine(FadeImage(descriptionImage, 0f, 1f, 1f));
         // 解説画面のコントロール
-        //while (_missionManager.HasVisitedNode("Description") == false)
-        //{
-        //    UpdateDescriptionImage();
-        //}
+        while (_missionManager.HasVisitedNode("Description") == false)
+        {
+            UpdateDescriptionImage();
+        }
         // 解説画面のフェードアウト
-        yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, fadeTime));
-        descriptionImage.gameObject.SetActive(false);
+        yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 1f));
         
     }
 
@@ -101,6 +98,7 @@ public class EndingManager : MonoBehaviour
 
     private IEnumerator FadeImage(Image image, float startAlpha, float endAlpha, float fadeDuration)
     {
+        Debug.Log("Fading image");
         float elapsedTime = 0f;
         Color imageColor = image.color;
         
@@ -112,12 +110,13 @@ public class EndingManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             imageColor.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
-            fadeImage.color = imageColor;
+            image.color = imageColor;
             yield return null;
         }
         
         imageColor.a = endAlpha;
         image.color = imageColor;
+        Debug.Log("Fading image done");
     }
 
     private void SwitchToMapCamera()
