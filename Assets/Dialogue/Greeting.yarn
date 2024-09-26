@@ -32,6 +32,19 @@ title: NarratorGreeting
 ナレーター: この村では、村内で使用された呪文の痕跡をすべて記録している。この記録を事件解決に有効に活用しよう。
 
 ===
+title: IntroSpellRecords
+
+---
+{$PlayerName}: これでだいたい聞き込みができたな...
+{$PlayerName}: 呪文の記録も見てみよう
+
+===
+title: IntroReportVillageChief
+
+---
+ナレーター: 原因が分かったら、村長に報告に行こう
+
+===
 title: VillageChiefFirstQuestion
 
 ---
