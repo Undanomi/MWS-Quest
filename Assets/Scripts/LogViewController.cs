@@ -160,8 +160,8 @@ public class LogViewController : MonoBehaviour
 
         //ダイアログの表示・非表示
         logViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isLogViewRunning);
-        _lineView.SetActive(!isLogViewRunning);
-        _optionsListView.SetActive(!isLogViewRunning);
+        dialogueRunner.transform.Find("Canvas").gameObject.SetActive(!isLogViewRunning);
+        clueViewController.gameObject.SetActive(!isLogViewRunning);
         _keyCode = isLogViewRunning ? KeyCode.Escape : KeyCode.L;
 
         if (isLogViewRunning)

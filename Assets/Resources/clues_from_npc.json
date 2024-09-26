@@ -1,4 +1,30 @@
 {
+  "npcs": [
+    {
+      "npc" : "Alice",
+      "display": "アリス"
+    },
+    {
+      "npc" : "Bob",
+      "display": "ボブ"
+    },
+    {
+      "npc" : "Charlie",
+      "display": "チャーリー"
+    },
+    {
+      "npc" : "Dave",
+      "display": "デイブ"
+    },
+    {
+      "npc" : "Ellen",
+      "display": "エレン"
+    },
+    {
+      "npc" : "Frank",
+      "display": "フランク"
+    }
+  ],
   "clues": [
     {
       "mission": "1",

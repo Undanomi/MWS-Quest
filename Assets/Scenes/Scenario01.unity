@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u6751\u4EBA\u305F\u3061\u306B\u8A71\u3092\u805E\u3044\u3066\u3001\u624B\u304C\u304B\u308A\u3092\u96C6\u3081\u3088\u3046\u3002"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
   m_sharedMaterial: {fileID: 3007508732787906507, guid: 4a19f869011317a4eb7b52995b10d4bb, type: 2}
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 103179856}
   - component: {fileID: 103179858}
   - component: {fileID: 103179857}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MissionTitlePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60752,13 +60752,13 @@ GameObject:
   - component: {fileID: 179715612}
   - component: {fileID: 179715611}
   - component: {fileID: 179715614}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &179715610
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63820,7 +63820,7 @@ GameObject:
   - component: {fileID: 491183343}
   - component: {fileID: 491183345}
   - component: {fileID: 491183344}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MissionTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65353,13 +65353,13 @@ GameObject:
   m_Component:
   - component: {fileID: 921623847}
   - component: {fileID: 921623848}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MissionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &921623847
 Transform:
   m_ObjectHideFlags: 0
