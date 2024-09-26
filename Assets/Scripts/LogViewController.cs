@@ -1,53 +1,61 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Yarn.Unity;
 
-public class LogView : MonoBehaviour
+public class LogViewController : MonoBehaviour
 {
-    public Boolean isLogViewEnable;
-    private KeyCode _keyCode = KeyCode.L;
+    public bool isLogViewRunning;
     public GameObject logAnalysisSystem;
-    public GameObject lineView;
-    public GameObject optionsListView;
-    public String searchWord = "";
     public DialogueRunner dialogueRunner;
+    public String searchWord = "";
+    
+    private GameObject _lineView;
+    private GameObject _optionsListView;
     private GameObject _searchField;
     private GameObject _clearButton;
     private GameObject _searchButton;
     private GameObject _escapeButton;
     private GameObject _logText;
+    private KeyCode _keyCode = KeyCode.L;
     private string _logTextString;
     private string _highlightedLogTextString;
 
-        private void Start()
+    private void Start()
+    {
+        isLogViewRunning = false;
+        _lineView = dialogueRunner.transform.Find("Canvas/Line View").gameObject;
+        _optionsListView = dialogueRunner.transform.Find("Canvas/Options List View").gameObject;
+        
+        _clearButton = logAnalysisSystem.transform.Find("Canvas/Panel/ClearButton").gameObject;
+        _searchButton = logAnalysisSystem.transform.Find("Canvas/Panel/SearchButton").gameObject;
+        _escapeButton = logAnalysisSystem.transform.Find("Canvas/Panel/EscapeButton").gameObject;
+        _logText = GameObject.Find("Canvas/Panel/Scroll View/Viewport/Content/LogText").gameObject;
+        _searchField = logAnalysisSystem.transform.Find("Canvas/Panel/SearchField").gameObject;
+        
+        TextAsset textAsset = Resources.Load<TextAsset>("log");
+
+        // TextAssetがnullでないことを確認
+        if (textAsset != null)
         {
-            _searchField = GameObject.Find("SearchField");
-            _clearButton = GameObject.Find("ClearButton");
-            _searchButton = GameObject.Find("SearchButton");
-            _escapeButton = GameObject.Find("EscapeButton");
-            _logText = GameObject.Find("Scroll View/Viewport/Content/LogText");
-            TextAsset textAsset = Resources.Load<TextAsset>("log");
+            // テキスト内容をstringとして取得
+            _logTextString = textAsset.text;
+            _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
+        }
+        else
+        {
+            Debug.LogError("Text file not found!");
+        }
 
-            // TextAssetがnullでないことを確認
-            if (textAsset != null)
-            {
-                // テキスト内容をstringとして取得
-                _logTextString = textAsset.text;
-                _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
-            }
-            else
-            {
-                Debug.LogError("Text file not found!");
-            }
-
-        logAnalysisSystem.SetActive(isLogViewEnable);
-        lineView.SetActive(!isLogViewEnable);
-        optionsListView.SetActive(!isLogViewEnable);
+        logAnalysisSystem.transform.Find("Canvas/Panel").gameObject.SetActive(isLogViewRunning);
+        _lineView.SetActive(!isLogViewRunning);
+        _optionsListView.SetActive(!isLogViewRunning);
+        
         // 現在のフォーカスを解除
         EventSystem.current.SetSelectedGameObject(null);
         // SearchFieldにフォーカスを当てる
@@ -65,31 +73,40 @@ public class LogView : MonoBehaviour
     //Lキーが押されたら，LogAnalysisSystemオブジェクトのすべての要素を可視化
     void Update()
     {
-        // XSS対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
-        if (_searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("<"))
+        if (_keyCode == KeyCode.None)
         {
-            _searchField.GetComponent<TMPro.TMP_InputField>().text = Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, "<", "");
-        }
-        if (_searchField.GetComponent<TMPro.TMP_InputField>().text.Contains(">"))
-        {
-            _searchField.GetComponent<TMPro.TMP_InputField>().text = Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, ">", "");
+            return;
         }
         
         if (dialogueRunner.IsDialogueRunning)
         {
             return;
         }
-        if (Input.GetKeyDown(_keyCode))
+        
+        // XSS対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
+        if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("<"))
         {
-            SwitchActivatingLogView();
+            _searchField.GetComponent<TMPro.TMP_InputField>().text =
+                Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, "<", "");
         }
 
-        if (_searchField.GetComponent<TMPro.TMP_InputField>().text == "")
+        if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text.Contains(">"))
+        {
+            _searchField.GetComponent<TMPro.TMP_InputField>().text =
+                Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, ">", "");
+        }
+        
+        if (Input.GetKeyDown(_keyCode))
+        {
+            SwitchLogViewRunning();
+        }
+
+        if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text == "")
         {
             _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
         }
 
-        if (Input.GetKeyDown(KeyCode.Return) && isLogViewEnable)
+        if (Input.GetKeyDown(KeyCode.Return) && isLogViewRunning)
         {
             _searchButton.GetComponent<Button>().onClick.Invoke();
         }
@@ -98,7 +115,7 @@ public class LogView : MonoBehaviour
     void OnEscapeButtonClicked()
     {
         Debug.Log("EscapeButtonClicked");
-        SwitchActivatingLogView();
+        SwitchLogViewRunning();
     }
 
     void OnClearButtonClicked()
@@ -115,20 +132,21 @@ public class LogView : MonoBehaviour
 
     public void SetLogViewAvailable(bool isAvailable)
     {
-        if(dialogueRunner.IsDialogueRunning)
+        if (dialogueRunner.IsDialogueRunning)
         {
             dialogueRunner.Stop();
         }
+        Debug.Log("LogViewAvailable: " + isAvailable);
 
         _keyCode = isAvailable ? KeyCode.L : KeyCode.None;
     }
 
-    void SwitchActivatingLogView()
+    private void SwitchLogViewRunning()
     {
         // 次の状態に遷移
-        isLogViewEnable = !isLogViewEnable;
+        isLogViewRunning = !isLogViewRunning;
 
-        if (!isLogViewEnable)
+        if (!isLogViewRunning)
         {
             //SearchFieldを一旦確定
             _searchField.GetComponent<TMPro.TMP_InputField>().DeactivateInputField();
@@ -143,15 +161,13 @@ public class LogView : MonoBehaviour
         }
 
         //ダイアログの表示・非表示
-        logAnalysisSystem.SetActive(isLogViewEnable);
-        lineView.SetActive(!isLogViewEnable);
-        optionsListView.SetActive(!isLogViewEnable);
-        _keyCode = isLogViewEnable ? KeyCode.Escape : KeyCode.L;
+        logAnalysisSystem.transform.Find("Canvas/Panel").gameObject.SetActive(isLogViewRunning);
+        _lineView.SetActive(!isLogViewRunning);
+        _optionsListView.SetActive(!isLogViewRunning);
+        _keyCode = isLogViewRunning ? KeyCode.Escape : KeyCode.L;
 
-        if (isLogViewEnable)
+        if (isLogViewRunning)
         {
-            //未確定のテキストを削除
-            _searchField.GetComponent<TMPro.TMP_InputField>().text = "";
             //SearchFieldに検索ワードを設定
             _searchField.GetComponent<TMPro.TMP_InputField>().text = searchWord;
             if (!string.IsNullOrEmpty(searchWord))
@@ -169,7 +185,7 @@ public class LogView : MonoBehaviour
         }
     }
 
-    void SearchWord()
+    private void SearchWord()
     {
         // SearchFieldから検索ワードを取得
         searchWord = _searchField.GetComponent<TMPro.TMP_InputField>().text;
@@ -201,8 +217,8 @@ public class LogView : MonoBehaviour
                 int tagEnd = _logTextString.IndexOf('>', i);
                 if (tagEnd > -1)
                 {
-                    string tag = _logTextString.Substring(i, tagEnd - i + 1);
-                    tagPositions.Add((tag, plainTextIndex)); // プレーンテキスト内の位置を記録
+                    string htmlTag = _logTextString.Substring(i, tagEnd - i + 1);
+                    tagPositions.Add((htmlTag, plainTextIndex)); // プレーンテキスト内の位置を記録
                     i = tagEnd; // タグ部分をスキップ
                 }
             }
@@ -226,7 +242,7 @@ public class LogView : MonoBehaviour
                 string highlightedLine = regex.Replace(line, "<mark=#FFFF0055>$0</mark>");
                 highlightedPlainText += highlightedLine + "\n";
             }
-            
+
 
             // (4) タグを元の位置に復元しつつ、<mark>タグを無視
             int tagIndex = 0;
@@ -242,10 +258,10 @@ public class LogView : MonoBehaviour
                     int tagEnd = highlightedPlainText.IndexOf('>', i);
                     if (tagEnd > -1)
                     {
-                        string tag = highlightedPlainText.Substring(i, tagEnd - i + 1);
-                        if (tag.StartsWith("<mark") || tag == "</mark>")
+                        string htmlTag = highlightedPlainText.Substring(i, tagEnd - i + 1);
+                        if (htmlTag.StartsWith("<mark") || htmlTag == "</mark>")
                         {
-                            _highlightedLogTextString += tag; // <mark> タグをそのまま追加
+                            _highlightedLogTextString += htmlTag; // <mark> タグをそのまま追加
                             i = tagEnd; // タグ全体をスキップ
                             continue;
                         }
