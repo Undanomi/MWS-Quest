@@ -50,11 +50,9 @@ public class EndingManager : MonoBehaviour
     
     private IEnumerator HandleEndingSequence()
     {
-        Debug.Log("Ending started");
         // 暗転
         yield return StartCoroutine(FadeImage(fadeImage, 0f, 1f, fadeTime));
         // カメラを俯瞰に切り替えておく
-        Debug.Log("Switching to map camera");
         SwitchToMapCamera();
         float elapsedTime = 0f;
         while (elapsedTime < 2f)
@@ -69,21 +67,22 @@ public class EndingManager : MonoBehaviour
         // エンディングダイアログが終わるまで待つ
         while (_missionManager.HasVisitedNode("Ending") == false)
         {
-            Debug.Log("Ending dialogue is running");
             yield return null;
         }
         // 解説ダイアログを開始
-        Debug.Log("Starting description");
         _dialogueRunner.StartDialogue("Description");
         // 解説画面のフェードイン
-        yield return StartCoroutine(FadeImage(descriptionImage, 0f, 1f, 1f));
-        // 解説画面のコントロール
+        yield return StartCoroutine(FadeImage(descriptionImage, 0f, 1f, 0.5f));
+        // 解説画面の更新
         while (_missionManager.HasVisitedNode("Description") == false)
         {
             UpdateDescriptionImage();
+            yield return null;
         }
         // 解説画面のフェードアウト
-        yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 1f));
+        yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 0.5f));
+        
+        // 
         
     }
 
@@ -91,14 +90,12 @@ public class EndingManager : MonoBehaviour
     {
         string descriptionImageIndex = ((int)_missionManager.GetYarnVariable<float>("$DescriptionProgress")+1).ToString("D2");
         string descriptionImageName = $"Description{descriptionImageIndex}";
-        Debug.Log($"Description image name: {descriptionImageName}");
         Sprite descriptionSprite = Array.Find(_descriptionImages, sprite => sprite.name == descriptionImageName);
         descriptionImage.sprite = descriptionSprite;
     }
 
     private IEnumerator FadeImage(Image image, float startAlpha, float endAlpha, float fadeDuration)
     {
-        Debug.Log("Fading image");
         float elapsedTime = 0f;
         Color imageColor = image.color;
         
@@ -116,12 +113,13 @@ public class EndingManager : MonoBehaviour
         
         imageColor.a = endAlpha;
         image.color = imageColor;
-        Debug.Log("Fading image done");
     }
 
+    /// <summary>
+    /// 俯瞰カメラに切り替える
+    /// </summary>
     private void SwitchToMapCamera()
     {
-        // 俯瞰カメラに切り替える
         mapOverViewCamera.Priority = 1;
         playerFollowCamera.Priority = 0;
     }
