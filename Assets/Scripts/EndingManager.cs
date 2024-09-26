@@ -20,32 +20,30 @@ public class EndingManager : MonoBehaviour
     [Header("プレイヤーフォローカメラ")]
     public Cinemachine.CinemachineVirtualCamera playerFollowCamera;
     
-    public bool skipToEnding;
-   
     private DialogueRunner _dialogueRunner;
     private MissionManager _missionManager;
+    private LogViewController _logViewController;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
-    
-    private InMemoryVariableStorage _variableStorage;
     
     private void Start()
     {
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
         _missionManager = FindObjectOfType<MissionManager>();
+        _logViewController = FindObjectOfType<LogViewController>();
         _descriptionImages = Resources.LoadAll<Sprite>("Images");
         descriptionImage.sprite = _descriptionImages[0];
         descriptionImage.gameObject.SetActive(false);
-        _variableStorage = _dialogueRunner.VariableStorage as InMemoryVariableStorage;
     }
 
     private void Update()
     {
-        // _variableStorage.SetValue("$CorrectFinalQuestion", skipToEnding);
         // Yarnの$CorrectFinalQuestion がtrueになったらエンディング処理を開始
         if (_missionManager.isEndingStarted && !_isEndingStarted)
         {
             _isEndingStarted = true;
+            // エンディング中は呪文の痕跡画面を表示しないようにする
+            _logViewController.isLogViewRunning = false;
             StartCoroutine(HandleEndingSequence());
         }
     }
