@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private static readonly int LookY = Animator.StringToHash("Look Y");
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private DialogueRunner _dialogueRunner;
-    private GameObject _logAnalysisSystem;
+    private LogViewController _logViewController;
+    private ClueViewController _clueViewController;
     
     private bool _isAutoMoving;
     private Vector2 _autoMoveDirection;
@@ -29,14 +30,18 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
-        _logAnalysisSystem = GameObject.Find("LogAnalysisSystem");
+        _logViewController = FindObjectOfType<LogViewController>();
+        _clueViewController = FindObjectOfType<ClueViewController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (_dialogueRunner.IsDialogueRunning || _logAnalysisSystem.GetComponent<LogViewController>().isLogViewRunning)
+        if (_dialogueRunner.IsDialogueRunning || 
+            _logViewController.isLogViewRunning ||
+            _clueViewController.isClueViewRunning
+            )
         {
             return;
         }
@@ -52,7 +57,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // YarnSpinnerのDialogueRunnerが動いているときはプレイヤーの移動を受け付けない
-        if (_dialogueRunner.IsDialogueRunning || _logAnalysisSystem.GetComponent<LogViewController>().isLogViewRunning)
+        if (_dialogueRunner.IsDialogueRunning || 
+            _logViewController.isLogViewRunning ||
+            _clueViewController.isClueViewRunning
+            )
         {
             // 現在のフレームでの移動をキャンセル
             _rb.velocity = Vector2.zero;
@@ -116,7 +124,8 @@ public class PlayerController : MonoBehaviour
     public void StartAutoMove()
     {
         _isAutoMoving = true;
-        _logAnalysisSystem.GetComponent<LogViewController>().SetLogViewAvailable(false);
+        _logViewController.SetLogViewAvailable(false);
+        _clueViewController.SetClueViewAvailable(false);
     }
     
     /// <summary>
@@ -125,7 +134,8 @@ public class PlayerController : MonoBehaviour
     public void StopAutoMove()
     {
         _isAutoMoving = false;
-        _logAnalysisSystem.GetComponent<LogViewController>().SetLogViewAvailable(true);
+        _logViewController.SetLogViewAvailable(true);
+        _clueViewController.SetClueViewAvailable(true);
     }
     
 }
