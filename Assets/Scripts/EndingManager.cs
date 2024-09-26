@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public class EndingManager : MonoBehaviour
@@ -11,6 +13,7 @@ public class EndingManager : MonoBehaviour
     public Image fadeImage;
     [Header("暗転フェード時間")] public float fadeTime;
     [Header("解説画像")] public Image descriptionImage;
+    [Header("エンディングテキスト")] public TextMeshProUGUI endingText;
     
     [Header("マップ俯瞰カメラ")]
     public Cinemachine.CinemachineVirtualCamera mapOverViewCamera;
@@ -38,8 +41,7 @@ public class EndingManager : MonoBehaviour
 
     private void Update()
     {
-        
-        _variableStorage.SetValue("$CorrectFinalQuestion", skipToEnding);
+        // _variableStorage.SetValue("$CorrectFinalQuestion", skipToEnding);
         // Yarnの$CorrectFinalQuestion がtrueになったらエンディング処理を開始
         if (_missionManager.isEndingStarted && !_isEndingStarted)
         {
@@ -82,7 +84,23 @@ public class EndingManager : MonoBehaviour
         // 解説画面のフェードアウト
         yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 0.5f));
         
-        // 
+        // 画面全体を暗転
+        yield return StartCoroutine(FadeImage(fadeImage, 0f, 1f, fadeTime));
+        
+        // ENDと表示する
+        yield return StartCoroutine(FadeText(endingText, 0f, 1f, 0.5f));
+        
+        // 2秒待つ
+        yield return new WaitForSeconds(2f);
+        
+        // ENDの表示をフェードアウト
+        yield return StartCoroutine(FadeText(endingText, 1f, 0f, 0.5f));
+        
+        // 1秒待つ
+        yield return new WaitForSeconds(1f);
+        
+        // シナリオ選択画面に遷移
+        SceneManager.LoadScene("ScenarioSelect");
         
     }
 
@@ -113,6 +131,27 @@ public class EndingManager : MonoBehaviour
         
         imageColor.a = endAlpha;
         image.color = imageColor;
+    }
+    
+    private IEnumerator FadeText(TextMeshProUGUI text, float startAlpha, float endAlpha, float fadeDuration)
+    {
+        float elapsedTime = 0f;
+        Color textColor = text.color;
+        
+        textColor.a = startAlpha;
+        text.color = textColor;
+        text.gameObject.SetActive(true);
+        
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            textColor.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / fadeDuration);
+            text.color = textColor;
+            yield return null;
+        }
+        
+        textColor.a = endAlpha;
+        text.color = textColor;
     }
 
     /// <summary>

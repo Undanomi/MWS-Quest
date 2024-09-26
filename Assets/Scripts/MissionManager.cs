@@ -65,6 +65,7 @@ public class MissionManager : MonoBehaviour
                 break;
         }
         // 最終問題が正解したらエンディング処理を開始
+        Debug.Log($"CorrectFinalQuestion : {GetYarnVariable<bool>("$CorrectFinalQuestion")}");
         if (!isEndingStarted && GetYarnVariable<bool>("$CorrectFinalQuestion"))
         {
             isEndingStarted = true;
