@@ -23,6 +23,7 @@ public class EndingManager : MonoBehaviour
     private DialogueRunner _dialogueRunner;
     private MissionManager _missionManager;
     private LogViewController _logViewController;
+    private ClueViewController _clueViewController;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
     
@@ -31,6 +32,7 @@ public class EndingManager : MonoBehaviour
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
         _missionManager = FindObjectOfType<MissionManager>();
         _logViewController = FindObjectOfType<LogViewController>();
+        _clueViewController = FindObjectOfType<ClueViewController>();
         _descriptionImages = Resources.LoadAll<Sprite>("Images");
         descriptionImage.sprite = _descriptionImages[0];
         descriptionImage.gameObject.SetActive(false);
@@ -43,6 +45,7 @@ public class EndingManager : MonoBehaviour
         {
             _isEndingStarted = true;
             _logViewController.SetLogViewAvailable(false);
+            _clueViewController.SetClueViewAvailable(false);
             StartCoroutine(HandleEndingSequence());
         }
     }
