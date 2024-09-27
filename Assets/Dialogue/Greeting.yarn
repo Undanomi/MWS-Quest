@@ -39,6 +39,8 @@ tracking: always
 <<elseif $MissionNumber == 7>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief6thQuestion>>
+<<elseif $MissionNumber == 8>>
+    村長: 誰が「帳簿管理の魔法の書」を持ち込んだのか、調査を続けてくれ！
 <<else>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief7thQuestion>>
@@ -193,11 +195,11 @@ title: VillageChief7thQuestion
 ---
 村長: 「帳簿管理の魔法の書」は誰から持ち込まれたんじゃ?
     -> {$AdversaryVillageName}村のイブ
-        <<set $CompletedMissionNumber = 8>>
+        <<set $CompletedMissionNumber = 9>>
         村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
         村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
         村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
-        <<set $MissionNumber = 9>>
+        <<set $MissionNumber = 10>>
     -> {$AdversaryVillageName}村のマロリー
         <<jump VillageChief7thQuestionIncorrect>>
     -> {$PlayerVillageName}村のアリス
@@ -225,11 +227,13 @@ title: AliceGreeting
     アリス: 交易記録がある私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずだったのに...。
     <<set $AliceMetCount = 1>>
 <<else>>
+    <<set $CompletedMissionNumber = 8>>
     アリス: まさか帳簿管理の魔法の書が原因だったなんて...。無害なものだと思って封印を解除してしまっていたわ。
     {$PlayerName}: 帳簿管理の魔法の書はどうやって手に入れたんだ？
     アリス: 転送呪文によってポストに送られてきたものよ。
     アリス: 送り主が書いてあるわ...
     アリス: 帳簿管理の魔法の書の送り主は...ブラボー村のイブよ。村長に知らせましょう。
+    <<set $MissionNumber = 9>>
     <<set $AliceMetCount = 2>>
 <<endif>>
 

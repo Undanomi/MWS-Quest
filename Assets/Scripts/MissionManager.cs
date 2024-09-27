@@ -58,7 +58,7 @@ public class MissionManager : MonoBehaviour
                     dialogueRunner.StartDialogue("IntroSpellRecords");
                 }
                 break;
-            case 9:
+            case 10:
                 isEndingStarted = true;
                 StartCoroutine(HandleMissionEnding());
                 break;
