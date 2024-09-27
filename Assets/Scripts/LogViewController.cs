@@ -137,7 +137,7 @@ public class LogViewController : MonoBehaviour
             dialogueRunner.Stop();
         }
         Debug.Log("LogViewAvailable: " + isAvailable);
-
+        logAnalysisSystem.GetComponent<LogViewController>().transform.Find("Canvas").gameObject.SetActive(isAvailable);
         _keyCode = isAvailable ? KeyCode.L : KeyCode.None;
     }
 
