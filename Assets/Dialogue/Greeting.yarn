@@ -8,6 +8,7 @@ tracking: always
 <<declare $EllenMetCount = 0 as number>>
 <<declare $FrankMetCount = 0 as number>>
 <<declare $CorrectFirstQuestion = false as bool>>
+<<declare $CorrectFinalQuestion = false as bool>>
 <<if visited("VillageChiefGreeting") == false>>
     村長: {$PlayerName}、衛兵であるお主を呼んだのは他でもない、例の事件を解決してもらうためじゃ
     村長: 先日、近隣の村との交易記録が外部に流出した事件はお主も知っておるな？交易記録はわが村の状況が記録されている、重要な機密情報じゃ。
@@ -74,6 +75,7 @@ title: VillageChiefSecondQuestion
         村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
         村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
         村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
+        <<set $CorrectFinalQuestion = true>>
     -> 村の倉庫に置いてあった
         <<jump VillageChiefSecondQuestionIncorrect>>
     -> フランクがアリスに渡した

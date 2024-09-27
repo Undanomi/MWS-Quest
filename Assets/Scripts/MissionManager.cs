@@ -11,6 +11,7 @@ public class MissionManager : MonoBehaviour
     public DialogueRunner dialogueRunner;
     public TextMeshProUGUI missionDisplay;
     public CanvasGroup missionCanvas;
+    public bool isEndingStarted;
     
     private readonly Dictionary<string, bool> _visitedNodes = new Dictionary<string, bool>();
     private InMemoryVariableStorage _variableStorage;
@@ -62,6 +63,12 @@ public class MissionManager : MonoBehaviour
             default:
                 UpdateMissionDisplay();
                 break;
+        }
+        // 最終問題が正解したらエンディング処理を開始
+        if (!isEndingStarted && GetYarnVariable<bool>("$CorrectFinalQuestion"))
+        {
+            isEndingStarted = true;
+            StartCoroutine(HandleMissionEnding());
         }
     }
 
@@ -123,6 +130,20 @@ public class MissionManager : MonoBehaviour
             $"ミッション{_missionPhase+1} : {title}" +
             $"{color}({currentProgress}/{totalProgress})</color>";
     }
+
+    private IEnumerator HandleMissionEnding()
+    {
+        // MissionのCanvasGroupをフェードアウト
+        float fadeTime = 1f;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            missionCanvas.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
+            yield return null;
+        }
+        missionCanvas.gameObject.SetActive(false);
+    }
     
     
     /// <summary>
@@ -149,7 +170,7 @@ public class MissionManager : MonoBehaviour
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
-    T GetYarnVariable<T>(string variableName)
+    public T GetYarnVariable<T>(string variableName)
     {
         if (typeof(T) == typeof(float))
         {
@@ -186,7 +207,7 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeName"></param>
     /// <returns></returns>
-    private bool HasVisitedNode(string nodeName)
+    public bool HasVisitedNode(string nodeName)
     {
         return _visitedNodes.ContainsKey(nodeName) && _visitedNodes[nodeName];
     }
