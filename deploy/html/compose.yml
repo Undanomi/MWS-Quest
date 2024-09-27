@@ -6,3 +6,4 @@ services:
       volumes:
         - ./html:/usr/local/apache2/htdocs
         - ./target/:/var/www/html/target/
+      restart: always
