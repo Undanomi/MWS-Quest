@@ -47,7 +47,14 @@ public class ClueViewController : MonoBehaviour
     {
         isClueViewRunning = false;
         _variableStorage = dialogueRunner.VariableStorage;
-        clueViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isClueViewRunning);
+        //ダイアログの表示・非表示
+        Transform panel = clueViewController.transform.Find("Canvas/Panel");
+        foreach (Transform child in panel)
+        {
+            // 子オブジェクトのアクティブ状態を設定
+            child.gameObject.SetActive(isClueViewRunning);
+        }
+        clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
         // EscapeButtonにOnClickイベントを追加
         _escapeButton = clueViewController.transform.Find("Canvas/Panel/EscapeButton").gameObject;
         _clueText = clueViewController.transform.Find("Canvas/Panel/Scroll View/Viewport/Content/ClueText").gameObject;
@@ -58,6 +65,14 @@ public class ClueViewController : MonoBehaviour
 
     private void Update()
     {
+        if (dialogueRunner.IsDialogueRunning)
+        {
+            clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(false);
+        }
+        if(dialogueRunner.IsDialogueRunning == false && isClueViewRunning == false)
+        {
+            clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(true);
+        }
         if (_keyCode == KeyCode.None || 
             dialogueRunner.IsDialogueRunning || 
             logViewController.isLogViewRunning
@@ -82,7 +97,15 @@ public class ClueViewController : MonoBehaviour
     public void SwitchClueViewRunning()
     {
         isClueViewRunning = !isClueViewRunning;
-        clueViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isClueViewRunning);
+        //ダイアログの表示・非表示
+        Transform panel = clueViewController.transform.Find("Canvas/Panel");
+        foreach (Transform child in panel)
+        {
+            // 子オブジェクトのアクティブ状態を設定
+            child.gameObject.SetActive(isClueViewRunning);
+        }
+        logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(!isClueViewRunning);
+        clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
         dialogueRunner.transform.Find("Canvas").gameObject.SetActive(!isClueViewRunning);
         logViewController.gameObject.SetActive(!isClueViewRunning);
         _keyCode = isClueViewRunning ? KeyCode.Escape : KeyCode.H;
