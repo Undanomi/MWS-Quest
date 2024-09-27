@@ -58,7 +58,7 @@ title: IntroSpellRecords
 ---
 <<set $CompletedMissionNumber = 1>>
 {$PlayerName}: これでだいたい聞き込みができたな...
-{$PlayerName}: 呪文の記録も見て、何かわかったら村長に報告しよう！
+{$PlayerName}: 呪文の痕跡も見て、何かわかったら村長に報告しよう！
 <<set $MissionNumber = 2>>
 
 ===
@@ -97,7 +97,7 @@ title: VillageChief2ndQuestion
 
 ---
 村長: 「帳簿管理の魔法の書」は何をしたんじゃ?
-    -> 複数の交易記録の書をどこかに送った
+    -> 「芋煮の魔法の書」を作成した
         <<jump VillageChiefQuestionInCorrect>>
     -> 精霊を呼び出した
         <<set $CompletedMissionNumber = 3>>
@@ -272,7 +272,7 @@ title: EllenGreeting
 title: FrankGreeting
 
 ---
-フランク: 呪文の記録の調査の基本は「怪しいことがあった時間帯の記録を見る」と「わかった単語で検索する」だ!!
+フランク: 呪文の痕跡の調査の基本は「怪しいことがあった時間帯の記録を見る」と「わかった単語で検索する」だ!!
 <<set $FrankMetCount = 1>>
 
 ===
