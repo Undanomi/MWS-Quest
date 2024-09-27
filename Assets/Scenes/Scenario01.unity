@@ -64962,6 +64962,9 @@ MonoBehaviour:
   fadeImage: {fileID: 1631457915}
   titleFadeTime: 1
   imageFadeTime: 3
+  logViewController: {fileID: 1454500385}
+  clueViewController: {fileID: 46995528}
+  startDialogueButtonController: {fileID: 3831113771523382165}
 --- !u!4 &586846194
 Transform:
   m_ObjectHideFlags: 0
@@ -99399,6 +99402,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96198362eff24a96b241294ef33afc60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 3579681405102365571}
+  logViewController: {fileID: 1454500385}
+  clueViewController: {fileID: 46995528}
 --- !u!1 &4540255441556133866
 GameObject:
   m_ObjectHideFlags: 0
