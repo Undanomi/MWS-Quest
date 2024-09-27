@@ -7,7 +7,7 @@ tracking: always
 <<declare $DaveMetCount = 0 as number>>
 <<declare $EllenMetCount = 0 as number>>
 <<declare $FrankMetCount = 0 as number>>
-<<declare $IsaacMetCount = 0 as number>>
+<<declare $MissionNumber = 1 as number>>
 <<declare $Correct1stQuestion = false as bool>>
 <<declare $Correct2ndQuestion = false as bool>>
 <<declare $Correct3rdQuestion = false as bool>>
@@ -62,24 +62,33 @@ title: IntroSpellRecords
 {$PlayerName}: 呪文の記録も見て、何かわかったら村長に報告しよう！
 
 ===
+title: VillageChiefQuestionInCorrect
+
+---
+ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+ナレーター: フランクに呪文の痕跡の調査のコツをもう一度聞いてみよう。
+ナレーター: 村の左上にいたはずだ
+
+===
 title: VillageChief1stQuestion
 
 ---
 村長: 何か怪しい出来事はあったかの?
     -> アリスが「帳簿管理の魔法の書」をメールで受け取った
+        <<set $Correct1stQuestion = true>>
         村長: ふむふむ、そんなことがあったのか...。
         村長: その「帳簿管理の魔法の書」が何か怪しいことをしたんじゃろうか...。調査を続けてくれ!
-        <<set $Correct1stQuestion = true>>
+        <<set $MissionNumber = 2>>
     -> ボブが「文書作成の魔道具」を起動した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> チャーリーが「画像編集の魔道具」を起動した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> デイヴが「webの秘伝書」を入手した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> エレンが「月の満ち欠けの書物」を閲覧した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> フランクが「記録の魔法の書」を展開した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -89,15 +98,16 @@ title: VillageChief2ndQuestion
 ---
 村長: 「帳簿管理の魔法の書」は何をしたんじゃ?
     -> 複数の交易記録の書をどこかに送った
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 精霊を呼び出した
+        <<set $Correct2ndQuestion = true>>
         村長: そのような面妖な存在を呼び出したのか...。
         村長: その精霊とやらは何をしたんじゃろうか...。調査を続けてくれ!
-        <<set $Correct2ndQuestion = true>>
+        <<set $MissionNumber = 3>>
     -> 故郷の村にある日記を自宅の本棚に転送した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 「帳簿の魔道具」を起動した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -107,15 +117,16 @@ title: VillageChief3rdQuestion
 ---
 村長: 精霊は何をしたんじゃ？
     -> 村長へ手紙を送った
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 魔力の使用状況を確認した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 暴走していた呪文を停止した
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 複数の交易記録をどこかに送った
+        <<set $Correct3rdQuestion = true>>
         村長: 交易記録が流出させたのは精霊だったのか!
         村長: どのくらいの交易記録が流出したのか、続けて調べておくれ！
-        <<set $Correct3rdQuestion = true>>
+        <<set $MissionNumber = 4>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -125,16 +136,17 @@ title: VillageChief4thQuestion
 ---
 村長: 持ち出された交易記録の数は何個じゃ？
     -> 3個
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 5個
+        <<set $Correct4thQuestion = true>>
         村長: なんと...。そんなに多くの交易記録が流出してしまったのか...。
         村長: これは後が思いやられるの...
         村長: 今後同じようなことをなくすためにも、改めて交易記録が流出した原因はなんじゃったかの?
-        <<set $Correct4thQuestion = true>>
+        <<set $MissionNumber = 5>>
     -> 7個
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 9個
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -144,16 +156,17 @@ title: VillageChief5thQuestion
 ---
 村長: 交易記録が流出した原因はなんじゃったかの？
     -> 「遠距離会話の魔道具」
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 「browserの魔道具」
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> 「帳簿管理の魔法の書」
+        <<set $Correct5thQuestion = true>>
         村長: そうじゃったな、アリスが持っていた「帳簿管理の魔法の書」が原因じゃったな。
         村長: この「帳簿管理の魔法の書」と精霊によって交易記録はどこに流出してしまったんじゃろうか...。
         村長: 引き続き調べてみてくれ!
-        <<set $Correct5thQuestion = true>>
+        <<set $MissionNumber = 6>>
     -> 「人工知能の魔法の書」
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -163,15 +176,16 @@ title: VillageChief6thQuestion
 ---
 村長: 交易記録はどこに送られてしまったんじゃろう？
     -> {$PlayerVillageName}村
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> {$AdversaryVillageName}村
+        <<set $Correct6thQuestion = true>>
         村長: なんと...、犯人はもしかしたら{$AdversaryVillageName}村の人間かもしれないの...。
         村長: 誰が「帳簿管理の魔法の書」を持ち込んだのか、調査を続けてくれ！
-        <<set $Correct6thQuestion = true>>
+        <<set $MissionNumber = 7>>
     -> デルタ村
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> エコー村
-        ナレーター: もう少し呪文の痕跡を調べた方が良さそうだ...。
+        <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
