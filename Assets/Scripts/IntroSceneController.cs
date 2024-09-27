@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Yarn.Unity;
 
 public class IntroSceneController : MonoBehaviour
 {
@@ -29,10 +30,19 @@ public class IntroSceneController : MonoBehaviour
     
     private readonly float _stopDistance = 0.1f;
     private PlayerController _playerController;
+    private LogViewController _logViewController;
+    private ClueViewController _clueViewController;
+    private StartDialogueButtonController _startDialogueButtonController;
 
     private void Start()
     {
+        _logViewController = FindObjectOfType<LogViewController>();
+        _clueViewController = FindObjectOfType<ClueViewController>();
         _playerController = player.GetComponent<PlayerController>();
+        _startDialogueButtonController = FindObjectOfType<StartDialogueButtonController>();
+        _logViewController.SetLogViewAvailable(false);
+        _clueViewController.SetClueViewAvailable(false);
+        _startDialogueButtonController.SetStartDialogueButtonAvailable(false);
         StartCoroutine(HandleIntroSequence());
     }
     

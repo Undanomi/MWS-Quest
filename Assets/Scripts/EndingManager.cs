@@ -24,6 +24,7 @@ public class EndingManager : MonoBehaviour
     private MissionManager _missionManager;
     private LogViewController _logViewController;
     private ClueViewController _clueViewController;
+    private StartDialogueButtonController _startDialogueButtonController;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
     
@@ -46,6 +47,7 @@ public class EndingManager : MonoBehaviour
             _isEndingStarted = true;
             _logViewController.SetLogViewAvailable(false);
             _clueViewController.SetClueViewAvailable(false);
+            _startDialogueButtonController.SetStartDialogueButtonAvailable(false);
             StartCoroutine(HandleEndingSequence());
         }
     }

@@ -58,7 +58,7 @@ public class ClueViewController : MonoBehaviour
         // EscapeButtonにOnClickイベントを追加
         _escapeButton = clueViewController.transform.Find("Canvas/Panel/EscapeButton").gameObject;
         _clueText = clueViewController.transform.Find("Canvas/Panel/Scroll View/Viewport/Content/ClueText").gameObject;
-        _clueText.GetComponent<TMPro.TMP_Text>().text = "";
+        _clueText.GetComponent<TMPro.TMP_Text>().text = "村人たちに話を聞いて、手がかりを集めよう。";
         _escapeButton.GetComponent<Button>().onClick.AddListener(OnEscapeButtonClicked);
         InitializeClueList();
     }

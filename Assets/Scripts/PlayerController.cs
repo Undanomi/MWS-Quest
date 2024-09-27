@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private DialogueRunner _dialogueRunner;
     private LogViewController _logViewController;
     private ClueViewController _clueViewController;
+    private StartDialogueButtonController _startDialogueButtonController;
     
     private bool _isAutoMoving;
     private Vector2 _autoMoveDirection;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
         _logViewController = FindObjectOfType<LogViewController>();
         _clueViewController = FindObjectOfType<ClueViewController>();
+        _startDialogueButtonController = FindObjectOfType<StartDialogueButtonController>();
     }
 
     // Update is called once per frame
@@ -126,6 +128,7 @@ public class PlayerController : MonoBehaviour
         _isAutoMoving = true;
         _logViewController.SetLogViewAvailable(false);
         _clueViewController.SetClueViewAvailable(false);
+        _startDialogueButtonController.SetStartDialogueButtonAvailable(false);
     }
     
     /// <summary>
@@ -136,6 +139,7 @@ public class PlayerController : MonoBehaviour
         _isAutoMoving = false;
         _logViewController.SetLogViewAvailable(true);
         _clueViewController.SetClueViewAvailable(true);
+        _startDialogueButtonController.SetStartDialogueButtonAvailable(true);
     }
     
 }
