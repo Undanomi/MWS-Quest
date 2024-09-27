@@ -1,0 +1,8 @@
+services:
+    irgame:
+      build: .
+      ports:
+        - "3000:80"
+      volumes:
+        - ./html:/usr/local/apache2/htdocs
+        - ./target/:/var/www/html/target/
