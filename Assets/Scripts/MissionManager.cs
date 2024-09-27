@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Yarn.Compiler;
 using Yarn.Unity;
 
 public class MissionManager : MonoBehaviour
@@ -20,7 +21,8 @@ public class MissionManager : MonoBehaviour
         "$AliceMetCount", "$BobMetCount", "$CharlieMetCount", "$DaveMetCount", "$EllenMetCount", "$FrankMetCount"
     };
 
-    private int _missionPhase = -1;
+    private bool _isMissionDiplayActive;
+    private int _missionPhase;
     private readonly List<Mission> _missions = new List<Mission>();
     
     void Start()
@@ -33,36 +35,38 @@ public class MissionManager : MonoBehaviour
 
     private void Update()
     {
+        if (_missionPhase == 0 && (int)GetYarnVariable<float>("$MissionNumber") == 1)
+        {
+            StartCoroutine(ActivateMissionDisplay());
+        }
+        
+        _missionPhase = (int)GetYarnVariable<float>("$MissionNumber");
+        
+        if (!_isMissionDiplayActive && HasVisitedNode("NarratorGreeting"))
+        {
+            _isMissionDiplayActive = true;
+            StartCoroutine(ActivateMissionDisplay());
+            return;
+        }
         
         switch (_missionPhase)
         {
-            case -1:
-                if (HasVisitedNode("NarratorGreeting"))
-                {
-                    _missionPhase++;
-                    StartCoroutine(ActivateMissionDisplay());
-                }
-                break;
-                
-            case 0:
-                int completeCount = CountVariablesGraterThanOrEqualTo(1) + 1;
-                _missions[_missionPhase].CurrentProgress = completeCount;
-                UpdateMissionDisplay();
-                if (completeCount == 7)
-                {
-                    bool isClear = GetYarnVariable<bool>("$Correct1stQuestion");
-                    if (isClear) _missionPhase++;
-                }
-                break;
             case 1:
+                int completeCount = CountVariablesGraterThanOrEqualTo(1) + 1;
+                _missions[_missionPhase-1].CurrentProgress = completeCount;
+                UpdateMissionDisplay();
+                break;
+            case 2:
+                break; 
+                
+            case 8:
                 // アリスに2回会ったかどうかを確認する
                 bool aliceMetTwice = GetYarnVariable<float>("$AliceMetCount") >= 2;
-                _missions[_missionPhase].CurrentProgress = aliceMetTwice ? 1 : 0;
+                _missions[_missionPhase-1].CurrentProgress = aliceMetTwice ? 1 : 0;
                 UpdateMissionDisplay();
                 break;
-            default:
-                UpdateMissionDisplay();
-                break;
+                
+                
         }
         // 最終問題が正解したらエンディング処理を開始
         if (!isEndingStarted && GetYarnVariable<bool>("$CorrectFinalQuestion"))
@@ -122,12 +126,14 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     private void UpdateMissionDisplay()
     {
-        string title = _missions[_missionPhase].Title;
-        int currentProgress = _missions[_missionPhase].CurrentProgress;
-        int totalProgress = _missions[_missionPhase].TotalProgress;
+        if (!_isMissionDiplayActive) return;
+        
+        string title = _missions[_missionPhase-1].Title;
+        int currentProgress = _missions[_missionPhase-1].CurrentProgress;
+        int totalProgress = _missions[_missionPhase-1].TotalProgress;
         string color = currentProgress == totalProgress ? "<color=#2E8B57>" : "<color=#B8860B>";
         missionDisplay.text = 
-            $"ミッション{_missionPhase+1} : {title}" +
+            $"ミッション{_missionPhase} : {title}" +
             $"{color}({currentProgress}/{totalProgress})</color>";
     }
 
@@ -163,6 +169,7 @@ public class MissionManager : MonoBehaviour
         }
         return count;
     }
+
     /// <summary>
     /// ある変数の値を取得する
     /// </summary>

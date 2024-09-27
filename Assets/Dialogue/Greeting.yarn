@@ -20,7 +20,6 @@ tracking: always
     村長: 先日、近隣の村との交易記録が外部に流出した事件はお主も知っておるな？交易記録はわが村の状況が記録されている、重要な機密情報じゃ。
     村長: 同じことを起こさないためにも、お主にはこの事件の原因を突き止めてほしいのじゃ。そこで、まずは村の怪しい出来事の調査をお願いしたい！
     村長: わしには原因の検討もつかん...。どうか頼んだぞ！
-    <<set $MissionNumber = 1>>
 <<elseif ($AliceMetCount == 0 or $BobMetCount == 0 or $CharlieMetCount == 0 or $DaveMetCount == 0 or $EllenMetCount == 0 or $FrankMetCount == 0)>>
     村長: 何が原因で情報が持ち出されたのか検討もつかん...。
     村長: この村の衛兵として、お主の力で事件を解決してくれ！
@@ -54,7 +53,7 @@ title: NarratorGreeting
 
 ---
 ナレーター: この村では、村内で使用された呪文の痕跡をすべて記録している。この記録を事件解決に有効に活用しよう。
-
+<<set $MissionNumber = 1>>
 ===
 title: IntroSpellRecords
 
