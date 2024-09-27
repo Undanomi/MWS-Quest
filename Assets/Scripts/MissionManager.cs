@@ -49,7 +49,7 @@ public class MissionManager : MonoBehaviour
                 UpdateMissionDisplay();
                 if (completeCount == 7)
                 {
-                    bool isClear = GetYarnVariable<bool>("$CorrectFirstQuestion");
+                    bool isClear = GetYarnVariable<bool>("$Correct1stQuestion");
                     if (isClear) _missionPhase++;
                 }
                 break;
