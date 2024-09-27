@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Yarn.Unity;
 
 public class LogViewController : MonoBehaviour
 {
     public bool isLogViewRunning;
-    public GameObject logAnalysisSystem;
+    public LogViewController logViewController;
     public DialogueRunner dialogueRunner;
-    public String searchWord = "";
+    public ClueViewController clueViewController;
+    
+    private String _searchWord = "";
     
     private GameObject _lineView;
     private GameObject _optionsListView;
@@ -32,11 +32,11 @@ public class LogViewController : MonoBehaviour
         _lineView = dialogueRunner.transform.Find("Canvas/Line View").gameObject;
         _optionsListView = dialogueRunner.transform.Find("Canvas/Options List View").gameObject;
         
-        _clearButton = logAnalysisSystem.transform.Find("Canvas/Panel/ClearButton").gameObject;
-        _searchButton = logAnalysisSystem.transform.Find("Canvas/Panel/SearchButton").gameObject;
-        _escapeButton = logAnalysisSystem.transform.Find("Canvas/Panel/EscapeButton").gameObject;
-        _logText = GameObject.Find("Canvas/Panel/Scroll View/Viewport/Content/LogText").gameObject;
-        _searchField = logAnalysisSystem.transform.Find("Canvas/Panel/SearchField").gameObject;
+        _clearButton = logViewController.transform.Find("Canvas/Panel/ClearButton").gameObject;
+        _searchButton = logViewController.transform.Find("Canvas/Panel/SearchButton").gameObject;
+        _escapeButton = logViewController.transform.Find("Canvas/Panel/EscapeButton").gameObject;
+        _logText = logViewController.transform.Find("Canvas/Panel/Scroll View/Viewport/Content/LogText").gameObject;
+        _searchField = logViewController.transform.Find("Canvas/Panel/SearchField").gameObject;
         
         TextAsset textAsset = Resources.Load<TextAsset>("log");
 
@@ -52,7 +52,14 @@ public class LogViewController : MonoBehaviour
             Debug.LogError("Text file not found!");
         }
 
-        logAnalysisSystem.transform.Find("Canvas/Panel").gameObject.SetActive(isLogViewRunning);
+        //ダイアログの表示・非表示
+        Transform panel = logViewController.transform.Find("Canvas/Panel");
+        foreach (Transform child in panel)
+        {
+            // 子オブジェクトのアクティブ状態を設定
+            child.gameObject.SetActive(isLogViewRunning);
+        }
+        logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(!isLogViewRunning);
         _lineView.SetActive(!isLogViewRunning);
         _optionsListView.SetActive(!isLogViewRunning);
         
@@ -73,12 +80,18 @@ public class LogViewController : MonoBehaviour
     //Lキーが押されたら，LogAnalysisSystemオブジェクトのすべての要素を可視化
     void Update()
     {
-        if (_keyCode == KeyCode.None)
+        if(dialogueRunner.IsDialogueRunning)
         {
-            return;
+            logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(false);
         }
-        
-        if (dialogueRunner.IsDialogueRunning)
+        if(dialogueRunner.IsDialogueRunning == false && isLogViewRunning == false)
+        {
+            logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(true);
+        }
+        if (_keyCode == KeyCode.None || 
+            dialogueRunner.IsDialogueRunning || 
+            clueViewController.isClueViewRunning
+            )
         {
             return;
         }
@@ -137,7 +150,7 @@ public class LogViewController : MonoBehaviour
             dialogueRunner.Stop();
         }
         Debug.Log("LogViewAvailable: " + isAvailable);
-        logAnalysisSystem.GetComponent<LogViewController>().transform.Find("Canvas").gameObject.SetActive(isAvailable);
+        logViewController.transform.Find("Canvas").gameObject.SetActive(isAvailable);
         _keyCode = isAvailable ? KeyCode.L : KeyCode.None;
     }
 
@@ -151,26 +164,32 @@ public class LogViewController : MonoBehaviour
             //SearchFieldを一旦確定
             _searchField.GetComponent<TMPro.TMP_InputField>().DeactivateInputField();
             //SearchFieldから検索ワードを取得
-            searchWord = _searchField.GetComponent<TMPro.TMP_InputField>().text;
-            Debug.Log("previousSearchWord: " + searchWord);
+            _searchWord = _searchField.GetComponent<TMPro.TMP_InputField>().text;
+            Debug.Log("previousSearchWord: " + _searchWord);
             //文字化けしてたら削除
-            if (searchWord.Contains("\u001b"))
+            if (_searchWord.Contains("\u001b"))
             {
-                searchWord = "";
+                _searchWord = "";
             }
         }
-
         //ダイアログの表示・非表示
-        logAnalysisSystem.transform.Find("Canvas/Panel").gameObject.SetActive(isLogViewRunning);
-        _lineView.SetActive(!isLogViewRunning);
-        _optionsListView.SetActive(!isLogViewRunning);
+        Transform panel = logViewController.transform.Find("Canvas/Panel");
+        foreach (Transform child in panel)
+        {
+            // 子オブジェクトのアクティブ状態を設定
+            child.gameObject.SetActive(isLogViewRunning);
+        }
+        logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(!isLogViewRunning);
+        clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(!isLogViewRunning);
+        dialogueRunner.transform.Find("Canvas").gameObject.SetActive(!isLogViewRunning);
+        clueViewController.gameObject.SetActive(!isLogViewRunning);
         _keyCode = isLogViewRunning ? KeyCode.Escape : KeyCode.L;
 
         if (isLogViewRunning)
         {
             //SearchFieldに検索ワードを設定
-            _searchField.GetComponent<TMPro.TMP_InputField>().text = searchWord;
-            if (!string.IsNullOrEmpty(searchWord))
+            _searchField.GetComponent<TMPro.TMP_InputField>().text = _searchWord;
+            if (!string.IsNullOrEmpty(_searchWord))
             {
                 // newLogTextStringを入れておく
                 _logText.GetComponent<TMPro.TMP_Text>().text = _highlightedLogTextString;
@@ -188,17 +207,17 @@ public class LogViewController : MonoBehaviour
     private void SearchWord()
     {
         // SearchFieldから検索ワードを取得
-        searchWord = _searchField.GetComponent<TMPro.TMP_InputField>().text;
-        Debug.Log("previousSearchWord: " + searchWord);
+        _searchWord = _searchField.GetComponent<TMPro.TMP_InputField>().text;
+        Debug.Log("previousSearchWord: " + _searchWord);
 
         // 文字化けしてたら削除
-        if (searchWord.Contains("\u001b"))
+        if (_searchWord.Contains("\u001b"))
         {
-            searchWord = "";
+            _searchWord = "";
         }
 
         // 検索ワードが空の場合は処理をスキップ
-        if (string.IsNullOrEmpty(searchWord))
+        if (string.IsNullOrEmpty(_searchWord))
         {
             _logText.GetComponent<TMPro.TMP_Text>().text = _logTextString;
             return;
@@ -232,7 +251,7 @@ public class LogViewController : MonoBehaviour
         try
         {
             // (3) 検索ワードに正規表現を使用してプレーンテキスト部分を検索しハイライト
-            Regex regex = new Regex(searchWord);
+            Regex regex = new Regex(_searchWord);
             string highlightedPlainText = "";
             // 改行で分割
             var lines = plainText.Split('\n');

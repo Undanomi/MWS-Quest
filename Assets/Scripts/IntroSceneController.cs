@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Yarn.Unity;
 
 public class IntroSceneController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class IntroSceneController : MonoBehaviour
     [Header("暗転画像")] public Image fadeImage;
     [Header("タイトルフェード時間")] public float titleFadeTime;
     [Header("画像フェード時間")] public float imageFadeTime;
+    [Header("ログ画面")] public LogViewController logViewController;
+    [Header("情報画面")] public ClueViewController clueViewController;
+    [Header("ダイアログボタン（DialogueRunnerを読ませる）")] public StartDialogueButtonController startDialogueButtonController;
     
     private readonly float _stopDistance = 0.1f;
     private PlayerController _playerController;
@@ -33,6 +37,9 @@ public class IntroSceneController : MonoBehaviour
     private void Start()
     {
         _playerController = player.GetComponent<PlayerController>();
+        logViewController.SetLogViewAvailable(false);
+        clueViewController.SetClueViewAvailable(false);
+        startDialogueButtonController.SetStartDialogueButtonAvailable(false);
         StartCoroutine(HandleIntroSequence());
     }
     

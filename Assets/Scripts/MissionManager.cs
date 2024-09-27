@@ -75,6 +75,11 @@ public class MissionManager : MonoBehaviour
             StartCoroutine(HandleMissionEnding());
         }
     }
+    
+    public int GetMissionPhase()
+    {
+        return _missionPhase;
+    }
 
     private class Mission
     {
