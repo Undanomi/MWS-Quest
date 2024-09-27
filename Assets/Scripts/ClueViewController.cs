@@ -28,6 +28,7 @@ public class ClueViewController : MonoBehaviour
         public string npc;
         public string display;
         public bool isMet = false;
+        public int wholeMetCount = 0; 
     }
     
     [System.Serializable]
@@ -158,8 +159,9 @@ public class ClueViewController : MonoBehaviour
         {
             float metCount = GetYarnVariable<float>("$" + npc.npc + "MetCount");
             //Yarnのnumberがfloatしかできないので、変な比較をしている
-            if (!npc.isMet && metCount > _currentMission - 1)
+            if (!npc.isMet && metCount > npc.wholeMetCount)
             {
+                npc.wholeMetCount = (int)metCount;
                 //_npcsのすべてのisMetがfalseであるかどうか
                 bool allFalse = true;
                 foreach (var n in _npcs)
