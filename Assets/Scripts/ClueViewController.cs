@@ -67,9 +67,9 @@ public class ClueViewController : MonoBehaviour
 
     private void Update()
     {
-        if(missionManager.GetMissionPhase() + 1 > _currentMission)
+        if(missionManager.GetMissionPhase() > _currentMission)
         {
-            _currentMission = missionManager.GetMissionPhase() + 1;
+            _currentMission = missionManager.GetMissionPhase();
             foreach (var npc in _npcs)
             {
                 npc.isMet = false;

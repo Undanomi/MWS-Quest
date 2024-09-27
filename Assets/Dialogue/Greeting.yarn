@@ -7,45 +7,41 @@ tracking: always
 <<declare $DaveMetCount = 0 as number>>
 <<declare $EllenMetCount = 0 as number>>
 <<declare $FrankMetCount = 0 as number>>
+
 <<declare $MissionNumber = 0 as number>>
-<<declare $Correct1stQuestion = false as bool>>
-<<declare $Correct2ndQuestion = false as bool>>
-<<declare $Correct3rdQuestion = false as bool>>
-<<declare $Correct4thQuestion = false as bool>>
-<<declare $Correct5thQuestion = false as bool>>
-<<declare $Correct6thQuestion = false as bool>>
-<<declare $CorrectFinalQuestion = false as bool>>
+<<declare $CompletedMissionNumber = 0 as number>>
+
 <<if visited("VillageChiefGreeting") == false>>
     村長: {$PlayerName}、衛兵であるお主を呼んだのは他でもない、例の事件を解決してもらうためじゃ
     村長: 先日、近隣の村との交易記録が外部に流出した事件はお主も知っておるな？交易記録はわが村の状況が記録されている、重要な機密情報じゃ。
     村長: 同じことを起こさないためにも、お主にはこの事件の原因を突き止めてほしいのじゃ。そこで、まずは村の怪しい出来事の調査をお願いしたい！
     村長: わしには原因の検討もつかん...。どうか頼んだぞ！
-<<elseif ($AliceMetCount == 0 or $BobMetCount == 0 or $CharlieMetCount == 0 or $DaveMetCount == 0 or $EllenMetCount == 0 or $FrankMetCount == 0)>>
+<<elseif $MissionNumber == 1>>
     村長: 何が原因で情報が持ち出されたのか検討もつかん...。
     村長: この村の衛兵として、お主の力で事件を解決してくれ！
     村長: そこで、まずは村の怪しい出来事の調査をお願いしたい！
     村長: どうか頼んだぞ！
-<<elseif $Correct1stQuestion == false>>
+<<elseif $MissionNumber == 2>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief1stQuestion>>
-<<elseif $Correct2ndQuestion == false>>
+<<elseif $MissionNumber == 3>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief2ndQuestion>>
-<<elseif $Correct3rdQuestion == false>>
+<<elseif $MissionNumber == 4>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief3rdQuestion>>
-<<elseif $Correct4thQuestion == false>>
+<<elseif $MissionNumber == 5>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief4thQuestion>>
-<<elseif $Correct5thQuestion == false>>
+<<elseif $MissionNumber == 6>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief5thQuestion>>
-<<elseif $Correct6thQuestion == false>>
+<<elseif $MissionNumber == 7>>
     村長: 調査、ご苦労であった。
     <<jump VillageChief6thQuestion>>
 <<else>>
     村長: 調査、ご苦労であった。
-    <<jump VillageChiefFinalQuestion>>
+    <<jump VillageChief7thQuestion>>
 <<endif>>
 
 ===
@@ -58,8 +54,10 @@ title: NarratorGreeting
 title: IntroSpellRecords
 
 ---
+<<set $CompletedMissionNumber = 1>>
 {$PlayerName}: これでだいたい聞き込みができたな...
 {$PlayerName}: 呪文の記録も見て、何かわかったら村長に報告しよう！
+<<set $MissionNumber = 2>>
 
 ===
 title: VillageChiefQuestionInCorrect
@@ -75,10 +73,10 @@ title: VillageChief1stQuestion
 ---
 村長: 何か怪しい出来事はあったかの?
     -> アリスが「帳簿管理の魔法の書」をメールで受け取った
-        <<set $Correct1stQuestion = true>>
+        <<set $CompletedMissionNumber = 2>>
         村長: ふむふむ、そんなことがあったのか...。
         村長: その「帳簿管理の魔法の書」が何か怪しいことをしたんじゃろうか...。調査を続けてくれ!
-        <<set $MissionNumber = 2>>
+        <<set $MissionNumber = 3>>
     -> ボブが「文書作成の魔道具」を起動した
         <<jump VillageChiefQuestionInCorrect>>
     -> チャーリーが「画像編集の魔道具」を起動した
@@ -100,10 +98,10 @@ title: VillageChief2ndQuestion
     -> 複数の交易記録の書をどこかに送った
         <<jump VillageChiefQuestionInCorrect>>
     -> 精霊を呼び出した
-        <<set $Correct2ndQuestion = true>>
+        <<set $CompletedMissionNumber = 3>>
         村長: そのような面妖な存在を呼び出したのか...。
         村長: その精霊とやらは何をしたんじゃろうか...。調査を続けてくれ!
-        <<set $MissionNumber = 3>>
+        <<set $MissionNumber = 4>>
     -> 故郷の村にある日記を自宅の本棚に転送した
         <<jump VillageChiefQuestionInCorrect>>
     -> 「帳簿の魔道具」を起動した
@@ -123,10 +121,10 @@ title: VillageChief3rdQuestion
     -> 暴走していた呪文を停止した
         <<jump VillageChiefQuestionInCorrect>>
     -> 複数の交易記録をどこかに送った
-        <<set $Correct3rdQuestion = true>>
+        <<set $CompletedMissionNumber = 4>>
         村長: 交易記録が流出させたのは精霊だったのか!
         村長: どのくらいの交易記録が流出したのか、続けて調べておくれ！
-        <<set $MissionNumber = 4>>
+        <<set $MissionNumber = 5>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 
@@ -138,11 +136,11 @@ title: VillageChief4thQuestion
     -> 3個
         <<jump VillageChiefQuestionInCorrect>>
     -> 5個
-        <<set $Correct4thQuestion = true>>
+        <<set $CompletedMissionNumber = 5>>
         村長: なんと...。そんなに多くの交易記録が流出してしまったのか...。
         村長: これは後が思いやられるの...
         村長: 今後同じようなことをなくすためにも、改めて交易記録が流出した原因はなんじゃったかの?
-        <<set $MissionNumber = 5>>
+        <<set $MissionNumber = 6>>
     -> 7個
         <<jump VillageChiefQuestionInCorrect>>
     -> 9個
@@ -160,11 +158,11 @@ title: VillageChief5thQuestion
     -> 「browserの魔道具」
         <<jump VillageChiefQuestionInCorrect>>
     -> 「帳簿管理の魔法の書」
-        <<set $Correct5thQuestion = true>>
+        <<set $CompletedMissionNumber = 6>>
         村長: そうじゃったな、アリスが持っていた「帳簿管理の魔法の書」が原因じゃったな。
         村長: この「帳簿管理の魔法の書」と精霊によって交易記録はどこに流出してしまったんじゃろうか...。
         村長: 引き続き調べてみてくれ!
-        <<set $MissionNumber = 6>>
+        <<set $MissionNumber = 7>>
     -> 「人工知能の魔法の書」
         <<jump VillageChiefQuestionInCorrect>>
     -> もう少し調べる
@@ -178,10 +176,10 @@ title: VillageChief6thQuestion
     -> {$PlayerVillageName}村
         <<jump VillageChiefQuestionInCorrect>>
     -> {$AdversaryVillageName}村
-        <<set $Correct6thQuestion = true>>
+        <<set $CompletedMissionNumber = 7>>
         村長: なんと...、犯人はもしかしたら{$AdversaryVillageName}村の人間かもしれないの...。
         村長: 誰が「帳簿管理の魔法の書」を持ち込んだのか、調査を続けてくれ！
-        <<set $MissionNumber = 7>>
+        <<set $MissionNumber = 8>>
     -> デルタ村
         <<jump VillageChiefQuestionInCorrect>>
     -> エコー村
@@ -190,21 +188,22 @@ title: VillageChief6thQuestion
         村長: 何かわかったら報告しておくれ！
 
 ===
-title: VillageChiefFinalQuestion
+title: VillageChief7thQuestion
 
 ---
 村長: 「帳簿管理の魔法の書」は誰から持ち込まれたんじゃ?
     -> {$AdversaryVillageName}村のイブ
+        <<set $CompletedMissionNumber = 8>>
         村長: アリスがブラボー村からもらっていたものだったとは！他の村から持ち込まれた魔法の書には気をつけねばならんな。
         村長: これで犯人がイブであるということもわかった！礼を言うぞ！{$PlayerName}！
         村長: 皆の衆！ブラボー村のイブを捕まえるのじゃ！
-        <<set $CorrectFinalQuestion = true>>
+        <<set $MissionNumber = 9>>
     -> {$AdversaryVillageName}村のマロリー
-        <<jump VillageChiefFinalQuestionIncorrect>>
+        <<jump VillageChief7thQuestionIncorrect>>
     -> {$PlayerVillageName}村のアリス
-        <<jump VillageChiefFinalQuestionIncorrect>>
+        <<jump VillageChief7thQuestionIncorrect>>
     -> {$PlayerVillageName}村のフランク
-        <<jump VillageChiefFinalQuestionIncorrect>>
+        <<jump VillageChief7thQuestionIncorrect>>
     -> もう少し調べる
         村長: 何かわかったら報告しておくれ！
 ===
@@ -221,7 +220,7 @@ title: AliceGreeting
 
 ---
 
-<<if $Correct6thQuestion == false>>
+<<if $MissionNumber <= 7>>
     アリス: 大事な情報が流出するなんて、物騒なこともあるものね。
     アリス: 交易記録がある私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはずだったのに...。
     <<set $AliceMetCount = 1>>

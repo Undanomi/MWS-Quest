@@ -21,7 +21,6 @@ public class MissionManager : MonoBehaviour
         "$AliceMetCount", "$BobMetCount", "$CharlieMetCount", "$DaveMetCount", "$EllenMetCount", "$FrankMetCount"
     };
 
-    private bool _isMissionDiplayActive;
     private int _missionPhase;
     private readonly List<Mission> _missions = new List<Mission>();
     
@@ -41,38 +40,33 @@ public class MissionManager : MonoBehaviour
         }
         
         _missionPhase = (int)GetYarnVariable<float>("$MissionNumber");
-        
-        if (!_isMissionDiplayActive && HasVisitedNode("NarratorGreeting"))
-        {
-            _isMissionDiplayActive = true;
-            StartCoroutine(ActivateMissionDisplay());
-            return;
-        }
+
+        int completedMissionNumber;
         
         switch (_missionPhase)
         {
+            case 0:
+                // 何もしない
+                break;
             case 1:
-                int completeCount = CountVariablesGraterThanOrEqualTo(1) + 1;
-                _missions[_missionPhase-1].CurrentProgress = completeCount;
+                int metCount = CountVariablesGraterThanOrEqualTo(1) + 1;
+                _missions[_missionPhase-1].CurrentProgress = metCount;
+                UpdateMissionDisplay();
+                completedMissionNumber = (int)GetYarnVariable<float>("$CompletedMissionNumber");
+                if (completedMissionNumber == 0 && metCount == _missions[_missionPhase-1].TotalProgress)
+                {
+                    dialogueRunner.StartDialogue("IntroSpellRecords");
+                }
+                break;
+            case 9:
+                isEndingStarted = true;
+                StartCoroutine(HandleMissionEnding());
+                break;
+            default:
+                completedMissionNumber = (int)GetYarnVariable<float>("$CompletedMissionNumber");
+                _missions[_missionPhase-1].CurrentProgress = completedMissionNumber == _missionPhase ? 1 : 0;
                 UpdateMissionDisplay();
                 break;
-            case 2:
-                break; 
-                
-            case 8:
-                // アリスに2回会ったかどうかを確認する
-                bool aliceMetTwice = GetYarnVariable<float>("$AliceMetCount") >= 2;
-                _missions[_missionPhase-1].CurrentProgress = aliceMetTwice ? 1 : 0;
-                UpdateMissionDisplay();
-                break;
-                
-                
-        }
-        // 最終問題が正解したらエンディング処理を開始
-        if (!isEndingStarted && GetYarnVariable<bool>("$CorrectFinalQuestion"))
-        {
-            isEndingStarted = true;
-            StartCoroutine(HandleMissionEnding());
         }
     }
     
@@ -131,8 +125,6 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     private void UpdateMissionDisplay()
     {
-        if (!_isMissionDiplayActive) return;
-        
         string title = _missions[_missionPhase-1].Title;
         int currentProgress = _missions[_missionPhase-1].CurrentProgress;
         int totalProgress = _missions[_missionPhase-1].TotalProgress;
