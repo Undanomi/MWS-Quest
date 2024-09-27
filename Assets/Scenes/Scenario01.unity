@@ -404,6 +404,7 @@ MonoBehaviour:
   logViewController: {fileID: 1454500385}
   dialogueRunner: {fileID: 3579681405102365571}
   clueViewController: {fileID: 46995528}
+  missionManager: {fileID: 921623848}
 --- !u!1 &55938745
 GameObject:
   m_ObjectHideFlags: 0
@@ -61817,6 +61818,11 @@ MonoBehaviour:
   endingText: {fileID: 1436093739}
   mapOverViewCamera: {fileID: 2081365621}
   playerFollowCamera: {fileID: 183777299}
+  dialogueRunner: {fileID: 3579681405102365571}
+  missionManager: {fileID: 921623848}
+  logViewController: {fileID: 1454500385}
+  clueViewController: {fileID: 46995528}
+  startDialogueButtonController: {fileID: 3831113771523382165}
 --- !u!1 &256700854
 GameObject:
   m_ObjectHideFlags: 0

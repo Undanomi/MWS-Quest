@@ -1,60 +1,65 @@
 {
   "npcs": [
     {
-      "npc" : "Alice",
+      "npc": "Alice",
       "display": "アリス"
     },
     {
-      "npc" : "Bob",
+      "npc": "Bob",
       "display": "ボブ"
     },
     {
-      "npc" : "Charlie",
+      "npc": "Charlie",
       "display": "チャーリー"
     },
     {
-      "npc" : "Dave",
+      "npc": "Dave",
       "display": "デイブ"
     },
     {
-      "npc" : "Ellen",
+      "npc": "Ellen",
       "display": "エレン"
     },
     {
-      "npc" : "Frank",
+      "npc": "Frank",
       "display": "フランク"
     }
   ],
   "clues": [
     {
-      "mission": "1",
+      "mission": "mission1",
       "npc": "Alice",
       "clue": "私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはず。"
     },
     {
-      "mission": "1",
+      "mission": "mission2",
+      "npc": "Alice",
+      "clue": "帳簿管理の魔法の書は転送呪文によってポストに送られてきた。\n帳簿管理の魔法の書の送り主は、ブラボー村のイブだ。"
+    },
+    {
+      "mission": "mission1",
       "npc": "Bob",
       "clue": "昨日の19時ごろにアリスの家から大きな物音がしていた。"
     },
     {
-      "mission": "1",
+      "mission": "mission1",
       "npc": "Charlie",
       "clue": "昨日は村長が丸1日遠くの町に出かけていた。"
     },
     {
-      "mission": "1",
+      "mission": "mission1",
       "npc": "Dave",
       "clue": "村には囲うように結界が張ってあって呪文が通らないようになっている。\n転送の魔法を使うときは、その呪文だけ通るように結界に穴を開ける。"
     },
     {
-      "mission": "1",
+      "mission": "mission1",
       "npc": "Ellen",
       "clue": "呪文を自動で発動する魔法の書というものがあるらしい。"
     },
     {
-      "mission": "1",
-        "npc": "Frank",
-        "clue": "転送の呪文で転送される書物は物によっては盗聴できる。"
+      "mission": "mission1",
+      "npc": "Frank",
+      "clue": "転送の呪文で転送される書物は物によっては盗聴できる。"
     }
   ]
 }

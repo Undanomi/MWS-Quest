@@ -12,6 +12,7 @@ public class ClueViewController : MonoBehaviour
     public LogViewController logViewController;
     public DialogueRunner dialogueRunner;
     public ClueViewController clueViewController;
+    public MissionManager missionManager;
 
     private VariableStorageBehaviour _variableStorage;
     private KeyCode _keyCode = KeyCode.H;
@@ -19,6 +20,7 @@ public class ClueViewController : MonoBehaviour
     private GameObject _clueText;
     private Npc[] _npcs;
     private Clue[] _clues;
+    private int _currentMission = 1;
 
     [System.Serializable]
     public class Npc
@@ -65,6 +67,15 @@ public class ClueViewController : MonoBehaviour
 
     private void Update()
     {
+        if(missionManager.GetMissionPhase() + 1 > _currentMission)
+        {
+            _currentMission = missionManager.GetMissionPhase() + 1;
+            foreach (var npc in _npcs)
+            {
+                npc.isMet = false;
+                Debug.Log(npc.npc + "のisMetをリセットしました。" + npc.isMet);
+            }
+        }
         if (dialogueRunner.IsDialogueRunning)
         {
             clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(false);
@@ -146,7 +157,8 @@ public class ClueViewController : MonoBehaviour
         foreach (var npc in _npcs)
         {
             float metCount = GetYarnVariable<float>("$" + npc.npc + "MetCount");
-            if (!npc.isMet && metCount > 0)
+            //Yarnのnumberがfloatしかできないので、変な比較をしている
+            if (!npc.isMet && metCount > _currentMission - 1)
             {
                 //_npcsのすべてのisMetがfalseであるかどうか
                 bool allFalse = true;
@@ -158,16 +170,18 @@ public class ClueViewController : MonoBehaviour
                         break;
                     }
                 }
-                if (allFalse)
+                if (allFalse && _currentMission == 1)
                 {
                     _clueText.GetComponent<TMPro.TMP_Text>().text = "";
                 }
                 
                 npc.isMet = true;
+                Debug.Log("isMetをtrueにしました。" + npc.isMet);
                 _clueText.GetComponent<TMPro.TMP_Text>().text += npc.display + "からの情報:\n";
+                Debug.Log(npc.npc + "からの情報:");
                 foreach (var clue in _clues)
                 {
-                    if (clue.npc == npc.npc)
+                    if (clue.npc == npc.npc && clue.mission == "mission" + _currentMission)
                     {
                         _clueText.GetComponent<TMPro.TMP_Text>().text += clue.clue + "\n\n";
                     }

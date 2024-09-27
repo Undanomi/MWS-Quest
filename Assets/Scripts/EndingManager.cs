@@ -20,20 +20,16 @@ public class EndingManager : MonoBehaviour
     [Header("プレイヤーフォローカメラ")]
     public Cinemachine.CinemachineVirtualCamera playerFollowCamera;
     
-    private DialogueRunner _dialogueRunner;
-    private MissionManager _missionManager;
-    private LogViewController _logViewController;
-    private ClueViewController _clueViewController;
-    private StartDialogueButtonController _startDialogueButtonController;
+    public DialogueRunner dialogueRunner;
+    public MissionManager missionManager;
+    public LogViewController logViewController;
+    public ClueViewController clueViewController;
+    public StartDialogueButtonController startDialogueButtonController;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
     
     private void Start()
     {
-        _dialogueRunner = FindObjectOfType<DialogueRunner>();
-        _missionManager = FindObjectOfType<MissionManager>();
-        _logViewController = FindObjectOfType<LogViewController>();
-        _clueViewController = FindObjectOfType<ClueViewController>();
         _descriptionImages = Resources.LoadAll<Sprite>("Images");
         descriptionImage.sprite = _descriptionImages[0];
         descriptionImage.gameObject.SetActive(false);
@@ -42,12 +38,12 @@ public class EndingManager : MonoBehaviour
     private void Update()
     {
         // Yarnの$CorrectFinalQuestion がtrueになったらエンディング処理を開始
-        if (_missionManager.isEndingStarted && !_isEndingStarted)
+        if (missionManager.isEndingStarted && !_isEndingStarted)
         {
             _isEndingStarted = true;
-            _logViewController.SetLogViewAvailable(false);
-            _clueViewController.SetClueViewAvailable(false);
-            _startDialogueButtonController.SetStartDialogueButtonAvailable(false);
+            logViewController.SetLogViewAvailable(false);
+            clueViewController.SetClueViewAvailable(false);
+            startDialogueButtonController.SetStartDialogueButtonAvailable(false);
             StartCoroutine(HandleEndingSequence());
         }
     }
@@ -67,18 +63,18 @@ public class EndingManager : MonoBehaviour
         // フェードイン
         yield return StartCoroutine(FadeImage(fadeImage, 1f, 0f, fadeTime));
         // エンディングダイアログを開始
-        _dialogueRunner.StartDialogue("Ending");
+        dialogueRunner.StartDialogue("Ending");
         // エンディングダイアログが終わるまで待つ
-        while (_missionManager.HasVisitedNode("Ending") == false)
+        while (missionManager.HasVisitedNode("Ending") == false)
         {
             yield return null;
         }
         // 解説ダイアログを開始
-        _dialogueRunner.StartDialogue("Description");
+        dialogueRunner.StartDialogue("Description");
         // 解説画面のフェードイン
         yield return StartCoroutine(FadeImage(descriptionImage, 0f, 1f, 0.5f));
         // 解説画面の更新
-        while (_missionManager.HasVisitedNode("Description") == false)
+        while (missionManager.HasVisitedNode("Description") == false)
         {
             UpdateDescriptionImage();
             yield return null;
@@ -108,7 +104,7 @@ public class EndingManager : MonoBehaviour
 
     private void UpdateDescriptionImage()
     {
-        string descriptionImageIndex = ((int)_missionManager.GetYarnVariable<float>("$DescriptionProgress")+1).ToString("D2");
+        string descriptionImageIndex = ((int)missionManager.GetYarnVariable<float>("$DescriptionProgress")+1).ToString("D2");
         string descriptionImageName = $"Description{descriptionImageIndex}";
         Sprite descriptionSprite = Array.Find(_descriptionImages, sprite => sprite.name == descriptionImageName);
         descriptionImage.sprite = descriptionSprite;
