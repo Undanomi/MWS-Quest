@@ -50,6 +50,10 @@ public class EndingManager : MonoBehaviour
     
     private IEnumerator HandleEndingSequence()
     {
+        // プレイヤーの移動を受け付けないようにする
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+        playerController.SetCanMove(false);
+        
         //一旦dialogueRunnerを停止（バグ対応）
         dialogueRunner.gameObject.SetActive(false);
         // 暗転
