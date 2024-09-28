@@ -19,7 +19,7 @@ public class TitleManager : MonoBehaviour
         titleButton.onClick.AddListener(OnClick);
     }
 
-    public void OnClick()
+    private void OnClick()
     {
         SceneManager.LoadScene("Login");
     }
