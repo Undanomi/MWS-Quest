@@ -127,19 +127,16 @@ public class LogViewController : MonoBehaviour
 
     void OnEscapeButtonClicked()
     {
-        Debug.Log("EscapeButtonClicked");
         SwitchLogViewRunning();
     }
 
     void OnClearButtonClicked()
     {
-        Debug.Log("ClearButtonClicked");
         _searchField.GetComponent<TMPro.TMP_InputField>().text = "";
     }
 
     void OnSearchButtonClicked()
     {
-        Debug.Log("SearchButtonClicked");
         SearchWord();
     }
 

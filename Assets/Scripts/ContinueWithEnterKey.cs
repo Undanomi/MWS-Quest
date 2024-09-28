@@ -10,11 +10,7 @@ public class ContinueOnEnter : MonoBehaviour
         if (continueButton == null)
         {
             Debug.LogError("Continue Button is not assigned!");
-            return;
         }
-
-        // ボタンのクリックイベントにEnterキーの入力を追加
-        continueButton.onClick.AddListener(OnContinueClicked);
     }
 
     void Update()
@@ -27,11 +23,5 @@ public class ContinueOnEnter : MonoBehaviour
                 continueButton.onClick.Invoke();
             }
         }
-    }
-
-    void OnContinueClicked()
-    {
-        // ここにボタンがクリックされたときの処理を書く
-        Debug.Log("Continue button clicked!");
     }
 }
