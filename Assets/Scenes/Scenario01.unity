@@ -98938,6 +98938,7 @@ GameObject:
   - component: {fileID: 3579681405102365571}
   - component: {fileID: 3831113771523382164}
   - component: {fileID: 3831113771523382165}
+  - component: {fileID: 3831113771523382166}
   m_Layer: 0
   m_Name: Dialogue System
   m_TagString: Untagged
@@ -99406,6 +99407,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96198362eff24a96b241294ef33afc60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 3579681405102365571}
+  logViewController: {fileID: 1454500385}
+  clueViewController: {fileID: 46995528}
+--- !u!114 &3831113771523382166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753718019804681214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd0fde9277b47e78bdd75e98f5f042a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 3579681405102365571}
