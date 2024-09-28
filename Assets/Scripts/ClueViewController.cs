@@ -34,7 +34,7 @@ public class ClueViewController : MonoBehaviour
     [System.Serializable]
     public class Clue
     {
-        public string mission;
+        public string count;
         public string npc;
         public string clue;
     }
@@ -51,13 +51,8 @@ public class ClueViewController : MonoBehaviour
         isClueViewRunning = false;
         _variableStorage = dialogueRunner.VariableStorage;
         //ダイアログの表示・非表示
-        Transform panel = clueViewController.transform.Find("Canvas/Panel");
-        foreach (Transform child in panel)
-        {
-            // 子オブジェクトのアクティブ状態を設定
-            child.gameObject.SetActive(isClueViewRunning);
-        }
-        clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
+        clueViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isClueViewRunning);
+        clueViewController.transform.Find("Canvas/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
         // EscapeButtonにOnClickイベントを追加
         _escapeButton = clueViewController.transform.Find("Canvas/Panel/EscapeButton").gameObject;
         _clueText = clueViewController.transform.Find("Canvas/Panel/Scroll View/Viewport/Content/ClueText").gameObject;
@@ -79,11 +74,11 @@ public class ClueViewController : MonoBehaviour
         }
         if (dialogueRunner.IsDialogueRunning)
         {
-            clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(false);
+            clueViewController.transform.Find("Canvas/OpenClueViewButton").gameObject.SetActive(false);
         }
-        if(dialogueRunner.IsDialogueRunning == false && isClueViewRunning == false)
+        if(dialogueRunner.IsDialogueRunning == false && isClueViewRunning == false && logViewController.isLogViewRunning == false)
         {
-            clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(true);
+            clueViewController.transform.Find("Canvas/OpenClueViewButton").gameObject.SetActive(true);
         }
         if (_keyCode == KeyCode.None || 
             dialogueRunner.IsDialogueRunning || 
@@ -110,14 +105,9 @@ public class ClueViewController : MonoBehaviour
     {
         isClueViewRunning = !isClueViewRunning;
         //ダイアログの表示・非表示
-        Transform panel = clueViewController.transform.Find("Canvas/Panel");
-        foreach (Transform child in panel)
-        {
-            // 子オブジェクトのアクティブ状態を設定
-            child.gameObject.SetActive(isClueViewRunning);
-        }
-        logViewController.transform.Find("Canvas/Panel/OpenLogViewButton").gameObject.SetActive(!isClueViewRunning);
-        clueViewController.transform.Find("Canvas/Panel/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
+        clueViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isClueViewRunning);
+        logViewController.transform.Find("Canvas/OpenLogViewButton").gameObject.SetActive(!isClueViewRunning);
+        clueViewController.transform.Find("Canvas/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
         dialogueRunner.transform.Find("Canvas").gameObject.SetActive(!isClueViewRunning);
         logViewController.gameObject.SetActive(!isClueViewRunning);
         _keyCode = isClueViewRunning ? KeyCode.Escape : KeyCode.H;
@@ -183,7 +173,7 @@ public class ClueViewController : MonoBehaviour
                 Debug.Log(npc.npc + "からの情報:");
                 foreach (var clue in _clues)
                 {
-                    if (clue.npc == npc.npc && clue.mission == "mission" + _currentMission)
+                    if (clue.npc == npc.npc && clue.count == "count" + npc.wholeMetCount)
                     {
                         _clueText.GetComponent<TMPro.TMP_Text>().text += clue.clue + "\n\n";
                     }

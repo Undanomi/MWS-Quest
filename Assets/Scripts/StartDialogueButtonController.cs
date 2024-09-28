@@ -31,6 +31,10 @@ public class StartDialogueButtonController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// DialogueButtonの表示を切り替える
+    /// </summary>
+    /// <param name="isAvailable"></param>
     public void SetStartDialogueButtonAvailable(bool isAvailable)
     {
         _isAvailable = isAvailable;
