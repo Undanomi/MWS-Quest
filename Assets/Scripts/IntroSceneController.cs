@@ -45,6 +45,8 @@ public class IntroSceneController : MonoBehaviour
     
     private IEnumerator HandleIntroSequence()
     {
+        // プレイヤーを移動できないようにする
+        _playerController.SetCanMove(false);
         // シナリオタイトルを表示
         yield return StartCoroutine(ShowScenarioTitle());
         
@@ -52,6 +54,7 @@ public class IntroSceneController : MonoBehaviour
         yield return StartCoroutine(SwitchMapCamera());
         
         // プレイヤーを目的地に移動
+        _playerController.SetCanMove(true);
         yield return StartCoroutine(MovePlayerToDestination());
         
     }
@@ -61,6 +64,7 @@ public class IntroSceneController : MonoBehaviour
         float elapsedTime = 0f;
         Color imageColor = fadeImage.color;
         Color textColor = scenarioTitle.color;
+        
         
         fadeImage.gameObject.SetActive(true);
         scenarioTitle.gameObject.SetActive(true);

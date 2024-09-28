@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         }
         Move();
     }
-    private void SetCanMove(bool flag)
+    public void SetCanMove(bool flag)
     {
         _canMove = flag;
     }
