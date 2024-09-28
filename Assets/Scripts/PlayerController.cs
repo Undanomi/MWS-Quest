@@ -1,4 +1,3 @@
-using DefaultNamespace;
 using UnityEngine;
 using Yarn.Unity;
 
