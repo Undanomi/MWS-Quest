@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Yarn.Compiler;
 using Yarn.Unity;
 
 public class MissionManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class MissionManager : MonoBehaviour
         "$AliceMetCount", "$BobMetCount", "$CharlieMetCount", "$DaveMetCount", "$EllenMetCount", "$FrankMetCount"
     };
 
-    private int _missionPhase = -1;
+    private int _missionPhase;
     private readonly List<Mission> _missions = new List<Mission>();
     
     void Start()
@@ -33,42 +34,39 @@ public class MissionManager : MonoBehaviour
 
     private void Update()
     {
+        if (_missionPhase == 0 && (int)GetYarnVariable<float>("$MissionNumber") == 1)
+        {
+            StartCoroutine(ActivateMissionDisplay());
+        }
+        
+        _missionPhase = (int)GetYarnVariable<float>("$MissionNumber");
+
+        int completedMissionNumber;
         
         switch (_missionPhase)
         {
-            case -1:
-                if (HasVisitedNode("NarratorGreeting"))
-                {
-                    _missionPhase++;
-                    StartCoroutine(ActivateMissionDisplay());
-                }
-                break;
-                
             case 0:
-                int completeCount = CountVariablesGraterThanOrEqualTo(1) + 1;
-                _missions[_missionPhase].CurrentProgress = completeCount;
-                UpdateMissionDisplay();
-                if (completeCount == 7)
-                {
-                    bool isClear = GetYarnVariable<bool>("$CorrectFirstQuestion");
-                    if (isClear) _missionPhase++;
-                }
+                // 何もしない
                 break;
             case 1:
-                // アリスに2回会ったかどうかを確認する
-                bool aliceMetTwice = GetYarnVariable<float>("$AliceMetCount") >= 2;
-                _missions[_missionPhase].CurrentProgress = aliceMetTwice ? 1 : 0;
+                int metCount = CountVariablesGraterThanOrEqualTo(1) + 1;
+                _missions[_missionPhase-1].CurrentProgress = metCount;
                 UpdateMissionDisplay();
+                completedMissionNumber = (int)GetYarnVariable<float>("$CompletedMissionNumber");
+                if (completedMissionNumber == 0 && metCount == _missions[_missionPhase-1].TotalProgress)
+                {
+                    dialogueRunner.StartDialogue("IntroSpellRecords");
+                }
+                break;
+            case 10:
+                isEndingStarted = true;
+                StartCoroutine(HandleMissionEnding());
                 break;
             default:
+                completedMissionNumber = (int)GetYarnVariable<float>("$CompletedMissionNumber");
+                _missions[_missionPhase-1].CurrentProgress = completedMissionNumber == _missionPhase ? 1 : 0;
                 UpdateMissionDisplay();
                 break;
-        }
-        // 最終問題が正解したらエンディング処理を開始
-        if (!isEndingStarted && GetYarnVariable<bool>("$CorrectFinalQuestion"))
-        {
-            isEndingStarted = true;
-            StartCoroutine(HandleMissionEnding());
         }
     }
     
@@ -127,12 +125,12 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     private void UpdateMissionDisplay()
     {
-        string title = _missions[_missionPhase].Title;
-        int currentProgress = _missions[_missionPhase].CurrentProgress;
-        int totalProgress = _missions[_missionPhase].TotalProgress;
+        string title = _missions[_missionPhase-1].Title;
+        int currentProgress = _missions[_missionPhase-1].CurrentProgress;
+        int totalProgress = _missions[_missionPhase-1].TotalProgress;
         string color = currentProgress == totalProgress ? "<color=#2E8B57>" : "<color=#B8860B>";
         missionDisplay.text = 
-            $"ミッション{_missionPhase+1} : {title}" +
+            $"ミッション{_missionPhase} : {title}" +
             $"{color}({currentProgress}/{totalProgress})</color>";
     }
 
@@ -168,6 +166,7 @@ public class MissionManager : MonoBehaviour
         }
         return count;
     }
+
     /// <summary>
     /// ある変数の値を取得する
     /// </summary>
