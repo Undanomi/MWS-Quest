@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool _isAutoMoving;
     private Vector2 _autoMoveDirection;
     private float _autoMoveSpeed;
-    private bool _doNotMove;
+    private bool _canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -73,9 +73,9 @@ public class PlayerController : MonoBehaviour
         }
         Move();
     }
-    private void DontMove(bool flag)
+    private void SetCanMove(bool flag)
     {
-        _doNotMove = flag;
+        _canMove = flag;
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void SyncMoveAnimation()
     {
-        if (_doNotMove) return;
+        if (!_canMove) return;
         
         Vector2 moveDirection = _isAutoMoving ? _autoMoveDirection : new Vector2(_horizontal, _vertical);
         if (moveDirection.sqrMagnitude > 0)
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        if (_doNotMove) return;
+        if (!_canMove) return;
         
         // direction unit-vector
         Vector2 moveDirection = _isAutoMoving ? _autoMoveDirection : new Vector2(_horizontal, _vertical);
