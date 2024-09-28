@@ -50,6 +50,8 @@ public class EndingManager : MonoBehaviour
     
     private IEnumerator HandleEndingSequence()
     {
+        //一旦dialogueRunnerを停止（バグ対応）
+        dialogueRunner.gameObject.SetActive(false);
         // 暗転
         yield return StartCoroutine(FadeImage(fadeImage, 0f, 1f, fadeTime));
         // カメラを俯瞰に切り替えておく
@@ -62,6 +64,10 @@ public class EndingManager : MonoBehaviour
         }
         // フェードイン
         yield return StartCoroutine(FadeImage(fadeImage, 1f, 0f, fadeTime));
+        // 再度Active化
+        dialogueRunner.gameObject.SetActive(true);
+        //進行中のダイアログを中断
+        dialogueRunner.Stop();
         // エンディングダイアログを開始
         dialogueRunner.StartDialogue("Ending");
         // エンディングダイアログが終わるまで待つ
@@ -79,6 +85,10 @@ public class EndingManager : MonoBehaviour
             UpdateDescriptionImage();
             yield return null;
         }
+        
+        //一旦dialogueRunnerを停止（バグ対応）
+        dialogueRunner.gameObject.SetActive(false);
+        
         // 解説画面のフェードアウト
         yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 0.5f));
         
