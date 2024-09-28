@@ -85,6 +85,10 @@ public class EndingManager : MonoBehaviour
             UpdateDescriptionImage();
             yield return null;
         }
+        
+        //一旦dialogueRunnerを停止（バグ対応）
+        dialogueRunner.gameObject.SetActive(false);
+        
         // 解説画面のフェードアウト
         yield return StartCoroutine(FadeImage(descriptionImage, 1f, 0f, 0.5f));
         
