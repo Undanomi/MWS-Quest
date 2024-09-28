@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -731,11 +731,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.19215687, g: 0.29411766, b: 0.5176471, a: 1}
-    m_HighlightedColor: {r: 0.3764706, g: 0.5019608, b: 0.77254903, a: 1}
-    m_PressedColor: {r: 0.4117647, g: 0.5019608, b: 0.6039216, a: 1}
-    m_SelectedColor: {r: 0.3764706, g: 0.5019608, b: 0.77254903, a: 1}
-    m_DisabledColor: {r: 0.4117647, g: 0.5019608, b: 0.6039216, a: 0.5019608}
+    m_NormalColor: {r: 0, g: 0.6132076, b: 0.48306143, a: 1}
+    m_HighlightedColor: {r: 0.011747932, g: 0.8301887, b: 0.6570569, a: 1}
+    m_PressedColor: {r: 0.03355288, g: 0.5471698, b: 0.43937367, a: 1}
+    m_SelectedColor: {r: 0.011764706, g: 0.83137256, b: 0.65882355, a: 1}
+    m_DisabledColor: {r: 0.03529412, g: 0.54901963, b: 0.44313726, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1791,6 +1791,7 @@ GameObject:
   - component: {fileID: 1651798321}
   - component: {fileID: 1651798323}
   - component: {fileID: 1651798322}
+  - component: {fileID: 1651798324}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1830,7 +1831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.3843137, g: 0.446576, b: 1, a: 0.33333334}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1855,6 +1856,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651798320}
   m_CullTransparentMesh: 1
+--- !u!114 &1651798324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651798320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a4b9ae73f548bba28e9d2eebbcd5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetImage: {fileID: 1651798322}
+  hueSpeed: 0.1
 --- !u!1 &1710347298
 GameObject:
   m_ObjectHideFlags: 0
