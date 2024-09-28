@@ -34,7 +34,7 @@ public class ClueViewController : MonoBehaviour
     [System.Serializable]
     public class Clue
     {
-        public string mission;
+        public string count;
         public string npc;
         public string clue;
     }
@@ -173,7 +173,7 @@ public class ClueViewController : MonoBehaviour
                 Debug.Log(npc.npc + "からの情報:");
                 foreach (var clue in _clues)
                 {
-                    if (clue.npc == npc.npc && clue.mission == "mission" + _currentMission)
+                    if (clue.npc == npc.npc && clue.count == "count" + npc.wholeMetCount)
                     {
                         _clueText.GetComponent<TMPro.TMP_Text>().text += clue.clue + "\n\n";
                     }
