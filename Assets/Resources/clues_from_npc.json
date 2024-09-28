@@ -27,37 +27,37 @@
   ],
   "clues": [
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Alice",
       "clue": "私の家の金庫は私か村長の呪文でしか開けられないようになっているから、セキュリティは万全のはず。"
     },
     {
-      "mission": "mission8",
+      "count": "count2",
       "npc": "Alice",
       "clue": "帳簿管理の魔法の書は転送呪文によってポストに送られてきた。\n帳簿管理の魔法の書の送り主は、ブラボー村のイブだ。"
     },
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Bob",
       "clue": "昨日の19時ごろにアリスの家から大きな物音がしていた。"
     },
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Charlie",
       "clue": "昨日は村長が丸1日遠くの町に出かけていた。"
     },
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Dave",
       "clue": "村には囲うように結界が張ってあって呪文が通らないようになっている。\n転送の魔法を使うときは、その呪文だけ通るように結界に穴を開ける。"
     },
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Ellen",
       "clue": "呪文を自動で発動する魔法の書というものがあるらしい。"
     },
     {
-      "mission": "mission1",
+      "count": "count1",
       "npc": "Frank",
       "clue": "「呪文の痕跡」の調査は「怪しいことがあった時間帯の記録を見る」と「わかった単語で検索する」がコツ"
     }
