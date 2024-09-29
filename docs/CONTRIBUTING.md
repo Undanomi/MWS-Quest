@@ -3,22 +3,49 @@
 本プロジェクトへのコントリビュート方法についてのガイドです。
 
 ## Issues
-次のIssueを受けつけています。
+
+次の Issue を受けつけています。
 
 - 使い方など本プロジェクトに関する質問
 - エラーや問題の報告
 - 新しい機能などの提案
 
-その他のIssueも歓迎しています。
+その他の Issue も歓迎しています。
 
 ## Pull Request
-Pull Requestはいつでも歓迎しています。  
-次の種類のPull Requestを受け付けています。
 
-以下の内容はIssue立てずにPull Requestを送ってください。
+Pull Request はいつでも歓迎しています。  
+次の種類の Pull Request を受け付けています。
+
+以下の内容は Issue 立てずに Pull Request を送ってください。
+
 - 誤字の修正
 - 各ドキュメントの修正
 
-以下の内容はIssueを立てて相談してください。
+以下の内容は Issue を立てて相談してください。
+
 - バグ・不具合の修正
 - 新しい機能の追加
+
+## 環境構築
+
+### 1. Unity のインストール
+
+[Unity Hub](https://store.unity.com/download) をダウンロードし、Unity をインストールしてください。
+
+### 2. VS Code や Rider などのエディタのインストール
+
+Unity
+
+### 3. リポジトリのクローン
+
+次のコマンドを実行してリポジトリをクローンしてください。
+
+```bash
+git clone https://github.com/Undanomi/MWS-Quest.git
+```
+
+### 4. プロジェクトの起動
+
+Unity Hub を開き、`Add` をクリックしてクローンしたリポジトリを選択してください。プロジェクトが開き、編集や実行、ビルドが可能になります。
+Unity の詳細な使用方法については、[Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/UnityManual.html) などを参照してください。
