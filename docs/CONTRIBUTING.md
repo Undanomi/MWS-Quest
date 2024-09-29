@@ -32,10 +32,11 @@ Pull Request はいつでも歓迎しています。
 ### 1. Unity のインストール
 
 [Unity Hub](https://store.unity.com/download) をダウンロードし、Unity をインストールしてください。
+Unity の詳細な使用方法については、[Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/UnityManual.html) などを参照してください。
 
 ### 2. VS Code や Rider などのエディタのインストール
 
-Unity
+本プロジェクトでは、Unity のスクリプトを編集するために VS Code や Rider などのエディタを使用します。好きなエディタをインストールし、Unity との連携を行ってください。
 
 ### 3. リポジトリのクローン
 
@@ -48,4 +49,3 @@ git clone https://github.com/Undanomi/MWS-Quest.git
 ### 4. プロジェクトの起動
 
 Unity Hub を開き、`Add` をクリックしてクローンしたリポジトリを選択してください。プロジェクトが開き、編集や実行、ビルドが可能になります。
-Unity の詳細な使用方法については、[Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/UnityManual.html) などを参照してください。
