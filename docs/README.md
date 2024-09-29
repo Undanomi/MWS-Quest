@@ -219,7 +219,7 @@ SE は、[効果音ラボ](https://soundeffect-lab.info/)さんのものを使�
 
 ## License
 
-This software is released under the MIT License, see LICENSE.
+このソフトウェアは、**MIT LICENSE** で提供されています。ただし、[クレジット](#クレジット)に記載されている素材については、それぞれのライセンスに従います。
 
 ## 審査基準について
 
