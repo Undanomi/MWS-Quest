@@ -104,6 +104,13 @@ public class LogViewController : MonoBehaviour
                 Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, ">", "");
         }
         
+        if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("\n"))
+        {
+            _searchField.GetComponent<TMPro.TMP_InputField>().text =
+                Regex.Replace(_searchField.GetComponent<TMPro.TMP_InputField>().text, "\n", "");
+        }
+        
+        
         if (Input.GetKeyDown(_keyCode))
         {
             SwitchLogViewRunning();
