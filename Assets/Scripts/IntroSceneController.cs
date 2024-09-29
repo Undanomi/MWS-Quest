@@ -10,7 +10,7 @@ public class IntroSceneController : MonoBehaviour
     public GameObject player;
     
     [Header("DialogueRunnerオブジェクト")]
-    public Yarn.Unity.DialogueRunner dialogueRunner;
+    public DialogueRunner dialogueRunner;
     
     [Header("プレイヤーの目的地")]
     public Vector2[] destinations;
@@ -33,10 +33,12 @@ public class IntroSceneController : MonoBehaviour
     
     private readonly float _stopDistance = 0.1f;
     private PlayerController _playerController;
+    private SoundManager _soundManager;
 
     private void Start()
     {
         _playerController = player.GetComponent<PlayerController>();
+        _soundManager = FindObjectOfType<SoundManager>();
         logViewController.SetLogViewAvailable(false);
         clueViewController.SetClueViewAvailable(false);
         startDialogueButtonController.SetStartDialogueButtonAvailable(false);
@@ -175,6 +177,9 @@ public class IntroSceneController : MonoBehaviour
         
         // プレイヤーの移動を停止
         _playerController.StopAutoMove();
+        
+        // BGMを再生
+        _soundManager.PlayBGM(bgmName: _soundManager.bgm, fadeInTime:3f);
         
         // ナレーターのセリフ
         dialogueRunner.StartDialogue("NarratorGreeting");

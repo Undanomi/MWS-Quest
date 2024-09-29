@@ -1,0 +1,149 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using Yarn.Unity;
+
+public class SoundManager : MonoBehaviour
+{
+    [Header("DialogueRunnerオブジェクト")] public DialogueRunner dialogueRunner;
+    
+    [Header("SE Path: ダイアログ送り")]
+    [Tooltip("拡張子を除いたものを指定")]
+    public string dialogueForwardSound;
+    [Header("SE Path: 決定音")]
+    [Tooltip("拡張子を除いたものを指定")]
+    public string decisionSound;
+    [Header("SE Path: キャンセル音")]
+    [Tooltip("拡張子を除いたものを指定")]
+    public string cancelSound;
+    [Header("SE Path: 歩行音")]
+    [Tooltip("拡張子を除いたものを指定")]
+    public string walkSound;
+    [Header("BGM Path:メインテーマ")]
+    [Tooltip("拡張子を除いたものを指定")]
+    public string bgm;
+    
+    
+    private AudioSource _soundEffectSource;
+    private AudioSource _bgmSource;
+    
+    // SEのキャッシュ
+    private readonly Dictionary<string, AudioClip> _seCache = new Dictionary<string, AudioClip>();
+    // BGMのキャッシュ
+    private readonly Dictionary<string, AudioClip> _bgmCache = new Dictionary<string, AudioClip>();
+    // YarnSpinnerのダイアログ
+    private DialogueRunner _dialogueRunner;
+
+    private void Awake()
+    {
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        if (audioSources.Length != 2)
+        {
+            Debug.LogError("AudioSourceの数が2つではありません");
+            return;
+        }
+        _soundEffectSource = audioSources[0];
+        _bgmSource = audioSources[1];
+    }
+    
+    private void Start()
+    {
+        _dialogueRunner = dialogueRunner;
+        _dialogueRunner.onDialogueStart.AddListener(() =>
+        {
+            PlaySE(decisionSound);
+        });
+    }
+
+    public void PlaySE(string seName, float volume = 0.2f)
+    {
+        if (!_seCache.ContainsKey(seName))
+        {
+            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{seName}");
+            if (!clip) // clipがnullの場合
+            {
+                Debug.LogError($"SE not found: {seName}");
+                return;
+            }
+            _seCache.Add(seName, clip);
+        }
+        // SE再生
+        _soundEffectSource.volume = volume;
+        _soundEffectSource.PlayOneShot(_seCache[seName]);
+    }
+    
+    public void PlayBGM(string bgmName, float volume=0.05f, float fadeInTime=3.0f, bool resume=false)
+    {
+        // 一時停止解除
+        // すでに再生中のBGMと同じ場合は一時停止を解除して音量をフェードイン
+        if (resume && _bgmSource.clip && _bgmSource.clip.name == bgmName)
+        {
+            // すでに再生中のBGMの音量が指定した音量と異なる場合は音量を変更
+            if (!Mathf.Approximately(_bgmSource.volume, volume))
+            {
+                _bgmSource.volume = volume;
+            }
+            _bgmSource.UnPause();
+            StartCoroutine(FadeInBGM(fadeInTime));
+            return;
+        }
+        
+        if (!_bgmCache.ContainsKey(bgmName))
+        {
+            AudioClip clip = Resources.Load<AudioClip>($"Sounds/BGM/{bgmName}");
+            if (!clip)
+            {
+                Debug.LogError($"BGM not found: {bgmName}");
+                return;
+            }
+            _bgmCache.Add(bgmName, clip);
+        }
+        
+        // BGM再生
+        _bgmSource.clip = _bgmCache[bgmName];
+        _bgmSource.volume = volume;
+        _bgmSource.loop = true;
+        _bgmSource.Play();
+        StartCoroutine(FadeInBGM(fadeInTime));
+    }
+    
+    private IEnumerator FadeInBGM(float fadeInTime = 0.0f)
+    {
+        float elapsedTime = 0f;
+        float volume = _bgmSource.volume;
+        while (elapsedTime < fadeInTime)
+        {
+            elapsedTime += Time.deltaTime;
+            _bgmSource.volume = Mathf.Lerp(0, volume, elapsedTime / fadeInTime);
+            yield return null;
+        }
+    }
+    
+    public void StopBGM(float fadeOutTime = 0.0f, bool pause=false)
+    {
+        StartCoroutine(FadeOutBGM(fadeOutTime, pause));
+    }
+    
+    private IEnumerator FadeOutBGM(float fadeOutTime, bool pause)
+    {
+        float elapsedTime = 0f;
+        float volume = _bgmSource.volume;
+        while (elapsedTime < fadeOutTime)
+        {
+            elapsedTime += Time.deltaTime;
+            _bgmSource.volume = Mathf.Lerp(volume, 0, elapsedTime / fadeOutTime);
+            yield return null;
+        }
+        if (pause)
+        {
+            _bgmSource.Pause();
+        }
+        else
+        {
+            _bgmSource.Stop();
+        }
+    }
+    
+    
+}
