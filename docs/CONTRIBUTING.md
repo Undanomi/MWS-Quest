@@ -33,6 +33,7 @@ Pull Request はいつでも歓迎しています。
 
 [Unity Hub](https://store.unity.com/download) をダウンロードし、Unity をインストールしてください。
 Unity の詳細な使用方法については、[Unity マニュアル](https://docs.unity3d.com/ja/2022.3/Manual/UnityManual.html) などを参照してください。
+本プロジェクトは Unity 2022.3.41f1 で開発しています。
 
 ### 2. VS Code や Rider などのエディタのインストール
 
