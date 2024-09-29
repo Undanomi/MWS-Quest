@@ -80,4 +80,4 @@ crashlytics-build.properties
 .DS_Store
 
 # Sounds Directory
-Assets/Resources/Sounds/*
+/[Aa]ssets/[Rr]esources/[Ss]ounds/*
