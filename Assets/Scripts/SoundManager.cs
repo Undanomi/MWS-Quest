@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Yarn.Unity;
 
 public class SoundManager : MonoBehaviour
@@ -19,16 +20,17 @@ public class SoundManager : MonoBehaviour
     public string cancelSound;
     [Header("SE Name: 歩行音")]
     [Tooltip("拡張子を除いたものを指定")]
-    public string walkSound;
+    public string footStep;
     [Header("BGM Name:メインテーマ")]
     [Tooltip("拡張子を除いたものを指定")]
     public string bgm;
     [Header("BGM音量")]
-    public float defaultBgmVolume = 0.05f;
+    public float bgmVolume = 0.05f;
     [Header("SE音量")]
-    public float defaultSeVolume = 0.2f;
+    public float seVolume = 0.2f;
     
     private AudioSource _soundEffectSource;
+    private AudioSource _footStepSource;
     private AudioSource _bgmSource;
     private DialogueRunner _dialogueRunner;
     
@@ -40,15 +42,17 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         AudioSource[] audioSources = GetComponents<AudioSource>();
-        if (audioSources.Length != 2)
+        if (audioSources.Length != 3)
         {
-            Debug.LogError("AudioSourceの数が2つではありません");
+            Debug.LogError("AudioSourceの数が3つではありません");
             return;
         }
         _soundEffectSource = audioSources[0];
-        _bgmSource = audioSources[1];
-        _soundEffectSource.volume = defaultSeVolume;
-        _bgmSource.volume = defaultBgmVolume;
+        _footStepSource = audioSources[1];
+        _bgmSource = audioSources[2];
+        _soundEffectSource.volume = seVolume;
+        _footStepSource.volume = seVolume;
+        _bgmSource.volume = bgmVolume;
     }
     
     private void Start()
@@ -74,6 +78,69 @@ public class SoundManager : MonoBehaviour
         }
         // SE再生
         _soundEffectSource.PlayOneShot(_seCache[seName]);
+    }
+    
+    public void PlayFootStep()
+    {
+        Debug.Log($"FootStepVolume: {_footStepSource.volume}");
+        if (_footStepSource.isPlaying)
+        {
+            return;
+        }
+        if (!_seCache.ContainsKey(footStep))
+        {
+            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{footStep}");
+            if (!clip) // clipがnullの場合
+            {
+                Debug.LogError($"SE not found: {footStep}");
+                return;
+            }
+            _seCache.Add(footStep, clip);
+        }
+        // 再生
+        _footStepSource.clip = _seCache[footStep];
+        _footStepSource.loop = true;
+        _footStepSource.Play();
+        
+    }
+
+    public IEnumerator StopFootStep()
+    {
+        if (!_footStepSource.isPlaying)
+        {
+            yield break;
+        }
+        // フェードアウト
+        yield return StartCoroutine(FadeOutFootStep(0.2f));
+        // ボリュームを元に戻しておく
+        _footStepSource.volume = seVolume;
+    }
+
+
+    private IEnumerator FadeInFootStep(float fadeInTime)
+    {
+        float volume = _footStepSource.volume;
+        _footStepSource.volume = 0;
+        _footStepSource.Play();
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeInTime)
+        {
+            elapsedTime += Time.deltaTime;
+            _footStepSource.volume = Mathf.Lerp(0, volume, elapsedTime / fadeInTime);
+            yield return null;
+        }
+    }
+    private IEnumerator FadeOutFootStep(float fadeOutTime)
+    {
+        float elapsedTime = 0f;
+        float volume = _footStepSource.volume;
+        while (elapsedTime < fadeOutTime)
+        {
+            elapsedTime += Time.deltaTime;
+            _footStepSource.volume = Mathf.Lerp(volume, 0, elapsedTime / fadeOutTime);
+            yield return null;
+        }
+        _footStepSource.Stop();
     }
     
     public void PlayBGM(string bgmName, float fadeInTime=3.0f, bool resume=false)
@@ -115,11 +182,14 @@ public class SoundManager : MonoBehaviour
             _bgmSource.volume = Mathf.Lerp(0, volume, elapsedTime / fadeInTime);
             yield return null;
         }
+        _bgmSource.volume = bgmVolume;
     }
     
-    public void StopBGM(float fadeOutTime = 0.0f, bool pause=false)
+    public IEnumerator StopBGM(float fadeOutTime = 0.0f, bool pause=false)
     {
-        StartCoroutine(FadeOutBGM(fadeOutTime, pause));
+        yield return StartCoroutine(FadeOutBGM(fadeOutTime, pause));
+        // ボリュームを元に戻しておく
+        _bgmSource.volume = bgmVolume;
     }
     
     private IEnumerator FadeOutBGM(float fadeOutTime, bool pause)
@@ -149,6 +219,7 @@ public class SoundManager : MonoBehaviour
     public void SetBGMVolume(float volume)
     {
         _bgmSource.volume = volume;
+        bgmVolume = volume;
     }
     
     /// <summary>
@@ -158,6 +229,8 @@ public class SoundManager : MonoBehaviour
     public void SetSEVolume(float volume)
     {
         _soundEffectSource.volume = volume;
+        _footStepSource.volume = volume * 0.8f;
+        seVolume = volume;
     }
     
     

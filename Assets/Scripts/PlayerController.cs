@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private LogViewController _logViewController;
     private ClueViewController _clueViewController;
     private StartDialogueButtonController _startDialogueButtonController;
+    private SoundManager _soundManager;
     
     private bool _isAutoMoving;
     private Vector2 _autoMoveDirection;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         _dialogueRunner = FindObjectOfType<DialogueRunner>();
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
             _clueViewController.isClueViewRunning
             )
         {
+            StopAnimation();
             return;
         }
         
@@ -53,7 +56,7 @@ public class PlayerController : MonoBehaviour
         _vertical = Input.GetAxis("Vertical");
         
         // プレイヤーの向きを変更
-        SyncMoveAnimation();
+        SyncAnimationAndSE();
     }
     
     void FixedUpdate()
@@ -66,8 +69,6 @@ public class PlayerController : MonoBehaviour
         {
             // 現在のフレームでの移動をキャンセル
             _rb.velocity = Vector2.zero;
-            // AnimationをStoppingに変更
-            _anim.SetBool(IsMoving, false);
             return;
         }
         Move();
@@ -76,24 +77,44 @@ public class PlayerController : MonoBehaviour
     {
         _canMove = flag;
     }
+    /// <summary>
+    /// 動くアニメーションを開始
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    private void StartAnimation(float x, float y)
+    {
+        _anim.SetFloat(LookX, x);
+        _anim.SetFloat(LookY, y);
+        _anim.SetBool(IsMoving, true);
+        _soundManager.PlayFootStep();
+    }
+    
+    /// <summary>
+    /// 動くアニメーションを停止
+    /// </summary>
+    private void StopAnimation()
+    {
+        _anim.SetBool(IsMoving, false);
+        // フェードアウトが伴うため、コルーチンを利用
+        StartCoroutine(_soundManager.StopFootStep());
+    }
 
     /// <summary>
     /// プレイヤーの向きと移動アニメーションの同期を行う
     /// </summary>
-    private void SyncMoveAnimation()
+    private void SyncAnimationAndSE()
     {
         if (!_canMove) return;
         
         Vector2 moveDirection = _isAutoMoving ? _autoMoveDirection : new Vector2(_horizontal, _vertical);
         if (moveDirection.sqrMagnitude > 0)
         {
-            _anim.SetFloat(LookX, moveDirection.x);
-            _anim.SetFloat(LookY, moveDirection.y);
-            _anim.SetBool(IsMoving, true);
+            StartAnimation(moveDirection.x, moveDirection.y);
         }
         else
         {
-            _anim.SetBool(IsMoving, false);
+            StopAnimation();
         }
         
     }
