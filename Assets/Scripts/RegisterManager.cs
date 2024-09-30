@@ -21,7 +21,37 @@ public class RegisterManager : MonoBehaviour
         _soundManager = FindObjectOfType<SoundManager>();
         _soundManager.PlayBGM(_soundManager.bgmLogin, fadeInTime:0f);
         registerButton.onClick.AddListener(OnRegisterButtonClicked);
+        
     }
+    
+    private void Update()
+    {
+        //インジェクション対策で、タグを無効化。また、改行コードを削除
+        if(usernameField.text != null && (usernameField.text.Contains("<") || usernameField.text.Contains(">") || usernameField.text.Contains("\n")))
+        {
+            usernameField.text = usernameField.text.Replace("<", "");
+            usernameField.text = usernameField.text.Replace(">", "");
+            usernameField.text = usernameField.text.Replace("\n", "");
+        }
+        if(passwordField.text != null && (passwordField.text.Contains("<") || passwordField.text.Contains(">") || passwordField.text.Contains("\n")))
+        {
+            passwordField.text = passwordField.text.Replace("<", "");
+            passwordField.text = passwordField.text.Replace(">", "");
+            passwordField.text = passwordField.text.Replace("\n", "");
+        }
+        if (Input.GetKeyDown(KeyCode.Return) && 
+            usernameField.text != null && 
+            passwordField.text != null && 
+            confirmPasswordField.text != null &&
+            usernameField.text != "" && 
+            passwordField.text != "" && 
+            confirmPasswordField.text != ""
+            )
+        {
+            OnRegisterButtonClicked();
+        }
+    }
+    
     public void OnRegisterButtonClicked()
     {
         string username = usernameField.text;
