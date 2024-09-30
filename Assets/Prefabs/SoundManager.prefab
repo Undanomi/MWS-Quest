@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007d0018657bad0439ce68810075895a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueRunner: {fileID: 0}
+  hasDialogue: 0
   dialogueForwardSound: Message
   decisionSound: Decision
   cancelSound: Cancel
   walkSound: Run
   bgm: Main
+  defaultBgmVolume: 0.05
+  defaultSeVolume: 0.2
 --- !u!82 &4067539322720063317
 AudioSource:
   m_ObjectHideFlags: 0
@@ -64,7 +66,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -160,7 +162,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.099
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

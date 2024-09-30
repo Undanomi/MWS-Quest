@@ -23,6 +23,10 @@ public class SoundManager : MonoBehaviour
     [Header("BGM Name:メインテーマ")]
     [Tooltip("拡張子を除いたものを指定")]
     public string bgm;
+    [Header("BGM音量")]
+    public float defaultBgmVolume = 0.05f;
+    [Header("SE音量")]
+    public float defaultSeVolume = 0.2f;
     
     private AudioSource _soundEffectSource;
     private AudioSource _bgmSource;
@@ -43,6 +47,8 @@ public class SoundManager : MonoBehaviour
         }
         _soundEffectSource = audioSources[0];
         _bgmSource = audioSources[1];
+        _soundEffectSource.volume = defaultSeVolume;
+        _bgmSource.volume = defaultBgmVolume;
     }
     
     private void Start()
