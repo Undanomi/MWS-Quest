@@ -52,6 +52,19 @@ public class SoundManager : MonoBehaviour
         _soundEffectSource = audioSources[0];
         _footStepSource = audioSources[1];
         _bgmSource = audioSources[2];
+        
+        // キャッシュの作成
+        AudioClip[] clips = Resources.LoadAll<AudioClip>("Sounds/SE");
+        foreach (AudioClip clip in clips)
+        {
+            _seCache.Add(clip.name, clip);
+        }
+        clips = Resources.LoadAll<AudioClip>("Sounds/BGM");
+        foreach (AudioClip clip in clips)
+        {
+            _bgmCache.Add(clip.name, clip);
+        }
+        
     }
     
     private void Start()
