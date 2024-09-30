@@ -1,13 +1,15 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class RegisterManager : MonoBehaviour
 {
     [Header("ユーザ名入力フィールド")] public TMP_InputField usernameField;
     [Header("パスワード入力フィールド")] public TMP_InputField passwordField;
     [Header("確認用パスワード入力フィールド")] public TMP_InputField confirmPasswordField;
-    [Header("エラーメッセージ")] public TMP_Text errorMessage;
+    [Header("メッセージ")] public TMP_Text message;
+    
 
     public void OnRegisterButtonClicked()
     {
@@ -28,12 +30,12 @@ public class RegisterManager : MonoBehaviour
         else if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
             // ユーザ登録失敗時の処理
-            errorMessage.text = "ユーザ名とパスワードを入力してください";
+            message.text = "ユーザ名とパスワードを入力してください";
         }
         else
         {
             // ユーザ登録失敗時の処理
-            errorMessage.text = "パスワードと確認用パスワードが一致しません";
+            message.text = "パスワードと確認用パスワードが一致しません";
         }
     }
     

@@ -4,13 +4,14 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class LoginManager : MonoBehaviour
 {
     [Header("ユーザ名入力フィールド")] public TMP_InputField usernameField;
     [Header("パスワード入力フィールド")] public TMP_InputField passwordField;
     [Header("ログインボタン")] public Button loginButton;
-    [Header("エラーメッセージ")] public TMP_Text errorMessage;
+    [Header("メッセージ")] public TMP_Text message;
     
     private SoundManager _soundManager;
     
@@ -38,14 +39,14 @@ public class LoginManager : MonoBehaviour
         {
             // ログイン失敗時の処理
             _soundManager.PlaySE(_soundManager.cancelSound);
-            errorMessage.text = "ユーザ名またはパスワードが違います";
+            message.text = "ユーザ名またはパスワードが違います";
         }
     }
     
     private IEnumerator LoginSuccess(string username)
     {
         _soundManager.PlaySE(_soundManager.decisionSound);
-        errorMessage.text = $"<color=green>ログイン成功: {username}さんこんにちは </color>";
+        message.text = $"<color=green>ログイン成功: {username}さんこんにちは </color>";
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("ScenarioSelect");
     }
