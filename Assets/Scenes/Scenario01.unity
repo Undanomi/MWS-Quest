@@ -65052,7 +65052,7 @@ MonoBehaviour:
   - {x: -24, y: -6.5}
   - {x: -24, y: -5.5}
   startPosition: {x: -24, y: -9.5}
-  autoMoveSpeed: 3
+  autoMoveSpeed: 5.5
   mapOverViewCamera: {fileID: 2081365621}
   playerFollowCamera: {fileID: 183777299}
   scenarioTitle: {fileID: 213829475}
