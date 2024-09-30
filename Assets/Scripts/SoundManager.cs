@@ -6,34 +6,33 @@ using Yarn.Unity;
 
 public class SoundManager : MonoBehaviour
 {
-    [Header("DialogueRunnerオブジェクト")] public DialogueRunner dialogueRunner;
-    
-    [Header("SE Path: ダイアログ送り")]
+    [Header("ダイアログの有無")]
+    public bool hasDialogue;
+    [Header("SE Name: ダイアログ送り")]
     [Tooltip("拡張子を除いたものを指定")]
     public string dialogueForwardSound;
-    [Header("SE Path: 決定音")]
+    [Header("SE Name: 決定音")]
     [Tooltip("拡張子を除いたものを指定")]
     public string decisionSound;
-    [Header("SE Path: キャンセル音")]
+    [Header("SE Name: キャンセル音")]
     [Tooltip("拡張子を除いたものを指定")]
     public string cancelSound;
-    [Header("SE Path: 歩行音")]
+    [Header("SE Name: 歩行音")]
     [Tooltip("拡張子を除いたものを指定")]
     public string walkSound;
-    [Header("BGM Path:メインテーマ")]
+    [Header("BGM Name:メインテーマ")]
     [Tooltip("拡張子を除いたものを指定")]
     public string bgm;
     
     
     private AudioSource _soundEffectSource;
     private AudioSource _bgmSource;
+    private DialogueRunner _dialogueRunner;
     
     // SEのキャッシュ
     private readonly Dictionary<string, AudioClip> _seCache = new Dictionary<string, AudioClip>();
     // BGMのキャッシュ
     private readonly Dictionary<string, AudioClip> _bgmCache = new Dictionary<string, AudioClip>();
-    // YarnSpinnerのダイアログ
-    private DialogueRunner _dialogueRunner;
 
     private void Awake()
     {
@@ -49,11 +48,11 @@ public class SoundManager : MonoBehaviour
     
     private void Start()
     {
-        _dialogueRunner = dialogueRunner;
-        _dialogueRunner.onDialogueStart.AddListener(() =>
+        if (hasDialogue)
         {
-            PlaySE(decisionSound);
-        });
+            _dialogueRunner = FindObjectOfType<DialogueRunner>();
+            _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(decisionSound); });
+        }
     }
 
     public void PlaySE(string seName, float volume = 0.2f)

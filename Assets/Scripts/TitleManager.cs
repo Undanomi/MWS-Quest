@@ -6,9 +6,13 @@ public class TitleManager : MonoBehaviour
 {
     public Button titleButton;
     private const string TitleImagePath = "Images/Title";
+    
+    private SoundManager _soundManager;
 
     private void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
+        
         // 全画像を読み込む
         Sprite[] titleSprites = Resources.LoadAll<Sprite>(TitleImagePath);
         // ランダムに画像を選択
@@ -21,6 +25,7 @@ public class TitleManager : MonoBehaviour
 
     private void OnClick()
     {
+        _soundManager.PlaySE(_soundManager.decisionSound);
         SceneManager.LoadScene("Login");
     }
     
