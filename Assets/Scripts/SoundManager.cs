@@ -24,7 +24,6 @@ public class SoundManager : MonoBehaviour
     [Tooltip("拡張子を除いたものを指定")]
     public string bgm;
     
-    
     private AudioSource _soundEffectSource;
     private AudioSource _bgmSource;
     private DialogueRunner _dialogueRunner;
@@ -55,7 +54,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySE(string seName, float volume = 0.2f)
+    public void PlaySE(string seName)
     {
         if (!_seCache.ContainsKey(seName))
         {
@@ -68,21 +67,15 @@ public class SoundManager : MonoBehaviour
             _seCache.Add(seName, clip);
         }
         // SE再生
-        _soundEffectSource.volume = volume;
         _soundEffectSource.PlayOneShot(_seCache[seName]);
     }
     
-    public void PlayBGM(string bgmName, float volume=0.05f, float fadeInTime=3.0f, bool resume=false)
+    public void PlayBGM(string bgmName, float fadeInTime=3.0f, bool resume=false)
     {
         // 一時停止解除
         // すでに再生中のBGMと同じ場合は一時停止を解除して音量をフェードイン
         if (resume && _bgmSource.clip && _bgmSource.clip.name == bgmName)
         {
-            // すでに再生中のBGMの音量が指定した音量と異なる場合は音量を変更
-            if (!Mathf.Approximately(_bgmSource.volume, volume))
-            {
-                _bgmSource.volume = volume;
-            }
             _bgmSource.UnPause();
             StartCoroutine(FadeInBGM(fadeInTime));
             return;
@@ -101,7 +94,6 @@ public class SoundManager : MonoBehaviour
         
         // BGM再生
         _bgmSource.clip = _bgmCache[bgmName];
-        _bgmSource.volume = volume;
         _bgmSource.loop = true;
         _bgmSource.Play();
         StartCoroutine(FadeInBGM(fadeInTime));
@@ -142,6 +134,24 @@ public class SoundManager : MonoBehaviour
         {
             _bgmSource.Stop();
         }
+    }
+    
+    /// <summary>
+    /// BGMのボリュームを設定
+    /// </summary>
+    /// <param name="volume"></param>
+    public void SetBGMVolume(float volume)
+    {
+        _bgmSource.volume = volume;
+    }
+    
+    /// <summary>
+    /// SEのボリュームを設定
+    /// </summary>
+    /// <param name="volume"></param>
+    public void SetSEVolume(float volume)
+    {
+        _soundEffectSource.volume = volume;
     }
     
     
