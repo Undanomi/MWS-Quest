@@ -99682,6 +99682,10 @@ PrefabInstance:
       value: SoundManager
       objectReference: {fileID: 0}
     - target: {fileID: 6024869911122754165, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
+      propertyPath: hasDialogue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024869911122754165, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
       propertyPath: dialogueRunner
       value: 
       objectReference: {fileID: 3579681405102365571}
