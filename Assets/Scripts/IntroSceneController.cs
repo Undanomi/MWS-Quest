@@ -179,7 +179,7 @@ public class IntroSceneController : MonoBehaviour
         _playerController.StopAutoMove();
         
         // BGMを再生
-        _soundManager.PlayBGM(bgmName: _soundManager.bgm, fadeInTime:3f);
+        _soundManager.PlayBGM(bgmName: _soundManager.bgmMain, fadeInTime:3f);
         
         // ナレーターのセリフ
         dialogueRunner.StartDialogue("NarratorGreeting");

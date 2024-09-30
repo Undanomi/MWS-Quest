@@ -24,7 +24,7 @@ public class AdditionalDialogueRunner : MonoBehaviour
             // 決定キーが押されたときのSEを再生
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
-                _soundManager.PlaySE(_soundManager.decisionSound);
+                _soundManager.PlaySE(_soundManager.seDecision);
             }
         }
 

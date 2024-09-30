@@ -24,7 +24,7 @@ public class TitleManager : MonoBehaviour
 
     private IEnumerator LoadLoginScene()
     {
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seTitle);
         yield return new WaitForSeconds(0.15f);
         SceneManager.LoadScene("Login");
     }

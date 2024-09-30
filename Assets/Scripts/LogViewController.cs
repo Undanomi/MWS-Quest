@@ -119,11 +119,11 @@ public class LogViewController : MonoBehaviour
         {
             if (_keyCode == KeyCode.L)
             {
-                _soundManager.PlaySE(_soundManager.decisionSound);
+                _soundManager.PlaySE(_soundManager.seDecision);
             }
             else if (_keyCode == KeyCode.Escape)
             {
-                _soundManager.PlaySE(_soundManager.cancelSound);
+                _soundManager.PlaySE(_soundManager.seCancel);
             }
             SwitchLogViewRunning();
         }
@@ -141,19 +141,19 @@ public class LogViewController : MonoBehaviour
 
     void OnEscapeButtonClicked()
     {
-        _soundManager.PlaySE(_soundManager.cancelSound);
+        _soundManager.PlaySE(_soundManager.seCancel);
         SwitchLogViewRunning();
     }
 
     void OnClearButtonClicked()
     {
-        _soundManager.PlaySE(_soundManager.cancelSound);
+        _soundManager.PlaySE(_soundManager.seCancel);
         _searchField.GetComponent<TMPro.TMP_InputField>().text = "";
     }
 
     void OnSearchButtonClicked()
     {
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seCancel);
         SearchWord();
     }
 

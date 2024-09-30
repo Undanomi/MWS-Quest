@@ -9,21 +9,23 @@ public class SoundManager : MonoBehaviour
 {
     [Header("ダイアログの有無")]
     public bool hasDialogue;
-    [Header("SE Name: ダイアログ送り")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string dialogueForwardSound;
-    [Header("SE Name: 決定音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string decisionSound;
-    [Header("SE Name: キャンセル音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string cancelSound;
-    [Header("SE Name: 歩行音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string footStep;
-    [Header("BGM Name:メインテーマ")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string bgm;
+    [Header("BGM Name: タイトル")]
+    public string bgmTitle;
+    [Header("BGM Name: ログイン/シナリオ選択")]
+    public string bgmLogin;
+    [Header("BGM Name: イントロ")]
+    public string bgmIntro;
+    [Header("BGM Name: メイン")]
+    public string bgmMain;
+    [Header("BGM Name: エンディング")]
+    public string bgmEnding;
+
+    [Header("SE Name: タイトル")] public string seTitle;
+    [Header("SE Name: シナリオ画面")] public string seScenario;
+    [Header("SE Name: 決定音")] public string seDecision;
+    [Header("SE Name: キャンセル音")] public string seCancel;
+    [Header("SE Name: フットステップ")] public string seFootStep;
+    
     [Header("BGM音量")]
     public float bgmVolume = 0.05f;
     [Header("SE音量")]
@@ -60,7 +62,7 @@ public class SoundManager : MonoBehaviour
         if (hasDialogue)
         {
             _dialogueRunner = FindObjectOfType<DialogueRunner>();
-            _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(decisionSound); });
+            _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(seDecision); });
         }
     }
 
@@ -86,18 +88,18 @@ public class SoundManager : MonoBehaviour
         {
             return;
         }
-        if (!_seCache.ContainsKey(footStep))
+        if (!_seCache.ContainsKey(seFootStep))
         {
-            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{footStep}");
+            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{seFootStep}");
             if (!clip) // clipがnullの場合
             {
-                Debug.LogError($"SE not found: {footStep}");
+                Debug.LogError($"SE not found: {seFootStep}");
                 return;
             }
-            _seCache.Add(footStep, clip);
+            _seCache.Add(seFootStep, clip);
         }
         // 再生
-        _footStepSource.clip = _seCache[footStep];
+        _footStepSource.clip = _seCache[seFootStep];
         _footStepSource.loop = true;
         _footStepSource.Play();
         

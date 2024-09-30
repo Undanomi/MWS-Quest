@@ -48,11 +48,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasDialogue: 1
-  dialogueForwardSound: Message
-  decisionSound: Decision
-  cancelSound: Cancel
-  footStep: FootStep
-  bgm: Main
+  bgmTitle: bgm_title
+  bgmLogin: bgm_login
+  bgmIntro: bgm_arrival
+  bgmMain: bgm_main
+  bgmEnding: bgm_ending
+  seTitle: se_title
+  seScenario: se_select
+  seDecision: se_decision
+  seCancel: se_cancel
+  seFootStep: se_footstep
   bgmVolume: 0.05
   seVolume: 0.2
 --- !u!82 &4644921636340798673

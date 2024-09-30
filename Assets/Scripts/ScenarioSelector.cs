@@ -49,7 +49,7 @@ public class ScenarioSelector : MonoBehaviour
     private IEnumerator LoadScenario(int scenarioId)
     {
         // SE再生
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seScenario);
         // フェードアウトを待つ
         yield return StartCoroutine(FadeOut(1f));
         // 2桁の0埋めしたシナリオ名を作成

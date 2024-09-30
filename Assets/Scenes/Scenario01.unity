@@ -100196,6 +100196,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1504061342771186458, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
+      propertyPath: footStep
+      value: se_footstep
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504061342771186458, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
+      propertyPath: cancelSound
+      value: se_cacel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504061342771186458, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
+      propertyPath: decisionSound
+      value: se_decision
+      objectReference: {fileID: 0}
     - target: {fileID: 5073740235969946544, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
       propertyPath: m_Name
       value: SoundManager

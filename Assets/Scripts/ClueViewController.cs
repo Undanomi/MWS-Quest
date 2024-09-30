@@ -97,11 +97,11 @@ public class ClueViewController : MonoBehaviour
         {
             if (_keyCode == KeyCode.H)
             {
-                _soundManager.PlaySE(_soundManager.decisionSound);
+                _soundManager.PlaySE(_soundManager.seDecision);
             }
             else if (_keyCode == KeyCode.Escape)
             {
-                _soundManager.PlaySE(_soundManager.cancelSound);
+                _soundManager.PlaySE(_soundManager.seCancel);
             }
             SwitchClueViewRunning();
         }
@@ -110,7 +110,7 @@ public class ClueViewController : MonoBehaviour
     
     void OnEscapeButtonClicked()
     {
-        _soundManager.PlaySE(_soundManager.cancelSound);
+        _soundManager.PlaySE(_soundManager.seCancel);
         SwitchClueViewRunning();
     }
     

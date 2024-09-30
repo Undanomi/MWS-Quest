@@ -50,7 +50,7 @@ public class RegisterManager : MonoBehaviour
 
     private IEnumerator RegisterSuccess(string username)
     {
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seScenario);
         message.text = $"<color=green>ユーザ登録成功: {username}さんこんにちは </color>";
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("ScenarioSelect");
@@ -58,7 +58,7 @@ public class RegisterManager : MonoBehaviour
     
     private void RegisterFailed(string errorMassage)
     {
-        _soundManager.PlaySE(_soundManager.cancelSound);
+        _soundManager.PlaySE(_soundManager.seCancel);
         message.text = errorMassage;
     }
     
