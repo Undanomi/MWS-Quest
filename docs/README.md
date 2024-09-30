@@ -1,5 +1,7 @@
 # MWS Quest - Missions for World Safety -
 
+![](img/thumbnail.png)
+
 ## Table of Contents
 
 _**for general**_
