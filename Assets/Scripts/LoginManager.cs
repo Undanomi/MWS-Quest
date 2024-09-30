@@ -20,6 +20,34 @@ public class LoginManager : MonoBehaviour
         _soundManager = FindObjectOfType<SoundManager>();
         loginButton.onClick.AddListener(OnLoginButtonClicked);
     }
+    
+    private void Update()
+    {
+        //インジェクション対策で、タグを無効化。また、改行コードを削除
+        if(usernameField.text != null && (usernameField.text.Contains("<") || usernameField.text.Contains(">") || usernameField.text.Contains("\n")))
+        {
+            usernameField.text = usernameField.text.Replace("<", "");
+            usernameField.text = usernameField.text.Replace(">", "");
+            usernameField.text = usernameField.text.Replace("\n", "");
+        }
+        if(passwordField.text != null && (passwordField.text.Contains("<") || passwordField.text.Contains(">") || passwordField.text.Contains("\n")))
+        {
+            passwordField.text = passwordField.text.Replace("<", "");
+            passwordField.text = passwordField.text.Replace(">", "");
+            passwordField.text = passwordField.text.Replace("\n", "");
+        }
+        if (Input.GetKeyDown(KeyCode.Return) &&
+            usernameField.text != null &&
+            passwordField.text != null &&
+            usernameField.text != "" && 
+            passwordField.text != ""
+            )
+        {
+            Debug.Log("username: " + usernameField.text);
+            OnLoginButtonClicked();
+        }
+    }
+    
     public void OnLoginButtonClicked()
     {
         
