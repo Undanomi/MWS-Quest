@@ -9,8 +9,12 @@ public class ScenarioSelector : MonoBehaviour
     public Button[] scenarioButtons;
     public Image fadeImage;
     
+    private SoundManager _soundManager;
+    
     void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
+        
         // シナリオボタンに変数を追加
         for (int i = 0; i < scenarioButtons.Length; i++)
         {
@@ -44,6 +48,8 @@ public class ScenarioSelector : MonoBehaviour
     }
     private IEnumerator LoadScenario(int scenarioId)
     {
+        // SE再生
+        _soundManager.PlaySE(_soundManager.decisionSound);
         // フェードアウトを待つ
         yield return StartCoroutine(FadeOut(1f));
         // 2桁の0埋めしたシナリオ名を作成
