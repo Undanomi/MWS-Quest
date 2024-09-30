@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Yarn.Unity;
 
 public class SoundManager : MonoBehaviour
@@ -24,6 +22,7 @@ public class SoundManager : MonoBehaviour
     [Header("SE Name: シナリオ画面")] public string seScenario;
     [Header("SE Name: 決定音")] public string seDecision;
     [Header("SE Name: キャンセル音")] public string seCancel;
+    [Header("SE Name: 正解音")] public string seCorrect;
     [Header("SE Name: フットステップ")] public string seFootStep;
     
     [Header("BGM音量")]
@@ -78,7 +77,6 @@ public class SoundManager : MonoBehaviour
             _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(seDecision); });
         }
     }
-
     public void PlaySE(string seName)
     {
         if (!_seCache.ContainsKey(seName))
@@ -93,6 +91,15 @@ public class SoundManager : MonoBehaviour
         }
         // SE再生
         _soundEffectSource.PlayOneShot(_seCache[seName]);
+    }
+
+    public IEnumerator PlayCorrectSE()
+    {
+        _footStepSource.clip = _seCache[seCorrect];
+        _footStepSource.loop = false;
+        _footStepSource.Play();
+        Debug.Log($"_footStepSource.clip.length: {_footStepSource.clip.length}");
+        yield return new WaitForSeconds(_footStepSource.clip.length);
     }
     
     public void PlayFootStep()

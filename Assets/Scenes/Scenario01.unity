@@ -100201,6 +100201,10 @@ PrefabInstance:
       value: se_footstep
       objectReference: {fileID: 0}
     - target: {fileID: 1504061342771186458, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
+      propertyPath: seCorrect
+      value: se_correct
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504061342771186458, guid: fb95f3fa96342d3418f240cefb292caa, type: 3}
       propertyPath: cancelSound
       value: se_cacel
       objectReference: {fileID: 0}
