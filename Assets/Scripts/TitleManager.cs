@@ -22,13 +22,13 @@ public class TitleManager : MonoBehaviour
         titleImage.sprite = randomSprite;
         
         // BGM再生
-        _soundManager.PlayBGM(_soundManager.bgmTitle);
+        _soundManager.PlayBGM(_soundManager.bgmTitle, fadeInTime:0f);
     }
 
     private IEnumerator LoadLoginScene()
     {
         _soundManager.PlaySE(_soundManager.seTitle);
-        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 2f));
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
         SceneManager.LoadScene("Login");
     }
     
