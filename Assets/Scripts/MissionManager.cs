@@ -24,9 +24,12 @@ public class MissionManager : MonoBehaviour
     private int _missionPhase;
     private readonly List<Mission> _missions = new List<Mission>();
     
+    private SoundManager _soundManager;
+    
     void Start()
     {
         dialogueRunner.onNodeComplete.AddListener(OnNodeComplete);
+        _soundManager = FindObjectOfType<SoundManager>();
         _variableStorage = dialogueRunner.VariableStorage as InMemoryVariableStorage;
         
         LoadMissionData("Missions");
