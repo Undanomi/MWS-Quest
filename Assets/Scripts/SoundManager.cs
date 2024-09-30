@@ -50,13 +50,13 @@ public class SoundManager : MonoBehaviour
         _soundEffectSource = audioSources[0];
         _footStepSource = audioSources[1];
         _bgmSource = audioSources[2];
-        _soundEffectSource.volume = seVolume;
-        _footStepSource.volume = seVolume;
-        _bgmSource.volume = bgmVolume;
     }
     
     private void Start()
     {
+        SetSEVolume(seVolume);
+        SetBGMVolume(bgmVolume);
+        
         if (hasDialogue)
         {
             _dialogueRunner = FindObjectOfType<DialogueRunner>();
@@ -82,7 +82,6 @@ public class SoundManager : MonoBehaviour
     
     public void PlayFootStep()
     {
-        Debug.Log($"FootStepVolume: {_footStepSource.volume}");
         if (_footStepSource.isPlaying)
         {
             return;
@@ -229,7 +228,7 @@ public class SoundManager : MonoBehaviour
     public void SetSEVolume(float volume)
     {
         _soundEffectSource.volume = volume;
-        _footStepSource.volume = volume * 0.8f;
+        _footStepSource.volume = volume;
         seVolume = volume;
     }
     

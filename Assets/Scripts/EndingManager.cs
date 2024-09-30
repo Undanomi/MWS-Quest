@@ -105,8 +105,8 @@ public class EndingManager : MonoBehaviour
         
         // ENDと表示する
         yield return StartCoroutine(FadeText(endingText, 0f, 1f, 0.5f));
-        
-        _soundManager.StopBGM(fadeOutTime: 5f);
+
+        StartCoroutine(_soundManager.StopBGM(fadeOutTime: 3f));
         
         // 2秒待つ
         yield return new WaitForSeconds(2f);
