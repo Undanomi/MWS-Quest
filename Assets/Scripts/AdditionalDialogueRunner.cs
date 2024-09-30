@@ -22,7 +22,7 @@ public class AdditionalDialogueRunner : MonoBehaviour
             logViewController.gameObject.SetActive(false);
             clueViewController.gameObject.SetActive(false);
             // 決定キーが押されたときのSEを再生
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
                 _soundManager.PlaySE(_soundManager.decisionSound);
             }
