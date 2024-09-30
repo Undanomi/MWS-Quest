@@ -4,16 +4,26 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class LoginManager : MonoBehaviour
 {
     [Header("ユーザ名入力フィールド")] public TMP_InputField usernameField;
     [Header("パスワード入力フィールド")] public TMP_InputField passwordField;
     [Header("ログインボタン")] public Button loginButton;
-    [Header("エラーメッセージ")] public TMP_Text errorMessage;
+    [Header("メッセージ")] public TMP_Text message;
     
+    private SoundManager _soundManager;
+    
+    private void Start()
+    {
+        _soundManager = FindObjectOfType<SoundManager>();
+        loginButton.onClick.AddListener(OnLoginButtonClicked);
+        _soundManager.PlayBGM(_soundManager.bgmLogin, fadeInTime: 0f);
+    }
     public void OnLoginButtonClicked()
     {
+        
         string username = usernameField.text;
         string password = passwordField.text;
         
@@ -24,14 +34,26 @@ public class LoginManager : MonoBehaviour
         if (username == "admin" && password == "password")
         {
             // ログイン成功時にはシナリオ選択画面に遷移
-            SceneManager.LoadScene("ScenarioSelect");
+            StartCoroutine(LoginSuccess(username));
         }
         else
         {
             // ログイン失敗時の処理
-            errorMessage.text = "ユーザ名またはパスワードが違います";
+            LoginFailed("ユーザ名またはパスワードが間違っています");
         }
-        
+    }
+    
+    private IEnumerator LoginSuccess(string username)
+    {
+        _soundManager.PlaySE(_soundManager.seScenario);
+        message.text = $"<color=green>ログイン成功: {username}さんこんにちは </color>";
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
+        SceneManager.LoadScene("ScenarioSelect");
+    }
+    private void LoginFailed(string errorMassage)
+    {
+        _soundManager.PlaySE(_soundManager.seCancel);
+        message.text = errorMassage;
     }
 
     private IEnumerator LoginRequest(string username, string password)

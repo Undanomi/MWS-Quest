@@ -25,11 +25,15 @@ public class EndingManager : MonoBehaviour
     public LogViewController logViewController;
     public ClueViewController clueViewController;
     public StartDialogueButtonController startDialogueButtonController;
+    
+    private SoundManager _soundManager;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
     
+    
     private void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
         _descriptionImages = Resources.LoadAll<Sprite>("Images");
         descriptionImage.sprite = _descriptionImages[0];
         descriptionImage.gameObject.SetActive(false);
@@ -41,6 +45,7 @@ public class EndingManager : MonoBehaviour
         if (missionManager.isEndingStarted && !_isEndingStarted)
         {
             _isEndingStarted = true;
+            _soundManager.StopBGM(fadeOutTime: 1f);
             logViewController.SetLogViewAvailable(false);
             clueViewController.SetClueViewAvailable(false);
             startDialogueButtonController.SetStartDialogueButtonAvailable(false);
@@ -60,6 +65,8 @@ public class EndingManager : MonoBehaviour
         yield return StartCoroutine(FadeImage(fadeImage, 0f, 1f, fadeTime));
         // カメラを俯瞰に切り替えておく
         SwitchToMapCamera();
+        // BGMを再生
+        _soundManager.PlayBGM(_soundManager.bgmEnding, fadeInTime: 2f);
         float elapsedTime = 0f;
         while (elapsedTime < 2f)
         {
@@ -101,6 +108,8 @@ public class EndingManager : MonoBehaviour
         
         // ENDと表示する
         yield return StartCoroutine(FadeText(endingText, 0f, 1f, 0.5f));
+
+        StartCoroutine(_soundManager.StopBGM(fadeOutTime: 3f));
         
         // 2秒待つ
         yield return new WaitForSeconds(2f);

@@ -78,3 +78,6 @@ crashlytics-build.properties
 
 # macOS Finder file
 .DS_Store
+
+# Sounds Directory
+/[Aa]ssets/[Rr]esources/[Ss]ounds*

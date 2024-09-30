@@ -1,14 +1,27 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class RegisterManager : MonoBehaviour
 {
     [Header("ユーザ名入力フィールド")] public TMP_InputField usernameField;
     [Header("パスワード入力フィールド")] public TMP_InputField passwordField;
     [Header("確認用パスワード入力フィールド")] public TMP_InputField confirmPasswordField;
-    [Header("エラーメッセージ")] public TMP_Text errorMessage;
+    [Header("登録ボタン")] public Button registerButton;
+    [Header("メッセージ")] public TMP_Text message;
+    
+    private SoundManager _soundManager;
 
+    private void Start()
+    {
+        _soundManager = FindObjectOfType<SoundManager>();
+        _soundManager.PlayBGM(_soundManager.bgmLogin, fadeInTime:0f);
+        registerButton.onClick.AddListener(OnRegisterButtonClicked);
+    }
     public void OnRegisterButtonClicked()
     {
         string username = usernameField.text;
@@ -22,19 +35,32 @@ public class RegisterManager : MonoBehaviour
         if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && password == confirmPassword)
         {
             // ユーザ登録成功時の処理
-            // 仮処理として、登録成功時にはシナリオ選択画面に遷移
-            SceneManager.LoadScene("ScenarioSelect");
+            StartCoroutine(RegisterSuccess(username));
         }
         else if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
             // ユーザ登録失敗時の処理
-            errorMessage.text = "ユーザ名とパスワードを入力してください";
+            RegisterFailed("ユーザ名またはパスワードが未入力です");
         }
         else
         {
             // ユーザ登録失敗時の処理
-            errorMessage.text = "パスワードと確認用パスワードが一致しません";
+            RegisterFailed("パスワードと確認用パスワードが一致しません");
         }
+    }
+
+    private IEnumerator RegisterSuccess(string username)
+    {
+        _soundManager.PlaySE(_soundManager.seScenario);
+        message.text = $"<color=green>ユーザ登録成功: {username}さんこんにちは </color>";
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
+        SceneManager.LoadScene("ScenarioSelect");
+    }
+    
+    private void RegisterFailed(string errorMassage)
+    {
+        _soundManager.PlaySE(_soundManager.seCancel);
+        message.text = errorMassage;
     }
     
     /// <summary>
