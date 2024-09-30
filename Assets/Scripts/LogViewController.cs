@@ -153,7 +153,7 @@ public class LogViewController : MonoBehaviour
 
     void OnSearchButtonClicked()
     {
-        _soundManager.PlaySE(_soundManager.seCancel);
+        _soundManager.PlaySE(_soundManager.seDecision);
         SearchWord();
     }
 
