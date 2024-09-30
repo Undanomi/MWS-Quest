@@ -76,6 +76,7 @@ BGM:
 - シナリオ選択の決定音: [キャンセル 7](https://soundeffect-lab.info/sound/button/)
 - 決定音: [決定ボタンを押す 48](https://soundeffect-lab.info/sound/button/)
 - キャンセル音: [キャンセル 9](https://soundeffect-lab.info/sound/button/)
+- ミッション完了音: [決定ボタンを押す 47](https://soundeffect-lab.info/sound/button/)
 - 歩行音: [芝生の上を走る](https://soundeffect-lab.info/sound/various/)
 
 #### 4.2 音源ファイルの編集
@@ -96,6 +97,7 @@ BGM:
 - シナリオ選択の決定音（[キャンセル 7](https://soundeffect-lab.info/sound/button/)）: 先頭と末尾の空白部分をカットし、`se_select.mp3` として保存
 - 決定音（[決定ボタンを押す 48](https://soundeffect-lab.info/sound/button/)）: 先頭と末尾の空白部分をカットし、`se_decision.mp3` として保存
 - キャンセル音（[キャンセル 9](https://soundeffect-lab.info/sound/button/)）: 先頭と末尾の空白部分をカットし、`se_cancel.mp3` として保存
+- ミッション完了音（[決定ボタンを押す 47](https://soundeffect-lab.info/sound/button/)）: そのまま、`se_correct.mp3` として保存
 - 歩行音（[芝生の上を走る](https://soundeffect-lab.info/sound/various/)）: 先頭と末尾の空白部分をカットし、2 倍速に変更し、さらに最大音量が`0dB` 程度になるように調整し、`se_footstep.mp3` として保存
 
 #### 4.3 音源ファイルの配置
