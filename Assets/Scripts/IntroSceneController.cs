@@ -179,8 +179,6 @@ public class IntroSceneController : MonoBehaviour
         // プレイヤーの移動を停止
         _playerController.StopAutoMove();
         
-        // イントロ用のBGMを停止
-        
         // ナレーターのセリフ
         dialogueRunner.StartDialogue("NarratorGreeting");
         
