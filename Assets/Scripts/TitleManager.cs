@@ -20,12 +20,15 @@ public class TitleManager : MonoBehaviour
         Sprite randomSprite = titleSprites[Random.Range(0, titleSprites.Length)];
         // 画像を設定
         titleImage.sprite = randomSprite;
+        
+        // BGM再生
+        _soundManager.PlayBGM(_soundManager.bgmTitle);
     }
 
     private IEnumerator LoadLoginScene()
     {
         _soundManager.PlaySE(_soundManager.seTitle);
-        yield return new WaitForSeconds(0.15f);
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 2f));
         SceneManager.LoadScene("Login");
     }
     
