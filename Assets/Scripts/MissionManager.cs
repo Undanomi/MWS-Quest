@@ -138,7 +138,7 @@ public class MissionManager : MonoBehaviour
         if (!isCompleted && currentProgress == totalProgress)
         {
             _missions[_missionPhase-1].IsCompleted = true;
-            StartCoroutine(_soundManager.PlayCorrectSE());
+            _soundManager.PlayCorrectSE();
         }
         string color = currentProgress == totalProgress ? "<color=#2E8B57>" : "<color=#B8860B>";
         missionDisplay.text = 

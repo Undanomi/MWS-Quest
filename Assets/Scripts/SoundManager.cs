@@ -32,6 +32,7 @@ public class SoundManager : MonoBehaviour
     
     private AudioSource _soundEffectSource;
     private AudioSource _footStepSource;
+    private AudioSource _correctEffectSource;
     private AudioSource _bgmSource;
     private DialogueRunner _dialogueRunner;
     
@@ -43,14 +44,15 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         AudioSource[] audioSources = GetComponents<AudioSource>();
-        if (audioSources.Length != 3)
+        if (audioSources.Length != 4)
         {
             Debug.LogError("AudioSourceの数が3つではありません");
             return;
         }
         _soundEffectSource = audioSources[0];
-        _footStepSource = audioSources[1];
-        _bgmSource = audioSources[2];
+        _correctEffectSource = audioSources[1];
+        _footStepSource = audioSources[2];
+        _bgmSource = audioSources[3];
         
         // キャッシュの作成
         AudioClip[] clips = Resources.LoadAll<AudioClip>("Sounds/SE");
@@ -93,13 +95,9 @@ public class SoundManager : MonoBehaviour
         _soundEffectSource.PlayOneShot(_seCache[seName]);
     }
 
-    public IEnumerator PlayCorrectSE()
+    public void PlayCorrectSE()
     {
-        _footStepSource.clip = _seCache[seCorrect];
-        _footStepSource.loop = false;
-        _footStepSource.Play();
-        Debug.Log($"_footStepSource.clip.length: {_footStepSource.clip.length}");
-        yield return new WaitForSeconds(_footStepSource.clip.length);
+        _correctEffectSource.PlayOneShot(_seCache[seCorrect]);
     }
     
     public void PlayFootStep()
@@ -251,6 +249,7 @@ public class SoundManager : MonoBehaviour
     {
         _soundEffectSource.volume = volume;
         _footStepSource.volume = volume;
+        _correctEffectSource.volume = volume;
         seVolume = volume;
     }
     
