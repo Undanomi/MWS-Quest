@@ -1,10 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
-{
-    public Button titleButton;
+{ 
+    public Image titleImage;
     private const string TitleImagePath = "Images/Title";
     
     private SoundManager _soundManager;
@@ -18,22 +20,23 @@ public class TitleManager : MonoBehaviour
         // ランダムに画像を選択
         Sprite randomSprite = titleSprites[Random.Range(0, titleSprites.Length)];
         // 画像を設定
-        titleButton.image.sprite = randomSprite;
-        
-        titleButton.onClick.AddListener(OnClick);
+        titleImage.sprite = randomSprite;
     }
 
-    private void OnClick()
+    private IEnumerator LoadLoginScene()
     {
         _soundManager.PlaySE(_soundManager.decisionSound);
+        yield return new WaitForSeconds(0.15f);
         SceneManager.LoadScene("Login");
     }
     
     void Update()
     {
-        if(Input.anyKey)
+        // 2重で音声が再生されないように
+        // キーボードだけ(マウスは除外)が押されたら
+        if (Input.anyKeyDown)
         {
-            OnClick();
+            StartCoroutine(LoadLoginScene());
         }
     }
 }
