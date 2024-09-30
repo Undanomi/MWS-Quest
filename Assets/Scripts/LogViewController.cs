@@ -25,6 +25,8 @@ public class LogViewController : MonoBehaviour
     private KeyCode _keyCode = KeyCode.L;
     private string _logTextString;
     private string _highlightedLogTextString;
+    
+    private SoundManager _soundManager;
 
     private void Start()
     {
@@ -37,6 +39,8 @@ public class LogViewController : MonoBehaviour
         _escapeButton = logViewController.transform.Find("Canvas/Panel/EscapeButton").gameObject;
         _logText = logViewController.transform.Find("Canvas/Panel/Scroll View/Viewport/Content/LogText").gameObject;
         _searchField = logViewController.transform.Find("Canvas/Panel/SearchField").gameObject;
+        
+        _soundManager = FindObjectOfType<SoundManager>();
         
         TextAsset textAsset = Resources.Load<TextAsset>("log");
 
@@ -91,7 +95,7 @@ public class LogViewController : MonoBehaviour
             return;
         }
         
-        // XSS対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
+        // インジェクション対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
         if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("<"))
         {
             _searchField.GetComponent<TMPro.TMP_InputField>().text =
@@ -113,6 +117,14 @@ public class LogViewController : MonoBehaviour
         
         if (Input.GetKeyDown(_keyCode))
         {
+            if (_keyCode == KeyCode.L)
+            {
+                _soundManager.PlaySE(_soundManager.decisionSound);
+            }
+            else if (_keyCode == KeyCode.Escape)
+            {
+                _soundManager.PlaySE(_soundManager.cancelSound);
+            }
             SwitchLogViewRunning();
         }
 
@@ -129,16 +141,19 @@ public class LogViewController : MonoBehaviour
 
     void OnEscapeButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.cancelSound);
         SwitchLogViewRunning();
     }
 
     void OnClearButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.cancelSound);
         _searchField.GetComponent<TMPro.TMP_InputField>().text = "";
     }
 
     void OnSearchButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.decisionSound);
         SearchWord();
     }
 

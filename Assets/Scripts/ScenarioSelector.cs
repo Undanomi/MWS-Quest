@@ -8,8 +8,13 @@ public class ScenarioSelector : MonoBehaviour
     // Start is called before the first frame update
     public Button[] scenarioButtons;
     public Image fadeImage;
+    
+    private SoundManager _soundManager;
+    
     void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
+        
         // シナリオボタンに変数を追加
         for (int i = 0; i < scenarioButtons.Length; i++)
         {
@@ -23,12 +28,10 @@ public class ScenarioSelector : MonoBehaviour
         {
             button.interactable = false;
         }
-        // フェードアウト
-        StartCoroutine(FadeOut(index, 1.0f));
-        
+        StartCoroutine(LoadScenario(index));
     }
     
-    private IEnumerator FadeOut(int index, float delay)
+    private IEnumerator FadeOut(float delay)
     {
         fadeImage.gameObject.SetActive(true);
         Color color = fadeImage.color;
@@ -42,11 +45,13 @@ public class ScenarioSelector : MonoBehaviour
         }
         color.a = 1f;
         fadeImage.color = color;
-        // シナリオの読み込み
-        LoadScenario(index);
     }
-    private void LoadScenario(int scenarioId)
+    private IEnumerator LoadScenario(int scenarioId)
     {
+        // SE再生
+        _soundManager.PlaySE(_soundManager.decisionSound);
+        // フェードアウトを待つ
+        yield return StartCoroutine(FadeOut(1f));
         // 2桁の0埋めしたシナリオ名を作成
         string sceneName = "Scenario" + (scenarioId+1).ToString("D2");
         SceneManager.LoadScene(sceneName);

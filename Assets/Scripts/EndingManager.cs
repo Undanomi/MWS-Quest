@@ -25,11 +25,15 @@ public class EndingManager : MonoBehaviour
     public LogViewController logViewController;
     public ClueViewController clueViewController;
     public StartDialogueButtonController startDialogueButtonController;
+    
+    private SoundManager _soundManager;
     private Sprite[] _descriptionImages;
     private bool _isEndingStarted;
     
+    
     private void Start()
     {
+        _soundManager = FindObjectOfType<SoundManager>();
         _descriptionImages = Resources.LoadAll<Sprite>("Images");
         descriptionImage.sprite = _descriptionImages[0];
         descriptionImage.gameObject.SetActive(false);
@@ -101,6 +105,8 @@ public class EndingManager : MonoBehaviour
         
         // ENDと表示する
         yield return StartCoroutine(FadeText(endingText, 0f, 1f, 0.5f));
+
+        StartCoroutine(_soundManager.StopBGM(fadeOutTime: 3f));
         
         // 2秒待つ
         yield return new WaitForSeconds(2f);

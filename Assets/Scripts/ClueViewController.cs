@@ -21,6 +21,8 @@ public class ClueViewController : MonoBehaviour
     private Npc[] _npcs;
     private Clue[] _clues;
     private int _currentMission = 1;
+    
+    private SoundManager _soundManager;
 
     [System.Serializable]
     public class Npc
@@ -50,6 +52,9 @@ public class ClueViewController : MonoBehaviour
     {
         isClueViewRunning = false;
         _variableStorage = dialogueRunner.VariableStorage;
+        
+        _soundManager = FindObjectOfType<SoundManager>();
+        
         //ダイアログの表示・非表示
         clueViewController.transform.Find("Canvas/Panel").gameObject.SetActive(isClueViewRunning);
         clueViewController.transform.Find("Canvas/OpenClueViewButton").gameObject.SetActive(!isClueViewRunning);
@@ -90,6 +95,14 @@ public class ClueViewController : MonoBehaviour
         
         if (Input.GetKeyDown(_keyCode))
         {
+            if (_keyCode == KeyCode.H)
+            {
+                _soundManager.PlaySE(_soundManager.decisionSound);
+            }
+            else if (_keyCode == KeyCode.Escape)
+            {
+                _soundManager.PlaySE(_soundManager.cancelSound);
+            }
             SwitchClueViewRunning();
         }
         AddText();
@@ -97,7 +110,7 @@ public class ClueViewController : MonoBehaviour
     
     void OnEscapeButtonClicked()
     {
-        Debug.Log("EscapeButtonClicked");
+        _soundManager.PlaySE(_soundManager.cancelSound);
         SwitchClueViewRunning();
     }
     
