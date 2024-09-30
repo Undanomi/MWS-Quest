@@ -1,29 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Yarn.Unity;
 
 public class SoundManager : MonoBehaviour
 {
     [Header("ダイアログの有無")]
     public bool hasDialogue;
-    [Header("SE Name: ダイアログ送り")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string dialogueForwardSound;
-    [Header("SE Name: 決定音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string decisionSound;
-    [Header("SE Name: キャンセル音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string cancelSound;
-    [Header("SE Name: 歩行音")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string footStep;
-    [Header("BGM Name:メインテーマ")]
-    [Tooltip("拡張子を除いたものを指定")]
-    public string bgm;
+    [Header("BGM Name: タイトル")]
+    public string bgmTitle;
+    [Header("BGM Name: ログイン/シナリオ選択")]
+    public string bgmLogin;
+    [Header("BGM Name: イントロ")]
+    public string bgmIntro;
+    [Header("BGM Name: メイン")]
+    public string bgmMain;
+    [Header("BGM Name: エンディング")]
+    public string bgmEnding;
+
+    [Header("SE Name: タイトル")] public string seTitle;
+    [Header("SE Name: シナリオ画面")] public string seScenario;
+    [Header("SE Name: 決定音")] public string seDecision;
+    [Header("SE Name: キャンセル音")] public string seCancel;
+    [Header("SE Name: 正解音")] public string seCorrect;
+    [Header("SE Name: フットステップ")] public string seFootStep;
+    
     [Header("BGM音量")]
     public float bgmVolume = 0.05f;
     [Header("SE音量")]
@@ -31,6 +32,7 @@ public class SoundManager : MonoBehaviour
     
     private AudioSource _soundEffectSource;
     private AudioSource _footStepSource;
+    private AudioSource _correctEffectSource;
     private AudioSource _bgmSource;
     private DialogueRunner _dialogueRunner;
     
@@ -42,14 +44,28 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         AudioSource[] audioSources = GetComponents<AudioSource>();
-        if (audioSources.Length != 3)
+        if (audioSources.Length != 4)
         {
             Debug.LogError("AudioSourceの数が3つではありません");
             return;
         }
         _soundEffectSource = audioSources[0];
-        _footStepSource = audioSources[1];
-        _bgmSource = audioSources[2];
+        _correctEffectSource = audioSources[1];
+        _footStepSource = audioSources[2];
+        _bgmSource = audioSources[3];
+        
+        // キャッシュの作成
+        AudioClip[] clips = Resources.LoadAll<AudioClip>("Sounds/SE");
+        foreach (AudioClip clip in clips)
+        {
+            _seCache.Add(clip.name, clip);
+        }
+        clips = Resources.LoadAll<AudioClip>("Sounds/BGM");
+        foreach (AudioClip clip in clips)
+        {
+            _bgmCache.Add(clip.name, clip);
+        }
+        
     }
     
     private void Start()
@@ -60,10 +76,9 @@ public class SoundManager : MonoBehaviour
         if (hasDialogue)
         {
             _dialogueRunner = FindObjectOfType<DialogueRunner>();
-            _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(decisionSound); });
+            _dialogueRunner.onDialogueStart.AddListener(() => { PlaySE(seDecision); });
         }
     }
-
     public void PlaySE(string seName)
     {
         if (!_seCache.ContainsKey(seName))
@@ -79,6 +94,11 @@ public class SoundManager : MonoBehaviour
         // SE再生
         _soundEffectSource.PlayOneShot(_seCache[seName]);
     }
+
+    public void PlayCorrectSE()
+    {
+        _correctEffectSource.PlayOneShot(_seCache[seCorrect]);
+    }
     
     public void PlayFootStep()
     {
@@ -86,18 +106,18 @@ public class SoundManager : MonoBehaviour
         {
             return;
         }
-        if (!_seCache.ContainsKey(footStep))
+        if (!_seCache.ContainsKey(seFootStep))
         {
-            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{footStep}");
+            AudioClip clip = Resources.Load<AudioClip>($"Sounds/SE/{seFootStep}");
             if (!clip) // clipがnullの場合
             {
-                Debug.LogError($"SE not found: {footStep}");
+                Debug.LogError($"SE not found: {seFootStep}");
                 return;
             }
-            _seCache.Add(footStep, clip);
+            _seCache.Add(seFootStep, clip);
         }
         // 再生
-        _footStepSource.clip = _seCache[footStep];
+        _footStepSource.clip = _seCache[seFootStep];
         _footStepSource.loop = true;
         _footStepSource.Play();
         
@@ -229,6 +249,7 @@ public class SoundManager : MonoBehaviour
     {
         _soundEffectSource.volume = volume;
         _footStepSource.volume = volume;
+        _correctEffectSource.volume = volume;
         seVolume = volume;
     }
     

@@ -24,9 +24,12 @@ public class MissionManager : MonoBehaviour
     private int _missionPhase;
     private readonly List<Mission> _missions = new List<Mission>();
     
+    private SoundManager _soundManager;
+    
     void Start()
     {
         dialogueRunner.onNodeComplete.AddListener(OnNodeComplete);
+        _soundManager = FindObjectOfType<SoundManager>();
         _variableStorage = dialogueRunner.VariableStorage as InMemoryVariableStorage;
         
         LoadMissionData("Missions");
@@ -80,11 +83,14 @@ public class MissionManager : MonoBehaviour
         public string Title { get; set; }
         public int CurrentProgress { get; set; }
         public int TotalProgress { get; set; }
+        
+        public bool IsCompleted { get; set; }
         public Mission(string title, int currentProgress, int totalProgress)
         {
             Title = title;
             CurrentProgress = currentProgress;
             TotalProgress = totalProgress;
+            IsCompleted = false;
         }
     }
     
@@ -128,6 +134,12 @@ public class MissionManager : MonoBehaviour
         string title = _missions[_missionPhase-1].Title;
         int currentProgress = _missions[_missionPhase-1].CurrentProgress;
         int totalProgress = _missions[_missionPhase-1].TotalProgress;
+        bool isCompleted = _missions[_missionPhase-1].IsCompleted;
+        if (!isCompleted && currentProgress == totalProgress)
+        {
+            _missions[_missionPhase-1].IsCompleted = true;
+            _soundManager.PlayCorrectSE();
+        }
         string color = currentProgress == totalProgress ? "<color=#2E8B57>" : "<color=#B8860B>";
         missionDisplay.text = 
             $"ミッション{_missionPhase} : {title}" +

@@ -14,6 +14,7 @@ public class ScenarioSelector : MonoBehaviour
     void Start()
     {
         _soundManager = FindObjectOfType<SoundManager>();
+        _soundManager.PlayBGM(_soundManager.bgmLogin, fadeInTime:0f);
         
         // シナリオボタンに変数を追加
         for (int i = 0; i < scenarioButtons.Length; i++)
@@ -49,8 +50,9 @@ public class ScenarioSelector : MonoBehaviour
     private IEnumerator LoadScenario(int scenarioId)
     {
         // SE再生
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seScenario);
         // フェードアウトを待つ
+        StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
         yield return StartCoroutine(FadeOut(1f));
         // 2桁の0埋めしたシナリオ名を作成
         string sceneName = "Scenario" + (scenarioId+1).ToString("D2");
