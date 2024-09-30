@@ -39,12 +39,12 @@ public class RegisterManager : MonoBehaviour
         else if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
             // ユーザ登録失敗時の処理
-            message.text = "ユーザ名とパスワードを入力してください";
+            RegisterFailed("ユーザ名またはパスワードが未入力です");
         }
         else
         {
             // ユーザ登録失敗時の処理
-            message.text = "パスワードと確認用パスワードが一致しません";
+            RegisterFailed("パスワードと確認用パスワードが一致しません");
         }
     }
 
@@ -54,6 +54,12 @@ public class RegisterManager : MonoBehaviour
         message.text = $"<color=green>ユーザ登録成功: {username}さんこんにちは </color>";
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("ScenarioSelect");
+    }
+    
+    private void RegisterFailed(string errorMassage)
+    {
+        _soundManager.PlaySE(_soundManager.cancelSound);
+        message.text = errorMassage;
     }
     
     /// <summary>

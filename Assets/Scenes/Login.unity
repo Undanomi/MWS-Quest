@@ -1825,7 +1825,7 @@ MonoBehaviour:
   usernameField: {fileID: 321698554}
   passwordField: {fileID: 715051898}
   loginButton: {fileID: 583939369}
-  errorMessage: {fileID: 1942992363}
+  message: {fileID: 1942992363}
 --- !u!4 &1584538144
 Transform:
   m_ObjectHideFlags: 0
@@ -2133,7 +2133,7 @@ GameObject:
   - component: {fileID: 1942992364}
   - component: {fileID: 1942992363}
   m_Layer: 5
-  m_Name: ErrorMassage
+  m_Name: Massage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
