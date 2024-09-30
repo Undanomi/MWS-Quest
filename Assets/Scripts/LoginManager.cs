@@ -19,6 +19,7 @@ public class LoginManager : MonoBehaviour
     {
         _soundManager = FindObjectOfType<SoundManager>();
         loginButton.onClick.AddListener(OnLoginButtonClicked);
+        _soundManager.PlayBGM(_soundManager.bgmLogin, fadeInTime: 0f);
     }
     public void OnLoginButtonClicked()
     {
@@ -38,17 +39,21 @@ public class LoginManager : MonoBehaviour
         else
         {
             // ログイン失敗時の処理
-            _soundManager.PlaySE(_soundManager.cancelSound);
-            message.text = "ユーザ名またはパスワードが違います";
+            LoginFailed("ユーザ名またはパスワードが間違っています");
         }
     }
     
     private IEnumerator LoginSuccess(string username)
     {
-        _soundManager.PlaySE(_soundManager.decisionSound);
+        _soundManager.PlaySE(_soundManager.seScenario);
         message.text = $"<color=green>ログイン成功: {username}さんこんにちは </color>";
-        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
         SceneManager.LoadScene("ScenarioSelect");
+    }
+    private void LoginFailed(string errorMassage)
+    {
+        _soundManager.PlaySE(_soundManager.seCancel);
+        message.text = errorMassage;
     }
 
     private IEnumerator LoginRequest(string username, string password)

@@ -45,6 +45,7 @@ public class EndingManager : MonoBehaviour
         if (missionManager.isEndingStarted && !_isEndingStarted)
         {
             _isEndingStarted = true;
+            _soundManager.StopBGM(fadeOutTime: 1f);
             logViewController.SetLogViewAvailable(false);
             clueViewController.SetClueViewAvailable(false);
             startDialogueButtonController.SetStartDialogueButtonAvailable(false);
@@ -64,6 +65,8 @@ public class EndingManager : MonoBehaviour
         yield return StartCoroutine(FadeImage(fadeImage, 0f, 1f, fadeTime));
         // カメラを俯瞰に切り替えておく
         SwitchToMapCamera();
+        // BGMを再生
+        _soundManager.PlayBGM(_soundManager.bgmEnding, fadeInTime: 2f);
         float elapsedTime = 0f;
         while (elapsedTime < 2f)
         {
