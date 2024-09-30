@@ -145,9 +145,23 @@ UN 頼みはシナリオの一例としてインシデントレスポンスの�
 
 ## MWS Quest の使用方法
 
-### ダウンロード・インストール方法
+### ダウンロード・実行方法
 
-[//]: # "後で追記"
+1. GitHubの右側にある [Releases](https://github.com/Undanomi/MWS-Quest/releases) にアクセスします。
+
+![releases](img/github.png)
+
+2. プレイ環境に合わせて、ZIPファイルをダウンロードします。
+   - Window: `MWS-Quest_[version]_windows_x86_64.zip`
+   - Mac (Intel): `MWS-Quest_[version]_mac_x86_64.zip`
+   - Mac (Apple Silicon): `MWS-Quest_[version]_mac_arm64.zip`
+
+![select](img/github2.png)
+
+3. 必要に応じてダウンロードしたZIPファイルを任意の場所に展開します。
+4. 展開したフォルダ内にある実行ファイルをクリックして起動します。インストールは不要です。警告が出る場合には必要に応じてセキュリティの設定を変更してください。
+   - Windows: `MWS-Quest.exe`
+   - Mac: `MWS-Quest_[version]_mac_[architecture].app`
 
 ### プレイ方法
 
