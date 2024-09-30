@@ -110,7 +110,7 @@ public class ClueViewController : MonoBehaviour
     
     void OnEscapeButtonClicked()
     {
-        Debug.Log("EscapeButtonClicked");
+        _soundManager.PlaySE(_soundManager.cancelSound);
         SwitchClueViewRunning();
     }
     
