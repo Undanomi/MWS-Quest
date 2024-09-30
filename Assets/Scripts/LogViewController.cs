@@ -95,7 +95,7 @@ public class LogViewController : MonoBehaviour
             return;
         }
         
-        // XSS対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
+        // インジェクション対策で，InputFieldのタグを正規表現で検知してエスケープ（削除ではなくテキストで表示）
         if (isLogViewRunning && _searchField != null && _searchField.GetComponent<TMPro.TMP_InputField>().text.Contains("<"))
         {
             _searchField.GetComponent<TMPro.TMP_InputField>().text =
@@ -141,16 +141,19 @@ public class LogViewController : MonoBehaviour
 
     void OnEscapeButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.cancelSound);
         SwitchLogViewRunning();
     }
 
     void OnClearButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.cancelSound);
         _searchField.GetComponent<TMPro.TMP_InputField>().text = "";
     }
 
     void OnSearchButtonClicked()
     {
+        _soundManager.PlaySE(_soundManager.decisionSound);
         SearchWord();
     }
 
