@@ -53,6 +53,7 @@ public class IntroSceneController : MonoBehaviour
         yield return StartCoroutine(ShowScenarioTitle());
         
         // 俯瞰
+        _soundManager.PlayBGM(_soundManager.bgmIntro, fadeInTime: 2f);
         yield return StartCoroutine(SwitchMapCamera());
         
         // プレイヤーを目的地に移動
@@ -178,10 +179,14 @@ public class IntroSceneController : MonoBehaviour
         // プレイヤーの移動を停止
         _playerController.StopAutoMove();
         
-        // BGMを再生
-        _soundManager.PlayBGM(bgmName: _soundManager.bgmMain, fadeInTime:3f);
+        // イントロ用のBGMを停止
         
         // ナレーターのセリフ
         dialogueRunner.StartDialogue("NarratorGreeting");
+        
+        // BGM切り替え
+        yield return StartCoroutine(_soundManager.StopBGM(fadeOutTime: 1f));
+        _soundManager.PlayBGM(bgmName: _soundManager.bgmMain, fadeInTime:3f);
+        
     }
 }
