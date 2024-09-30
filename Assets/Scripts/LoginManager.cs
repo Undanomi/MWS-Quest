@@ -12,8 +12,16 @@ public class LoginManager : MonoBehaviour
     [Header("ログインボタン")] public Button loginButton;
     [Header("エラーメッセージ")] public TMP_Text errorMessage;
     
+    private SoundManager _soundManager;
+    
+    private void Start()
+    {
+        _soundManager = FindObjectOfType<SoundManager>();
+        loginButton.onClick.AddListener(OnLoginButtonClicked);
+    }
     public void OnLoginButtonClicked()
     {
+        
         string username = usernameField.text;
         string password = passwordField.text;
         
@@ -24,14 +32,22 @@ public class LoginManager : MonoBehaviour
         if (username == "admin" && password == "password")
         {
             // ログイン成功時にはシナリオ選択画面に遷移
-            SceneManager.LoadScene("ScenarioSelect");
+            StartCoroutine(LoginSuccess(username));
         }
         else
         {
             // ログイン失敗時の処理
+            _soundManager.PlaySE(_soundManager.cancelSound);
             errorMessage.text = "ユーザ名またはパスワードが違います";
         }
-        
+    }
+    
+    private IEnumerator LoginSuccess(string username)
+    {
+        _soundManager.PlaySE(_soundManager.decisionSound);
+        errorMessage.text = $"<color=green>ログイン成功: {username}さんこんにちは </color>";
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("ScenarioSelect");
     }
 
     private IEnumerator LoginRequest(string username, string password)
